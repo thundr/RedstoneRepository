@@ -36,15 +36,18 @@ public class ArmorEventHandler {
 	public void onFall(LivingFallEvent event) {
 		if(event.getEntity() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+
 			if(!player.world.isRemote){
 				ArmorSummary summary = new ArmorSummary().getSummary(player);
+
 				if(summary != null){
 					if (summary.enderiumPieces.containsKey("Boots")) {
-						//TODO: this should probably be a config
 						int toDrain = (int) (event.getDistance() * fallDrainFactor);
+
 						if(summary.energyStored.get("Boots") >= toDrain){
 							ItemStack boots = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
 							event.setDamageMultiplier(0);
+							//TODO: I should really make a nice util method for extractEnergy
 							summary.enderiumPieces.get("Boots").extractEnergy(boots, toDrain, false);
 						}
 					}
@@ -57,17 +60,18 @@ public class ArmorEventHandler {
 	public void onPlayerAttacked(LivingAttackEvent event) {
 		if(event.getEntity() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+
 			if(!player.world.isRemote){
 				ArmorSummary summary = new ArmorSummary().getSummary(player);
+
 				if(summary.isFullSet){
 					//the enderium armor is made out of cryotheum, after all...
 					if(event.getSource().isFireDamage()){
-						//TODO: should be config
 						if(doFullArmorDrain((int) event.getAmount()* fireDrainFactor, summary, player)){
 							event.setCanceled(true);
 						}
 					}
-					//this is to deal with flux quiver weirdness
+					//this is to deal with flux quiver weirdness, bypasses armor calc
 					else if(event.getSource().getDamageType().contains("flux")){
 						if(doFullArmorDrain((int) event.getAmount()* fluxDrainFactor, summary, player)){
 							event.setCanceled(true);

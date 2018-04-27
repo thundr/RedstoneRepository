@@ -5,11 +5,11 @@ import cofh.core.util.helpers.ItemHelper;
 import net.minecraft.block.Block;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import thundr.redstonerepository.blocks.RABlockStorage.Type;
+import thundr.redstonerepository.blocks.BlockStorage.Type;
 
-public class RAItemBlockStorage extends ItemBlockCore {
+public class ItemBlockStorage extends ItemBlockCore {
 
-    public RAItemBlockStorage(Block block) {
+    public ItemBlockStorage(Block block) {
         super(block);
         setHasSubtypes(true);
         setMaxDamage(0);

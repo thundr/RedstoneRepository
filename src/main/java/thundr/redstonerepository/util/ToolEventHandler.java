@@ -103,6 +103,7 @@ public class ToolEventHandler {
 
     //cause cofh methods are protected :))))))))))))))))))))))))))
     public boolean isEmpowered(ItemStack stack) {
+    	//this casts to a pick every time, but that doesn't matter. check here if bug
     	ItemPickaxeGelidEnderium pick = (ItemPickaxeGelidEnderium)stack.getItem();
 	    return pick.getMode(stack) == 1 && pick.getEnergyStored(stack) >= pick.getEnergyPerUseCharged();
     }

@@ -5,7 +5,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import thundr.redstonerepository.blocks.RABlockStorage;
+import thundr.redstonerepository.blocks.BlockStorage;
 
 import java.util.ArrayList;
 
@@ -18,9 +18,9 @@ public class RedstoneRepositoryBlocks{
 
     public static void preInit() {
 
-        RABlockStorage = new RABlockStorage();
+        BlockStorage = new BlockStorage();
 
-        initList.add(RABlockStorage);
+        initList.add(BlockStorage);
 
         for (IInitializer init : initList) {
             init.initialize();
@@ -40,6 +40,6 @@ public class RedstoneRepositoryBlocks{
     static ArrayList<IInitializer> initList = new ArrayList<>();
 
     /* REFERENCES */
-    public static RABlockStorage RABlockStorage;
+    public static BlockStorage BlockStorage;
 
 }

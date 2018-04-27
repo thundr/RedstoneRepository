@@ -26,21 +26,21 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thundr.redstonerepository.RedstoneRepository;
-import thundr.redstonerepository.items.blocks.RAItemBlockStorage;
+import thundr.redstonerepository.items.blocks.ItemBlockStorage;
 
 import java.util.Locale;
 
 import static cofh.core.util.helpers.ItemHelper.registerWithHandlers;
 import static cofh.core.util.helpers.RecipeHelper.addStorageRecipe;
 
-public class RABlockStorage extends BlockCore implements IInitializer, IModelRegister {
+public class BlockStorage extends BlockCore implements IInitializer, IModelRegister {
 
     public static final PropertyEnum<Type> VARIANT = PropertyEnum.create("type", Type.class);
 
     public static ItemStack blockGelidEnderium;
     public static ItemStack blockGelidGem;
 
-    public RABlockStorage() {
+    public BlockStorage() {
 
         super(Material.IRON, "redstonerepository");
 
@@ -129,7 +129,6 @@ public class RABlockStorage extends BlockCore implements IInitializer, IModelReg
     @Override
     @SideOnly (Side.CLIENT)
     public void registerModels() {
-
         for (int i = 0; i < Type.values().length; i++) {
             ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), i, new ModelResourceLocation("redstonerepository:" + name, "type=" + Type.byMetadata(i).getName()));
         }
@@ -142,7 +141,7 @@ public class RABlockStorage extends BlockCore implements IInitializer, IModelReg
         this.setRegistryName("storage");
         ForgeRegistries.BLOCKS.register(this);
 
-        RAItemBlockStorage itemBlock = new RAItemBlockStorage(this);
+        ItemBlockStorage itemBlock = new ItemBlockStorage(this);
         itemBlock.setRegistryName(this.getRegistryName());
         ForgeRegistries.ITEMS.register(itemBlock);
 

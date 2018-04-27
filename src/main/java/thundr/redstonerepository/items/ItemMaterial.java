@@ -25,14 +25,10 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
     public static ItemStack gemGelid;
     public static ItemStack rodGelid;
     public static ItemStack plateArmorGelidEnderium;
-//    public static ItemStack blockGelidEnderium;
-//    public static ItemStack blockGelidGem;
     public static ItemStack stringFluxed;
 
     public ItemMaterial() {
-
         super("redstonerepository");
-
         setUnlocalizedName("material");
         setCreativeTab(RedstoneRepository.tabCommon);
     }
@@ -40,7 +36,7 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
     /* IInitializer */
     @Override
     public boolean initialize() {
-        //TODO make sure ItemMap ids are not overlapping (?)
+        //TODO make sure ItemMap ids are not overlapping (?) ok this one is weird
 
         dustGelidEnderium = addOreDictItem(0, "dustGelidEnderium", EnumRarity.RARE);
         ingotGelidEnderium = addOreDictItem(16, "ingotGelidEnderium", EnumRarity.RARE);

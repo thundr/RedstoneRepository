@@ -19,7 +19,6 @@ public class ClientProxy extends CommonProxy {
         for (IModelRegister register : modelList) {
             register.registerModels();
         }
-        registerRenderInformation();
     }
 
     @Override
@@ -32,10 +31,6 @@ public class ClientProxy extends CommonProxy {
     public void postInit(FMLPostInitializationEvent event) {
 
         super.postInit(event);
-    }
-
-    public void registerRenderInformation() {
-
     }
 
     public boolean addIModelRegister(IModelRegister modelRegister) {

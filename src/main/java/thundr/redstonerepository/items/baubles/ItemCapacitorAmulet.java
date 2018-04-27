@@ -19,6 +19,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
@@ -89,13 +90,16 @@ public class ItemCapacitorAmulet extends ItemCoreRF implements IBauble, IEnergyC
 		Iterable<ItemStack> playerItems;
 		playerItems = Iterables.concat(entityPlayer.inventory.armorInventory, entityPlayer.inventory.mainInventory, entityPlayer.inventory.offHandInventory, getBaubles(entityPlayer));
 		for(ItemStack playerItem : playerItems){
+			//dont play yourself (or charge yourself)
 			if (playerItem.isEmpty() || playerItem.equals(cap) || playerItem.getItem() instanceof ItemCapacitorAmulet) {
 				continue;
 			}
+
 			if (EnergyHelper.isEnergyContainerItem(playerItem)) {
 				extractEnergy(cap, ((IEnergyContainerItem) playerItem.getItem()).receiveEnergy(playerItem, Math.min(getEnergyStored(cap), maxTransfer), false), false);
 			} else if (EnergyHelper.isEnergyHandler(playerItem)) {
 				IEnergyStorage handler = EnergyHelper.getEnergyHandler(playerItem);
+
 				if (handler != null) {
 					extractEnergy(cap, handler.receiveEnergy(Math.min(getEnergyStored(cap), maxTransfer), false), false);
 				}
@@ -187,5 +191,10 @@ public class ItemCapacitorAmulet extends ItemCoreRF implements IBauble, IEnergyC
 	@Override
 	public boolean setMode(ItemStack stack, int mode) {
 		return false;
+	}
+
+	@Override
+	public EnumRarity getRarity(ItemStack stack) {
+		return EnumRarity.RARE;
 	}
 }
