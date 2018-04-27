@@ -1,0 +1,183 @@
+buildscript {
+	repositories {
+		jcenter()
+		maven { 
+			name = "forge"
+			url = "http://files.minecraftforge.net/maven" 
+		}
+	}
+	dependencies {
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'maven'
+
+
+compileJava {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+//thanks cofh 
+ext.configFile = file "build.properties"
+
+configFile.withReader {
+	def prop = new Properties()
+	prop.load(it)
+	project.ext.config = new ConfigSlurper().parse prop
+}
+
+def build_number = 'dev'
+if (project.hasProperty("release"))
+    build_number = 'release'
+
+if (System.getenv('BUILD_NUMBER') != null)
+	build_number = System.getenv('BUILD_NUMBER')
+
+
+//version= 1.12-1.0.0-143-universal.jar
+//or in dev= 1.12-1.0.0-dev-universal.jar
+version = "${project.config.mc_version}-${project.config.mod_version}-${build_number}"
+
+group = "thundr"
+archivesBaseName = "RedstoneRepository"
+//TODO: fix this to read from vars
+println config.mc_version + "-" + config.forge_version
+
+
+ repositories {
+	 mavenCentral()
+	 maven {
+ 		name = "CoFH Maven"
+ 		url = "http://maven.covers1624.net"
+ 	}
+ 	maven {
+ 		name = "Thiakil Maven"
+ 		url = "http://maven.thiakil.com"
+ 	}
+ 	maven {
+ 		name = "JEI Maven"
+ 		url = "http://dvs1.progwml6.com/files/maven"
+ 	}
+	maven {
+		name = "ChickenBones Maven"
+		url = "http://chickenbones.net/maven/"
+	}
+ }
+
+ dependencies {
+    deobfCompile "com.azanor.baubles:Baubles:1.12-1.5.2"
+    compile "cofh:RedstoneArsenal:${config.mc_version}-${config.ra_version}:deobf"
+    compile "cofh:CoFHCore:${config.mc_version}-${config.cofh_core_version}:deobf"
+ }
+
+minecraft {
+	version = "${config.mc_version}-${config.forge_version}"
+	runDir = "run"
+	mappings = config.mappings
+	replace '${config.mod_version}', project.config.mod_version
+	makeObfSourceJar = false
+	
+}
+
+processResources {
+	inputs.property "version", project.version
+	inputs.property "mc_version", project.config.mc_version
+
+	from(sourceSets.main.resources.srcDirs) {
+		include '**/*.info'
+		include '**/*.properties'
+
+		expand 'version': project.version, 'mc_version': project.config.mc_version
+	}
+	from(sourceSets.main.resources.srcDirs) {
+		exclude '**/*.info'
+		exclude '**/*.properties'
+	}
+}
+
+jar {
+    classifier = 'universal'
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
+}
+
+task srcJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+tasks.build.dependsOn srcJar, deobfJar
+
+//tasks.withType(JavaCompile) { task ->
+//	task.options.encoding = 'UTF-8'
+//}
+
+// publishing {
+// 	tasks.publish.dependsOn 'build'
+// 	publications {
+// 		mavenJava(MavenPublication) {
+// 			from components.java
+// 			artifact sourceJar
+// 			artifact javadocJar
+// 			artifact deobfJar
+// 		}
+// 	}
+// 	repositories {
+// 		if (project.hasProperty('maven_repo')) {
+// 			maven { url maven_repo }
+// 		} else {
+// 			mavenLocal()
+// 		}
+// 	}
+// }
+
+// def curseRelations = {
+// 	requiredLibrary 'cofhcore'
+// 	requiredLibrary 'thermal-foundation'
+// 	requiredLibrary 'redstone-arsenal'
+// 	requiredLibrary 'ttcore'
+// 	requiredLibrary 'thermalexpansion'
+// }
+ 
+// curseforge {
+// 	if (project.hasProperty('curse_key'))
+// 		apiKey = project.curse_key
+ 
+// 	project {
+// 		id = "${curse_id}"
+// 		changelog = project.hasProperty('changelog') ? project.changelog : ''
+// 		releaseType = 'release'
+ 
+// 		mainArtifact(jar) {
+// 			displayName = "${mod_name} - ${mod_version}-${build_number}"
+// 			relations curseRelations
+// 		}
+ 
+// 		addArtifact(deobfJar) {
+// 			relations curseRelations
+// 		}
+ 
+// 		addArtifact sourceJar
+// 		addArtifact javadocJar
+// 	}
+// }
+idea {
+	module {
+		inheritOutputDirs = true
+	}
+}
+//testing
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.6'
+}

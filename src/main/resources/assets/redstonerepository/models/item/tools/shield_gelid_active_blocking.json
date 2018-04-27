@@ -1,0 +1,6 @@
+{
+	"parent": "redstonerepository:item/tool/shield_gelid_blocking",
+	"textures": {
+		"layer0": "redstonerepository:items/tool/shield_gelid_active"
+	}
+}

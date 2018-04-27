@@ -1,0 +1,6 @@
+{
+	"parent": "redstonerepository:item/tools/wrench_gelid",
+	"textures": {
+		"layer0": "redstonerepository:items/tool/wrench_gelid_active"
+	}
+}

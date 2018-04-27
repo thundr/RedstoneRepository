@@ -1,0 +1,66 @@
+{
+	"parent": "redstonerepository:item/tool/bow",
+	"textures": {
+		"layer0": "redstonerepository:items/tool/bow_gelid"
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"active": 1.0
+			},
+			"model": "redstonerepository:item/tools/bow_gelid_active"
+		},
+		{
+			"predicate": {
+				"pulling": 1.0,
+				"active": 1.0
+			},
+			"model": "redstonerepository:item/tools/bow_gelid_active_0"
+		},
+		{
+			"predicate": {
+				"pulling": 1.0,
+				"pull": 0.65,
+				"active": 1.0
+			},
+			"model": "redstonerepository:item/tool/bow_gelid_active_1"
+		},
+		{
+			"predicate": {
+				"pulling": 1.0,
+				"pull": 0.9,
+				"active": 1.0
+			},
+			"model": "redstonerepository:item/tool/bow_gelid_active_2"
+		},
+		{
+			"predicate": {
+				"empowered": 1.0
+			},
+			"model": "redstonerepository:item/tool/bow_gelid_empowered"
+		},
+		{
+			"predicate": {
+				"pulling": 1.0,
+				"empowered": 1.0
+			},
+			"model": "redstonerepository:item/tool/bow_gelid_empowered_0"
+		},
+		{
+			"predicate": {
+				"pulling": 1.0,
+				"pull": 0.65,
+				"empowered": 1.0
+			},
+			"model": "redstonerepository:item/tool/bow_gelid_empowered_1"
+		},
+		{
+			"predicate": {
+				"pulling": 1.0,
+				"pull": 0.9,
+				"empowered": 1.0
+			},
+			"model": "redstonerepository:item/tool/bow_gelid_empowered_2"
+		}
+	]
+}

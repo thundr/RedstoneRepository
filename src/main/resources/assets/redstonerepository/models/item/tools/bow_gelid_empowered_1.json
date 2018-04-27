@@ -1,0 +1,6 @@
+{
+	"parent": "redstonerepository:item/tool/bow_gelid",
+	"textures": {
+		"layer0": "redstonerepository:items/tool/bow_gelid_empowered_1"
+	}
+}

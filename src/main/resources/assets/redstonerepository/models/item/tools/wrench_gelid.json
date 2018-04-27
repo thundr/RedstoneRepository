@@ -1,0 +1,14 @@
+{
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "redstonerepository:items/tool/wrench_gelid"
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"active": 1.0
+			},
+			"model": "redstonerepository:item/tools/wrench_gelid_active"
+		}
+	]
+}

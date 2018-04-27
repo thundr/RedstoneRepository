@@ -1,0 +1,20 @@
+{
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "redstonerepository:items/tool/sword_gelid"
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"active": 1.0
+			},
+			"model": "redstonerepository:item/tools/sword_gelid_active"
+		},
+		{
+			"predicate": {
+				"empowered": 1.0
+			},
+			"model": "redstonerepository:item/tools/sword_gelid_empowered"
+		}
+	]
+}

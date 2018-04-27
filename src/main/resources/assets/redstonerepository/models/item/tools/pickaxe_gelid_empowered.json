@@ -1,0 +1,6 @@
+{
+	"parent": "redstonerepository:item/tools/pickaxe_gelid",
+	"textures": {
+		"layer0": "redstonerepository:items/tool/pickaxe_gelid_empowered"
+	}
+}

@@ -1,0 +1,34 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "builtin/generated",
+		"textures": {
+			"layer0": "blocks/dirt"
+		},
+		"transform": "forge:default-item"
+	},
+	"variants": {
+		"type": {
+			"helmet_gelid": {
+				"textures": {
+					"layer0": "redstonerepository:items/armor/helmet_gelid"
+				}
+			},
+			"chestplate_gelid": {
+				"textures": {
+					"layer0": "redstonerepository:items/armor/chestplate_gelid"
+				}
+			},
+			"leggings_gelid": {
+				"textures": {
+					"layer0": "redstonerepository:items/armor/leggings_gelid"
+				}
+			},
+			"boots_gelid": {
+				"textures": {
+					"layer0": "redstonerepository:items/armor/boots_gelid"
+				}
+			}
+		}
+	}
+}

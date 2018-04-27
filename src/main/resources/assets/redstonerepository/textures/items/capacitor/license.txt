@@ -1,0 +1,4 @@
+Parts of these textures are Copyright Creative Commons Attribution-ShareAlike 4.0
+From Thermal Expansion 1.7.10
+https://github.com/CoFH/ThermalExpansion/
+https://github.com/CoFH/ThermalExpansion/blob/1.7.10/LICENSE%20-%20ART.txt

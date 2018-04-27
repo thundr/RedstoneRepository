@@ -1,0 +1,6 @@
+{
+	"parent": "redstonerepository:item/tools/shield_gelid",
+	"textures": {
+		"layer0": "redstonerepository:items/tool/shield_gelid_empowered"
+	}
+}

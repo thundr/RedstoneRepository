@@ -1,0 +1,20 @@
+{
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "redstonerepository:items/tool/battle_wrench_gelid"
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"active": 1.0
+			},
+			"model": "redstonerepository:item/tools/battle_wrench_gelid_active"
+		},
+		{
+			"predicate": {
+				"empowered": 1.0
+			},
+			"model": "redstonerepository:item/tools/battle_wrench_gelid_empowered"
+		}
+	]
+}

@@ -1,0 +1,59 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "builtin/generated",
+		"textures": {
+			"layer0": "blocks/dirt"
+		},
+		"transform": "forge:default-item"
+	},
+	"variants": {
+		"type": {
+			"dustgelidenderium": {
+				"textures": {
+					"layer0": "redstonerepository:items/material/dust_gelid_enderium"
+				}
+			},
+			"ingotgelidenderium": {
+				"textures": {
+					"layer0": "redstonerepository:items/material/ingot_gelid_enderium"
+				}
+			},
+			"nuggetgelidenderium": {
+				"textures": {
+					"layer0": "redstonerepository:items/material/nugget_gelid_enderium"
+				}
+			},
+			"geargelidenderium": {
+				"textures": {
+					"layer0": "redstonerepository:items/material/gear_gelid_enderium"
+				}
+			},
+			"plategelidenderium": {
+				"textures": {
+					"layer0": "redstonerepository:items/material/plate_gelid_enderium"
+				}
+			},
+			"gemgelid": {
+				"textures": {
+					"layer0": "redstonerepository:items/material/gem_gelid"
+				}
+			},
+			"rodgelid": {
+				"textures": {
+					"layer0": "redstonerepository:items/material/rod_gelid"
+				}
+			},
+			"platearmorgelidenderium": {
+				"textures": {
+					"layer0": "redstonerepository:items/material/plate_armor_gelid_enderium"
+				}
+			},
+			"stringfluxed": {
+				"textures": {
+					"layer0": "redstonerepository:items/material/string_fluxed"
+				}
+			}
+		}
+	}
+}

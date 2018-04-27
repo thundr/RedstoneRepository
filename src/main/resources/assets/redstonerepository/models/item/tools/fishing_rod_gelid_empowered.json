@@ -1,0 +1,6 @@
+{
+	"parent": "redstonerepository:item/tools/fishing_rod_gelid",
+	"textures": {
+		"layer0": "redstonerepository:items/tool/fishing_rod_gelid_empowered"
+	}
+}

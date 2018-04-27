@@ -1,0 +1,6 @@
+{
+	"parent": "redstonerepository:item/tools/battle_wrench_gelid",
+	"textures": {
+		"layer0": "redstonerepository:items/tool/battle_wrench_gelid_empowered"
+	}
+}

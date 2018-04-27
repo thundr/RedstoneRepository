@@ -1,0 +1,6 @@
+{
+	"parent": "redstonerepository:item/tools/hammer_gelid",
+	"textures": {
+		"layer0": "redstonerepository:items/tool/hammer_gelid_active"
+	}
+}

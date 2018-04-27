@@ -1,0 +1,6 @@
+{
+	"parent": "redstonerepository:item/tools/sword_gelid",
+	"textures": {
+		"layer0": "redstonerepository:items/tool/sword_gelid_active"
+	}
+}

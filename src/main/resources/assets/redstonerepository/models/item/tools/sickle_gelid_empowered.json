@@ -1,0 +1,6 @@
+{
+	"parent": "redstonerepository:item/tools/sickle_gelid",
+	"textures": {
+		"layer0": "redstonerepository:items/tool/sickle_gelid_empowered"
+	}
+}
