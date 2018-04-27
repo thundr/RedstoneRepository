@@ -2,14 +2,14 @@
 	{
 		"modid": "redstonerepository",
 		"name": "Redstone Repository",
-		"description": "Enhancing the Flux Revolution!",
+		"description": "Re-enhancing the Flux Revolution!",
         "version": "${version}",
-		"credits": "TehNut, thundR",
+		"credits": "TehNut",
 		"logoFile": "assets/redstonerepository/textures/logo.png",
 		"mcversion": "${mc_version}",
 		"url": "https://www.github.com/thundR/RedstoneRepository",
 		"updateUrl": "",
-		"authorList": [ "TehNut", "thundR" ],
+		"authorList": [ "thundR" ],
 		"parent": "",
 		"screenshots": [],
 		"dependencies": [
