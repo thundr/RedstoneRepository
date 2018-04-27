@@ -54,7 +54,7 @@ public class RedstoneRepositoryEquipment{
 			RedstoneRepository.proxy.addIModelRegister(e);
 		}
 		capInit = new EquipmentInit();
-		capInit.initialize();
+		capInit.preInit();
 		MinecraftForge.EVENT_BUS.register(INSTANCE);
 	}
 
@@ -68,7 +68,7 @@ public class RedstoneRepositoryEquipment{
 		for (ToolSet e : ToolSet.values()) {
 			e.register();
 		}
-		capInit.register();
+		capInit.initialize();
 	}
 
 //	/* MATERIALS */
@@ -372,7 +372,7 @@ public class RedstoneRepositoryEquipment{
 		public static int capacity;
 		public static int transfer;
 
-		public boolean initialize() {
+		public boolean preInit() {
 			config();
 
 			itemCapacitorAmulet = new ItemCapacitorAmulet(capacity, transfer);
@@ -394,7 +394,7 @@ public class RedstoneRepositoryEquipment{
 			capacity = RedstoneRepository.CONFIG.get("Item.Capacitor", "BaseCapacity", 100000000, "Set the base capacity of the Gelid Capacitor Amulet in RF/t (Default 100,000,000) ");
 		}
 
-		public boolean register() {
+		public boolean initialize() {
 			itemCapacitor.setItemDamage(4);
 			if (enable[0]) {
 				addShapedRecipe(capacitorAmuletGelid,

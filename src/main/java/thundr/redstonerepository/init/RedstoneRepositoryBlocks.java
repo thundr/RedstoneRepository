@@ -23,7 +23,7 @@ public class RedstoneRepositoryBlocks{
         initList.add(BlockStorage);
 
         for (IInitializer init : initList) {
-            init.initialize();
+            init.preInit();
         }
         MinecraftForge.EVENT_BUS.register(INSTANCE);
     }

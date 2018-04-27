@@ -10,6 +10,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 import thundr.redstonerepository.RedstoneRepository;
 
@@ -35,9 +36,10 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 
     /* IInitializer */
     @Override
-    public boolean initialize() {
+    public boolean preInit() {
         //TODO make sure ItemMap ids are not overlapping (?) ok this one is weird
-
+	    ForgeRegistries.ITEMS.register(setRegistryName("material"));
+	    RedstoneRepository.proxy.addIModelRegister(this);
         dustGelidEnderium = addOreDictItem(0, "dustGelidEnderium", EnumRarity.RARE);
         ingotGelidEnderium = addOreDictItem(16, "ingotGelidEnderium", EnumRarity.RARE);
         nuggetGelidEnderium = addOreDictItem(32, "nuggetGelidEnderium", EnumRarity.RARE);
@@ -51,13 +53,13 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 	    stringFluxed = addOreDictItem(128, "stringFluxed", EnumRarity.UNCOMMON);
 
 
-        RedstoneRepository.proxy.addIModelRegister(this);
+
 
         return true;
     }
 
     @Override
-    public boolean register() {
+    public boolean initialize() {
         addTwoWayStorageRecipe(ingotGelidEnderium, "ingotGelidEnderium", nuggetGelidEnderium, "nuggetGelidEnderium");
 
         addReverseStorageRecipe(ingotGelidEnderium, "blockGelidEnderium");
@@ -74,8 +76,6 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
 
         ThermalExpansionHelper.addSmelterRecipe(4000, dustGelidEnderium, new ItemStack(Blocks.SAND), ingotGelidEnderium);
 
-        ThermalExpansionHelper.addCompactorPressRecipe(4000, ingotGelidEnderium, plateGelidEnderium);
-        ThermalExpansionHelper.addCompactorStorageRecipe(400, ItemHelper.cloneStack(nuggetGelidEnderium, 9), ingotGelidEnderium);
 
         ThermalExpansionHelper.addTransposerFill(4000, dustEnderium, dustGelidEnderium, fluidCryotheum, false);
         ThermalExpansionHelper.addTransposerFill(4000, new ItemStack(Items.EMERALD), gemGelid, fluidCryotheum, false);
