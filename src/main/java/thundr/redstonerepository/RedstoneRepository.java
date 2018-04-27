@@ -25,7 +25,7 @@ import java.io.File;
 
 @Mod(modid = RedstoneRepository.ID, name = RedstoneRepository.NAME, version = RedstoneRepository.VERSION, dependencies = RedstoneRepository.REQUIRED, guiFactory = RedstoneRepository.GUIFACTORY)
 public class RedstoneRepository {
-
+	//test jenkins
     public static final String NAME = "Redstone Repository";
     public static final String ID = "redstonerepository";
     public static final String VERSION = "0.1.1";
