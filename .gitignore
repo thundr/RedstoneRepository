@@ -1,2 +1,26 @@
-*.rbc
-*.fyc
+#General use .gitignore for Minecraft modding.
+
+#Folder
+/.idea/*
+/.gradle/*
+/build/*
+/eclipse/*
+/run/*
+/out/*
+/asm/*
+/bin/*
+/libs/*
+/classes/*
+
+#File Extensions
+*.psd
+*.iml
+*.ipr
+*.iws
+*.classpath
+*.project
+*.zip
+
+#Specific files
+MCFPost.txt
+Thumbs.db
