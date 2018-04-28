@@ -1,0 +1,120 @@
+#Creative Tab
+itemGroup.redstonerepository.creativeTab=Redstone Repository
+
+#Items
+item.redstonerepository.material.dustGelidEnderium.name=极寒末影粉
+item.redstonerepository.material.gearGelidEnderium.name=极寒末影齿轮
+item.redstonerepository.material.gemGelid.name=极寒水晶
+item.redstonerepository.material.ingotGelidEnderium.name=极寒末影锭
+item.redstonerepository.material.nuggetGelidEnderium.name=极寒末影粒
+item.redstonerepository.material.plateGelidEnderium.name=极寒末影板
+item.redstonerepository.material.plateArmorGelidEnderium.name=极寒护甲防护板
+item.redstonerepository.material.rodGelid.name=极寒黑曜石手柄
+item.redstonerepository.material.stringFluxed.name=充能红石线
+
+tile.redstonerepository.storage.blockGelidEnderium.name=极寒末影块
+tile.redstonerepository.storage.blockGelidGem.name=极寒水晶块
+
+item.redstonerepository.bauble.capacitor.creative.name=创造通量护符
+item.redstonerepository.bauble.capacitor.tuberous.name=土豆通量护符
+item.redstonerepository.bauble.capacitor.leadstone.name=铅石通量护符
+item.redstonerepository.bauble.capacitor.hardened.name=硬化通量护符
+item.redstonerepository.bauble.capacitor.reinforced.name=强化通量护符
+item.redstonerepository.bauble.capacitor.resonant.name=谐振通量护符
+item.redstonerepository.bauble.capacitor.gelid.name=便携式极寒电容
+
+#Tools
+item.redstonerepository.tool.enderium.gelid.axe.name=极寒末影斧
+item.redstonerepository.tool.enderium.gelid.battlewrench.name=极寒末影战锤
+item.redstonerepository.tool.enderium.gelid.pickaxe.name=极寒末影镐
+item.redstonerepository.tool.enderium.gelid.shovel.name=极寒末影锹
+item.redstonerepository.tool.enderium.gelid.sickle.name=极寒末影镰刀
+item.redstonerepository.tool.enderium.gelid.sword.name=极寒末影剑
+item.redstonerepository.tool.potato.hoe.name=通量土豆锄
+
+#Armor
+item.redstonerepository.armor.enderium.gelid.helm.name=末影充能头盔
+item.redstonerepository.armor.enderium.gelid.chestplate.name=末影充能胸甲
+item.redstonerepository.armor.enderium.gelid.leggings.name=末影充能护腿
+item.redstonerepository.armor.enderium.gelid.boots.name=末影充能靴子
+item.redstonerepository.armor.powersuit.helm.name=Powersuit头盔
+item.redstonerepository.armor.powersuit.chestplate.name=Powersuit胸甲
+item.redstonerepository.armor.powersuit.leggings.name=Powersuit护腿
+item.redstonerepository.armor.powersuit.boots.name=Powersuit靴子
+item.redstonerepository.armor.lumium.helm.name=流明头盔
+item.redstonerepository.armor.lumium.chestplate.name=流明胸甲
+item.redstonerepository.armor.lumium.leggings.name=流明护腿
+item.redstonerepository.armor.lumium.boots.name=流明靴子
+item.redstonerepository.armor.tuberous.helm.name=土豆头盔
+item.redstonerepository.armor.tuberous.chestplate.name=土豆胸甲
+item.redstonerepository.armor.tuberous.leggings.name=土豆护腿
+item.redstonerepository.armor.tuberous.boots.name=土豆靴子
+item.redstonerepository.armor.redstone.boots.name=红石缓落铁靴
+
+#Blocks
+tile.redstonerepository.storage.enderium.gelid.nothing.name=Block of Anti-Derp Protocol
+tile.redstonerepository.random.lapis.purple.name=Lapis Quisque
+tile.redstonerepository.random.nothing.name=Anti-Derp Protocol
+tile.redstonerepository.table.tinker.name=改装台
+tile.redstonerepository.light.invisible.name=不可见光
+tile.redstonerepository.solar.basic.name=太阳能板（基础）
+tile.redstonerepository.solar.hardened.name=太阳能板（硬化）
+tile.redstonerepository.solar.reinforced.name=太阳能板（强化）
+tile.redstonerepository.solar.resonant.name=太阳能板（谐振）
+
+#Tooltips
+info.redstonerepository.tooltip.getenergy=充能：%d / %d RF
+info.redstonerepository.tooltip.peruse=%d RF/次使用
+info.redstonerepository.tooltip.perdamage=%d RF/次伤害
+info.redstonerepository.tooltip.extinguish=按下 %s 禁用充能
+info.redstonerepository.tooltip.empower=按下 %s 启用充能
+info.redstonerepository.tooltip.damage=+%d 攻击伤害
+info.redstonerepository.tooltip.damage.flux=+%d 通量伤害
+info.redstonerepository.tooltip.durability=耐久
+info.redstonerepository.tooltip.bound=绑定方块：
+info.redstonerepository.tooltip.side=Insert Side:
+
+info.redstonerepository.capacitor.title=用来充能物品栏中的物品。
+info.redstonerepository.capacitor.activate=潜行以启用。
+info.redstonerepository.capacitor.deactivate=潜行以禁用。
+
+info.redstonerepository.tooltip.armor.lumium.shine=像荧石一样闪亮
+info.redstonerepository.tooltip.armor.tuberous.clever.1=恭喜你，你已经抹黑了自己
+info.redstonerepository.tooltip.armor.tuberous.clever.2=土豆！很好你已经实现了"土豆防护"。
+info.redstonerepository.tooltip.armor.powersuit.ignore=目前暂无其他作用。
+info.redstonerepository.tooltip.forModules=for Modules
+info.redstonerepository.tooltip.forDetails=for bound details
+info.redstonerepository.tooltip.control=控制
+info.redstonerepository.tooltip.hold=按住
+
+#Powersuit Upgrade Tooltips
+info.redstonerepository.tooltip.armor.powersuit.flight.t1=飞行 Mk1
+info.redstonerepository.tooltip.armor.powersuit.flight.t2=飞行 Mk2
+info.redstonerepository.tooltip.armor.powersuit.flight.t3=飞行 Mk3
+info.redstonerepository.tooltip.armor.powersuit.flight.t4=飞行 Mk4
+info.redstonerepository.tooltip.armor.powersuit.flight.t5=飞行 Mk5
+info.redstonerepository.tooltip.armor.powersuit.fall.prevention=摔落保护
+info.redstonerepository.tooltip.armor.powersuit.speed.t1=速度提升 Mk1
+info.redstonerepository.tooltip.armor.powersuit.speed.t2=速度提升 Mk2
+info.redstonerepository.tooltip.armor.powersuit.speed.t3=速度提升 Mk3
+info.redstonerepository.tooltip.armor.powersuit.speed.t4=速度提升 Mk4
+info.redstonerepository.tooltip.armor.powersuit.step.assist=步行辅助
+info.redstonerepository.tooltip.armor.powersuit.water.breathing=水下呼吸
+info.redstonerepository.tooltip.armor.powersuit.potion.nullification=免疫药水效果
+
+#Chat Messages
+info.redstonerepository.chat.table.tinker.instruct=右击powersuit以进行升级。
+info.redstonerepository.chat.armor.powersuit.active=激活：
+info.redstonerepository.chat.boundto.txt=绑定至：
+info.redstonerepository.chat.unbound.txt=物品未绑定！
+
+#Keybinding
+key.redstonerepository.bind.powersuitActivate=启用Powersuit
+
+#Console
+info.redstonerepository.console.recipes.remove=删除合成
+info.redstonerepository.console.recipes.remove.vanilla.armor=原版护甲
+info.redstonerepository.console.compat.thermalexpansion=启用与ThermalExpansion（热力膨胀）的兼容
+
+#Config
+config.redstonerepository.title=RedstoneRepository配置
