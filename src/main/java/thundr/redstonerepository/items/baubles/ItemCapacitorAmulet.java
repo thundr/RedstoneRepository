@@ -6,7 +6,6 @@ import baubles.api.cap.IBaublesItemHandler;
 import cofh.api.item.INBTCopyIngredient;
 import cofh.core.init.CoreEnchantments;
 import cofh.core.item.IEnchantableItem;
-import cofh.core.item.ItemCoreRF;
 import cofh.core.util.CoreUtils;
 import cofh.core.util.helpers.EnergyHelper;
 import cofh.core.util.helpers.StringHelper;
@@ -29,6 +28,7 @@ import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.common.Optional;
 import thundr.redstonerepository.init.RedstoneRepositoryEquipment;
+import thundr.redstonerepository.items.ItemCoreRF;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
