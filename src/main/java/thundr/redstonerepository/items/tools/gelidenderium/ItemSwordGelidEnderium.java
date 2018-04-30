@@ -56,15 +56,19 @@ public class ItemSwordGelidEnderium extends ItemSwordFlux{
 				potionDamage += player.getActivePotionEffect(MobEffects.STRENGTH).getAmplifier() * 1.3F;
 			}
 			entity.attackEntityFrom(DamageHelper.causePlayerFluxDamage(thePlayer), fluxDamage * potionDamage);
+			int toExtract = isEmpowered(stack) ? energyPerUseCharged : energyPerUse;
+			System.out.println(toExtract);
+			extractEnergy(stack, toExtract, thePlayer.capabilities.isCreativeMode);
+			if(isEmpowered(stack)) {
+				AxisAlignedBB bb = new AxisAlignedBB(entity.posX - radius, entity.posY - radius, entity.posZ - radius, entity.posX + radius, entity.posY + radius, entity.posZ + radius);
+				ArrayList<EntityMob> entities = new ArrayList<>(thePlayer.world.getEntitiesWithinAABB(EntityMob.class, bb));
 
-			AxisAlignedBB bb = new AxisAlignedBB(entity.posX - radius, entity.posY - radius, entity.posZ - radius, entity.posX + radius, entity.posY + radius, entity.posZ + radius);
-			ArrayList<EntityMob> entities = new ArrayList<>(thePlayer.world.getEntitiesWithinAABB(EntityMob.class, bb));
-
-            if(entities.size() > 0 && getEnergyStored(stack) >= energyPerUseCharged * entities.size()){
-                for(EntityMob i : entities){
-                    i.attackEntityFrom(DamageHelper.causePlayerFluxDamage(thePlayer), fluxDamage * potionDamage);
+				if (entities.size() > 1 && getEnergyStored(stack) >= energyPerUseCharged * entities.size()) {
+					for (EntityMob i : entities) {
+						i.attackEntityFrom(DamageHelper.causePlayerFluxDamage(thePlayer), fluxDamage * potionDamage);
+					}
+					extractEnergy(stack, energyPerUseCharged * entities.size(), thePlayer.capabilities.isCreativeMode);
 				}
-				extractEnergy(stack, energyPerUseCharged * entities.size(), thePlayer.capabilities.isCreativeMode);
 			}
 		}
 		return true;
