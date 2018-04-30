@@ -14,7 +14,6 @@ import thundr.redstonerepository.RedstoneRepository;
 import javax.annotation.Nullable;
 import java.util.List;
 
-//TODO: figure out how to block fucking flux damage god damn it
 public class ItemArmorEnderium extends ItemArmorFlux {
 
     public ItemArmorEnderium(ArmorMaterial material, EntityEquipmentSlot type) {
@@ -25,7 +24,7 @@ public class ItemArmorEnderium extends ItemArmorFlux {
 
         this.maxEnergy = 4000000;
 	    this.energyPerDamage = 4500;
-	    this.absorbRatio = 1.2D;
+	    this.absorbRatio = .95D;
 	    this.maxTransfer = 20000;
     }
 
