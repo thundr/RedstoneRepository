@@ -10,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -19,6 +20,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class ItemSwordGelidEnderium extends ItemSwordFlux{
 		}
 		EntityPlayer thePlayer = (EntityPlayer) player;
 
-		if (thePlayer.capabilities.isCreativeMode || getEnergyStored(stack) >= getEnergyPerUse(stack)) {
+		if (thePlayer.capabilities.isCreativeMode || getEnergyStored(stack) >= energyPerUse) {
 			int fluxDamage = isEmpowered(stack) ? damageCharged : 1;
 			float potionDamage = 1.0F;
 
@@ -56,13 +58,13 @@ public class ItemSwordGelidEnderium extends ItemSwordFlux{
 			entity.attackEntityFrom(DamageHelper.causePlayerFluxDamage(thePlayer), fluxDamage * potionDamage);
 
 			AxisAlignedBB bb = new AxisAlignedBB(entity.posX - radius, entity.posY - radius, entity.posZ - radius, entity.posX + radius, entity.posY + radius, entity.posZ + radius);
-			Iterator<EntityMob> entities = thePlayer.world.getEntitiesWithinAABB(EntityMob.class, bb).iterator();
+			ArrayList<EntityMob> entities = new ArrayList<>(thePlayer.world.getEntitiesWithinAABB(EntityMob.class, bb));
 
-			if(entities != null){
-				while(entities.hasNext()) {
-					entities.next().attackEntityFrom(DamageHelper.causePlayerFluxDamage(thePlayer), fluxDamage * potionDamage);
-					useEnergy(stack, thePlayer.capabilities.isCreativeMode);
+            if(entities.size() > 0 && getEnergyStored(stack) >= energyPerUseCharged * entities.size()){
+                for(EntityMob i : entities){
+                    i.attackEntityFrom(DamageHelper.causePlayerFluxDamage(thePlayer), fluxDamage * potionDamage);
 				}
+				extractEnergy(stack, energyPerUseCharged * entities.size(), thePlayer.capabilities.isCreativeMode);
 			}
 		}
 		return true;

@@ -14,6 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 
@@ -34,17 +35,24 @@ public class ItemBattleWrenchGelidEnderium extends ItemBattleWrenchFlux{
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack held = player.getHeldItem(hand);
         BlockPos pos = player.getPosition();
+
         if (!world.isRemote && hand == EnumHand.MAIN_HAND && isEmpowered(held)) {
-            Iterator<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos.getX() - radius, pos.getY() - radius, pos.getZ() - radius,
-                    pos.getX() + radius, pos.getY() + radius, pos.getZ() + radius)).iterator();
-            if(items != null){
-                while(items.hasNext()) {
-                    items.next().setPosition(pos.getX(), pos.getY(), pos.getZ());
+            ArrayList<EntityItem> items = new ArrayList<>(world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos.getX() - radius, pos.getY() - radius, pos.getZ() - radius,
+                    pos.getX() + radius, pos.getY() + radius, pos.getZ() + radius)));
+
+            if(items.size() > 0 && getEnergyStored(held) >= energyPerUseCharged * items.size()){
+
+                for(EntityItem i : items){
+                    i.setPosition(pos.getX(), pos.getY(), pos.getZ());
                 }
+
+                extractEnergy(held, energyPerUseCharged * items.size(), player.capabilities.isCreativeMode);
             }
+
             player.swingArm(EnumHand.MAIN_HAND);
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
         }
+
         return new ActionResult<ItemStack>(EnumActionResult.FAIL, player.getHeldItem(hand));
     }
 
