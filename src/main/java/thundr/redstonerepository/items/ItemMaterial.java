@@ -37,23 +37,17 @@ public class ItemMaterial extends ItemMulti implements IInitializer {
     /* IInitializer */
     @Override
     public boolean preInit() {
-        //TODO make sure ItemMap ids are not overlapping (?) ok this one is weird
 	    ForgeRegistries.ITEMS.register(setRegistryName("material"));
 	    RedstoneRepository.proxy.addIModelRegister(this);
         dustGelidEnderium = addOreDictItem(0, "dustGelidEnderium", EnumRarity.RARE);
-        ingotGelidEnderium = addOreDictItem(16, "ingotGelidEnderium", EnumRarity.RARE);
-        nuggetGelidEnderium = addOreDictItem(32, "nuggetGelidEnderium", EnumRarity.RARE);
-        gearGelidEnderium = addOreDictItem(48, "gearGelidEnderium", EnumRarity.RARE);
-
-        plateGelidEnderium = addOreDictItem(64, "plateGelidEnderium", EnumRarity.RARE);
-
-        gemGelid = addOreDictItem(80, "gemGelid", EnumRarity.RARE);
-        rodGelid = addItem(96, "rodGelid", EnumRarity.RARE);
-        plateArmorGelidEnderium = addItem(112, "plateArmorGelidEnderium", EnumRarity.RARE);
-	    stringFluxed = addOreDictItem(128, "stringFluxed", EnumRarity.UNCOMMON);
-
-
-
+        ingotGelidEnderium = addOreDictItem(1, "ingotGelidEnderium", EnumRarity.RARE);
+        nuggetGelidEnderium = addOreDictItem(2, "nuggetGelidEnderium", EnumRarity.RARE);
+        gearGelidEnderium = addOreDictItem(3, "gearGelidEnderium", EnumRarity.RARE);
+        plateGelidEnderium = addOreDictItem(4, "plateGelidEnderium", EnumRarity.RARE);
+        gemGelid = addOreDictItem(5, "gemGelid", EnumRarity.RARE);
+        rodGelid = addItem(6, "rodGelid", EnumRarity.RARE);
+        plateArmorGelidEnderium = addItem(7, "plateArmorGelidEnderium", EnumRarity.RARE);
+	    stringFluxed = addOreDictItem(8, "stringFluxed", EnumRarity.UNCOMMON);
 
         return true;
     }
