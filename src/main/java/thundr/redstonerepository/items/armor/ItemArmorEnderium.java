@@ -10,11 +10,12 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import thundr.redstonerepository.RedstoneRepository;
+import thundr.redstonerepository.api.IArmorEnderium;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemArmorEnderium extends ItemArmorFlux {
+public class ItemArmorEnderium extends ItemArmorFlux implements IArmorEnderium {
 
     public ItemArmorEnderium(ArmorMaterial material, EntityEquipmentSlot type) {
         super(material, type);
@@ -55,5 +56,7 @@ public class ItemArmorEnderium extends ItemArmorFlux {
 		return CoreProps.RGB_DURABILITY_ENDER;
 	}
 
-
+	public boolean isEnderiumArmor(ItemStack stack) {
+		return true;
+	}
 }

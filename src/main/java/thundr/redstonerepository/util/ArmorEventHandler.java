@@ -1,5 +1,6 @@
 package thundr.redstonerepository.util;
 
+import cofh.redstoneflux.api.IEnergyContainerItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -9,6 +10,7 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import thundr.redstonerepository.RedstoneRepository;
+import thundr.redstonerepository.api.IArmorEnderium;
 import thundr.redstonerepository.init.RedstoneRepositoryEquipment;
 import thundr.redstonerepository.items.armor.ItemArmorEnderium;
 
@@ -110,7 +112,7 @@ public class ArmorEventHandler {
 		ArrayList<ItemStack> armorStacks = new ArrayList<>();
 
 		//our armor on player
-		public Map<String, ItemArmorEnderium> enderiumPieces = new HashMap<String, ItemArmorEnderium>();
+		public Map<String, IEnergyContainerItem> enderiumPieces = new HashMap<>();
 
 		public boolean isFullSet = false;
 
@@ -126,8 +128,11 @@ public class ArmorEventHandler {
 			armorStacks.add(player.getItemStackFromSlot(EntityEquipmentSlot.FEET));
 
 			for(ItemStack i : armorStacks){
-				if (i.isEmpty() || !(i.getItem() instanceof ItemArmorEnderium)) continue;
-				ItemArmorEnderium armor = (ItemArmorEnderium) i.getItem();
+				if(i.isEmpty() || !(i.getItem() instanceof IArmorEnderium && i.getItem() instanceof IEnergyContainerItem)) {
+					continue;
+				}
+
+				IEnergyContainerItem armor = (IEnergyContainerItem) i.getItem();
 				int energy = armor.getEnergyStored(i);
 
 				if (armor == RedstoneRepositoryEquipment.ArmorSet.GELID.itemHelmet) {
