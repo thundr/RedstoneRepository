@@ -5,7 +5,6 @@ import cofh.core.init.CoreProps;
 import cofh.redstonearsenal.item.tool.ItemSickleFlux;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 //TODO: should this even be a thing???? answer yes for that sick automation options
 public class ItemSickleGelidEnderium extends ItemSickleFlux {

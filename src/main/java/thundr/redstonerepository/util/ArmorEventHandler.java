@@ -3,16 +3,13 @@ package thundr.redstonerepository.util;
 import cofh.redstoneflux.api.IEnergyContainerItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import thundr.redstonerepository.RedstoneRepository;
 import thundr.redstonerepository.api.IArmorEnderium;
 import thundr.redstonerepository.init.RedstoneRepositoryEquipment;
-import thundr.redstonerepository.items.armor.ItemArmorEnderium;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,7 +46,6 @@ public class ArmorEventHandler {
 						if(summary.energyStored.get("Boots") >= toDrain){
 							ItemStack boots = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
 							event.setDamageMultiplier(0);
-							//TODO: I should really make a nice util method for extractEnergy
 							summary.enderiumPieces.get("Boots").extractEnergy(boots, toDrain, false);
 						}
 					}

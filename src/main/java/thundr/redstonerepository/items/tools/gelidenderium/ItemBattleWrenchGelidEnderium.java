@@ -13,9 +13,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-
 import java.util.ArrayList;
-import java.util.Iterator;
 
 
 public class ItemBattleWrenchGelidEnderium extends ItemBattleWrenchFlux{

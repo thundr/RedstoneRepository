@@ -2,15 +2,10 @@ package thundr.redstonerepository.items.tools.gelidenderium;
 
 import cofh.core.init.CoreProps;
 import cofh.core.util.helpers.DamageHelper;
-import cofh.core.util.helpers.EnergyHelper;
 import cofh.core.util.helpers.StringHelper;
-import cofh.redstonearsenal.init.RAProps;
 import cofh.redstonearsenal.item.tool.ItemSwordFlux;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -21,7 +16,6 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 

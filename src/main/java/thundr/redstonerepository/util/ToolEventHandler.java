@@ -1,13 +1,11 @@
 package thundr.redstonerepository.util;
 
-import cofh.CoFHCore;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.event.world.BlockEvent;
@@ -15,7 +13,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
-import org.lwjgl.Sys;
 import thundr.redstonerepository.RedstoneRepository;
 import thundr.redstonerepository.items.tools.gelidenderium.ItemPickaxeGelidEnderium;
 
