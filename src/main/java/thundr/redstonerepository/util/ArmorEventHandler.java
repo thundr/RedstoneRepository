@@ -4,6 +4,8 @@ import cofh.redstoneflux.api.IEnergyContainerItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -108,7 +110,7 @@ public class ArmorEventHandler {
 		ArrayList<ItemStack> armorStacks = new ArrayList<>();
 
 		//our armor on player
-		public Map<String, IEnergyContainerItem> enderiumPieces = new HashMap<>();
+		public Map<String, IArmorEnderium> enderiumPieces = new HashMap<>();
 
 		public boolean isFullSet = false;
 
@@ -123,35 +125,43 @@ public class ArmorEventHandler {
 			armorStacks.add(player.getItemStackFromSlot(EntityEquipmentSlot.LEGS));
 			armorStacks.add(player.getItemStackFromSlot(EntityEquipmentSlot.FEET));
 
+			//slot iterator
+			int iter = 0;
+
 			for(ItemStack i : armorStacks){
-				if(i.isEmpty() || !(i.getItem() instanceof IArmorEnderium && i.getItem() instanceof IEnergyContainerItem)) {
+				if(i.isEmpty() || !(i.getItem() instanceof IArmorEnderium)) {
+					iter++;
 					continue;
 				}
 
-				IEnergyContainerItem armor = (IEnergyContainerItem) i.getItem();
+				IArmorEnderium armor = (IArmorEnderium) i.getItem();
 				int energy = armor.getEnergyStored(i);
+				switch (iter){
+					case 0:
+						energyStored.replace("Helm", 0, energy);
+						totalEnergyStored += energy;
+						enderiumPieces.put("Helm", armor);
+						break;
+					case 1:
+						energyStored.replace("Chest", 0, energy);
+						totalEnergyStored += energy;
+						enderiumPieces.put("Chest", armor);
+						break;
+					case 2:
+						energyStored.replace("Legs", 0, energy);
+						totalEnergyStored += energy;
+						enderiumPieces.put("Legs", armor);
+						break;
+					case 3:
+						energyStored.replace("Boots", 0, energy);
+						totalEnergyStored += energy;
+						enderiumPieces.put("Boots", armor);
+						break;
+					default:
+						break;
 
-				if (armor == RedstoneRepositoryEquipment.ArmorSet.GELID.itemHelmet) {
-					energyStored.replace("Helm", 0, energy);
-					totalEnergyStored += energy;
-					enderiumPieces.put("Helm", armor);
 				}
-				else if(armor == RedstoneRepositoryEquipment.ArmorSet.GELID.itemPlate){
-					energyStored.replace("Chest", 0, energy);
-					totalEnergyStored += energy;
-					enderiumPieces.put("Chest", armor);
-				}
-				else if(armor == RedstoneRepositoryEquipment.ArmorSet.GELID.itemLegs){
-					energyStored.replace("Legs", 0, energy);
-					totalEnergyStored += energy;
-					enderiumPieces.put("Legs", armor);
-				}
-				else if(armor == RedstoneRepositoryEquipment.ArmorSet.GELID.itemBoots){
-					energyStored.replace("Boots", 0, energy);
-					totalEnergyStored += energy;
-					enderiumPieces.put("Boots", armor);
-				}
-
+				iter++;
 			}
 			if(enderiumPieces == null){
 				return null;

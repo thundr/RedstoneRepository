@@ -21,23 +21,14 @@ public class RedstoneRepositoryProps {
     /* HELPERS */
     private static void configCommon() {
 
-
-
     }
-
     private static void configClient() {
         RedstoneRepository.tabCommon = new CreativeTabCore("redstonerepository") {
             @Override
             @SideOnly(Side.CLIENT)
             public ItemStack getIconItemStack() {
-                ItemStack iconStack = new ItemStack(RedstoneRepositoryEquipment.ToolSet.GELID.itemSword);
-                iconStack.setTagCompound(new NBTTagCompound());
-                iconStack.getTagCompound().setBoolean("CreativeTab", true);
-                iconStack.getTagCompound().setInteger("Energy", 3200000);
-                iconStack.getTagCompound().setInteger("Mode", 1);
-                return iconStack;
+                return new ItemStack(RedstoneRepositoryEquipment.ToolSet.GELID.itemSword);
             }
         };
-
     }
 }
