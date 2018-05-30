@@ -76,6 +76,7 @@ println config.mc_version + "-" + config.forge_version
     deobfCompile "com.azanor.baubles:Baubles:1.12-1.5.2"
     compile "cofh:RedstoneArsenal:${config.mc_version}-${config.ra_version}:deobf"
     compile "cofh:CoFHCore:${config.mc_version}-${config.cofh_core_version}:deobf"
+    runtime "cofh:ThermalExpansion:${config.mc_version}-${config.te_version}:universal"
  }
 
 minecraft {
