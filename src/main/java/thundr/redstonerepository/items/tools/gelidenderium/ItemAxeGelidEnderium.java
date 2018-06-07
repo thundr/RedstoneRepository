@@ -3,6 +3,7 @@ package thundr.redstonerepository.items.tools.gelidenderium;
 import cofh.core.init.CoreProps;
 import cofh.core.util.helpers.StringHelper;
 import cofh.redstonearsenal.item.tool.ItemAxeFlux;
+import com.sun.istack.internal.NotNull;
 import jline.internal.Log;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -113,19 +114,11 @@ public class ItemAxeGelidEnderium extends ItemAxeFlux{
 		float refStrength = state.getPlayerRelativeBlockHardness(player, world, pos);
 		if (refStrength != 0.0F) {
 			if (isEmpowered(stack) && block.isWood(world, pos) && canHarvestBlock(state, stack)) {
-				// Call the task to cut tree down async
-				MinecraftForge.EVENT_BUS.register(new CutTreeTask(stack, pos, player));
-//				for (int i = x - 1; i <= x + 1; i++) {
-//					for (int k = z - 1; k <= z + 1; k++) {
-//						for (int j = y - 4; j <= y + 4; j++) {
-//							BlockPos pos2 = new BlockPos(i, j, k);
-//							block = world.getBlockState(pos2).getBlock();
-//							if (block.isWood(world, pos2) || canHarvestBlock(state, stack)) {
-//								harvestBlock(world, pos2, player);
-//							}
-//						}
-//					}
-//				}
+				if (!world.isRemote)
+				{
+					// Call the task to cut tree down asyc
+					MinecraftForge.EVENT_BUS.register(new CutTreeTask(stack, pos, player));
+				}
 				if (!player.capabilities.isCreativeMode) {
 					useEnergy(stack, false);
 				}
@@ -219,7 +212,7 @@ public class ItemAxeGelidEnderium extends ItemAxeFlux{
 		public Queue<BlockPos> candidates = new LinkedList<BlockPos>();
 		public HashSet<BlockPos> visited = new HashSet<BlockPos>();
 
-		public CutTreeTask(ItemStack stack, BlockPos pos, EntityPlayer player) {
+		public CutTreeTask(@NotNull ItemStack stack,@NotNull BlockPos pos,@NotNull EntityPlayer player) {
 			if (stack.getItem() instanceof ItemAxeGelidEnderium) {
 				this.tool = stack;
 				// Cast to correct item
@@ -295,7 +288,7 @@ public class ItemAxeGelidEnderium extends ItemAxeFlux{
 							for (int z = -1; z < 2; z++) {
 								newPos = curPos.add(x, y, z);
 								if (!visited.contains(newPos)){
-								// If not visited yet, then add to the candidate list!
+									// If not visited yet, then add to the candidate list!
 									candidates.add(newPos);
 
 								}
