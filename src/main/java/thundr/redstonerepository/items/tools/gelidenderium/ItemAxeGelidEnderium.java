@@ -38,14 +38,16 @@ public class ItemAxeGelidEnderium extends ItemAxeFlux{
 
 	public static final int LIGHTNING_ENERGY = 6400;
 	public static final int EMPOWERED_LIGHTNING_ENERGY = 48000;
+	public static int blocksPerTick;
 
-    public ItemAxeGelidEnderium(Item.ToolMaterial toolMaterial) {
+    public ItemAxeGelidEnderium(Item.ToolMaterial toolMaterial, int axeBlocksCutPerTick) {
         super(toolMaterial);
 	    maxEnergy = GelidEnderiumEnergy.maxEnergy;
 	    energyPerUse = GelidEnderiumEnergy.energyPerUse;
 	    energyPerUseCharged =  GelidEnderiumEnergy.energyPerUseCharged;
 	    maxTransfer = GelidEnderiumEnergy.maxTransfer;
 	    damage = 10;
+	    blocksPerTick = axeBlocksCutPerTick;
     }
     //TODO: enable lumberaxe-like functionality WIP!!!!!
 
@@ -254,8 +256,9 @@ public class ItemAxeGelidEnderium extends ItemAxeFlux{
 				return;
 			}
 
+			int blocksIter = blocksPerTick;
 			// Loop through the blocks in the candidates until we break one.
-			while(!blockDeleted) {
+			while(blocksIter > 0) {
 				// check if any blocks in queue. If there are none, stop.
 				if (candidates.isEmpty()){
 					unregister();
@@ -290,7 +293,6 @@ public class ItemAxeGelidEnderium extends ItemAxeFlux{
 								if (!visited.contains(newPos)){
 									// If not visited yet, then add to the candidate list!
 									candidates.add(newPos);
-
 								}
 							}
 						}
@@ -301,11 +303,9 @@ public class ItemAxeGelidEnderium extends ItemAxeFlux{
 					//TODO: remove logging once done debugging
 					//sLog.info(MOD_NAME + ": Breaking block at " + curPos.toString());
 					// Stop looping. We're done working for this tick.
-					blockDeleted = true;
+					blocksIter--;
 				}
 			}
-			// Reset for next run
-			blockDeleted = false;
 		}
 
 		private void unregister() {
