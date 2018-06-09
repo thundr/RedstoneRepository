@@ -3,8 +3,6 @@ package thundr.redstonerepository.items.tools.gelidenderium;
 import cofh.core.init.CoreProps;
 import cofh.core.util.helpers.StringHelper;
 import cofh.redstonearsenal.item.tool.ItemAxeFlux;
-import com.sun.istack.internal.NotNull;
-import jline.internal.Log;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -12,15 +10,13 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.WorldInfo;
@@ -29,10 +25,10 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
-import static cofh.redstonearsenal.RedstoneArsenal.MOD_NAME;
 
 public class ItemAxeGelidEnderium extends ItemAxeFlux{
 
@@ -121,9 +117,6 @@ public class ItemAxeGelidEnderium extends ItemAxeFlux{
 					// Call the task to cut tree down asyc
 					MinecraftForge.EVENT_BUS.register(new CutTreeTask(stack, pos, player));
 				}
-				if (!player.capabilities.isCreativeMode) {
-					useEnergy(stack, false);
-				}
 				return true;
 			}
 		}
@@ -199,9 +192,6 @@ public class ItemAxeGelidEnderium extends ItemAxeFlux{
 		return true;
 	}
 
-
-
-
 	public static class CutTreeTask
 	{
 		public World world;
@@ -209,12 +199,13 @@ public class ItemAxeGelidEnderium extends ItemAxeFlux{
 		public ItemAxeGelidEnderium axe;
 		public BlockPos pos;
 		public EntityPlayer player = null;
-		public boolean blockDeleted = false;
+		public int maxIterations = 10000;
+		public int iterationCount = 0;
 
 		public Queue<BlockPos> candidates = new LinkedList<BlockPos>();
 		public HashSet<BlockPos> visited = new HashSet<BlockPos>();
 
-		public CutTreeTask(@NotNull ItemStack stack,@NotNull BlockPos pos,@NotNull EntityPlayer player) {
+		public CutTreeTask(@Nonnull ItemStack stack, @Nonnull BlockPos pos, @Nonnull EntityPlayer player) {
 			if (stack.getItem() instanceof ItemAxeGelidEnderium) {
 				this.tool = stack;
 				// Cast to correct item
@@ -256,7 +247,7 @@ public class ItemAxeGelidEnderium extends ItemAxeFlux{
 				return;
 			}
 
-			int blocksIter = blocksPerTick;
+			int blocksIter = axe.blocksPerTick;
 			// Loop through the blocks in the candidates until we break one.
 			while(blocksIter > 0) {
 				// check if any blocks in queue. If there are none, stop.
@@ -284,25 +275,42 @@ public class ItemAxeGelidEnderium extends ItemAxeFlux{
 				float refStrength = state.getPlayerRelativeBlockHardness(player, world, curPos);
 				if (refStrength != 0.0F) {
 
-					// Need to iterate through all the sides on the same y level and the one above
+					// Only check cardinal direction
 					BlockPos newPos;
-					for (int x = -1; x < 2; x++){
-						for (int y = 0; y < 2; y++){
-							for (int z = -1; z < 2; z++) {
-								newPos = curPos.add(x, y, z);
-								if (!visited.contains(newPos)){
-									// If not visited yet, then add to the candidate list!
+					EnumFacing[] cardinals = {EnumFacing.NORTH, EnumFacing.EAST, EnumFacing.SOUTH, EnumFacing.WEST};
+					for (EnumFacing face : cardinals){
+						newPos = curPos.offset(face);
+						if (!visited.contains(newPos)){
+							candidates.add(newPos);
+						}
+					}
+					// Top layer: 3x3 check
+					int y = 1; // y offset
+					for (int x = -1; x <= 1; x++){
+						for (int z = -1; z <= 1; z++) {
+							newPos = curPos.add(x, y, z);
+							if (!visited.contains(newPos)){
 									candidates.add(newPos);
-								}
 							}
 						}
 					}
 
 					//If we get here, we should actually break the block.
 					axe.harvestBlock(world, curPos, player);
-					//TODO: remove logging once done debugging
-					//sLog.info(MOD_NAME + ": Breaking block at " + curPos.toString());
-					// Stop looping. We're done working for this tick.
+					world.playSound(null, curPos, SoundEvents.BLOCK_WOOD_BREAK, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					if (!player.capabilities.isCreativeMode) {
+						//Use energy and check to see if we have enough.
+						if (axe.useEnergy(tool, false) == 0){
+							//Stop, we've run out of energy!
+							break;
+						}
+					}
+
+					iterationCount++;
+					if (iterationCount > maxIterations){
+						unregister();
+						return;
+					}
 					blocksIter--;
 				}
 			}
