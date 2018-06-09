@@ -244,7 +244,8 @@ public class RedstoneRepositoryEquipment{
 
 		protected void config() {
 			//axe
-			axeBlocksCutPerTick = RedstoneRepository.CONFIG.get("Equipment.Tools.Axe", "BlocksPerTick", 3, "Sets the number of blocks per tick the axe attempts to cut in empowered mode. Higher values cause more lag. ");
+			axeBlocksCutPerTick = RedstoneRepository.CONFIG.getConfiguration().get("Equipment.Tools.Axe", "BlocksPerTick", 3,
+					"Sets the number of blocks per tick the axe attempts to cut in empowered mode. Higher values cause more lag. ").setMinValue(0).setMaxValue(10).getInt();
 		}
 
 		protected void initialize() {
