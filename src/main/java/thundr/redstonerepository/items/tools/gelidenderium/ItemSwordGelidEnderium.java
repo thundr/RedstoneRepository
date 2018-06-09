@@ -51,7 +51,6 @@ public class ItemSwordGelidEnderium extends ItemSwordFlux{
 			}
 			entity.attackEntityFrom(DamageHelper.causePlayerFluxDamage(thePlayer), fluxDamage * potionDamage);
 			int toExtract = isEmpowered(stack) ? energyPerUseCharged : energyPerUse;
-			System.out.println(toExtract);
 			extractEnergy(stack, toExtract, thePlayer.capabilities.isCreativeMode);
 			if(isEmpowered(stack)) {
 				AxisAlignedBB bb = new AxisAlignedBB(entity.posX - radius, entity.posY - radius, entity.posZ - radius, entity.posX + radius, entity.posY + radius, entity.posZ + radius);
