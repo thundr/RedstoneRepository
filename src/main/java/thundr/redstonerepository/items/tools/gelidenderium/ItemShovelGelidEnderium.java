@@ -3,10 +3,12 @@ package thundr.redstonerepository.items.tools.gelidenderium;
 import cofh.core.init.CoreProps;
 import cofh.core.util.helpers.StringHelper;
 import cofh.redstonearsenal.item.tool.ItemShovelFlux;
+import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -14,6 +16,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
@@ -32,20 +35,23 @@ public class ItemShovelGelidEnderium extends ItemShovelFlux{
     }
 
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(!player.isSneaking()) {
-			ItemStack stack = player.getHeldItem(hand);
 
-			//arbitrary number that should probably get a config
-			int energy = getEnergyPerUse(stack)*8;
+		ItemStack stack = player.getHeldItem(hand);
 
-			if (!isEmpowered(stack) && getEnergyStored(stack) > energy) {
-				growCrop(worldIn, pos, player, stack, facing, hand, energy);
+    	if(!player.isSneaking() && stack.getItem() instanceof ItemShovelGelidEnderium) {
+    		ItemShovelGelidEnderium shovel = (ItemShovelGelidEnderium) stack.getItem();
+
+		    if (!player.canPlayerEdit(pos, facing, stack)) {
+			    return EnumActionResult.FAIL;
+		    }
+			if (!isEmpowered(stack) && getEnergyStored(stack) > energyPerUseCharged) {
+				growCrop(worldIn, pos, player, stack, facing, hand, energyPerUseCharged);
 			}
-			else if (isEmpowered(stack) && getEnergyStored(stack) > energy * 9 || player.capabilities.isCreativeMode) {
+			else if (isEmpowered(stack) && getEnergyStored(stack) > energyPerUseCharged * 9 || player.capabilities.isCreativeMode) {
 				for (int x = -1; x < 2; x++) {
 					for (int z = -1; z < 2; z++) {
 						BlockPos newPos = new BlockPos(pos.getX() + x, pos.getY(), pos.getZ() + z);
-						growCrop(worldIn, newPos, player, stack, facing, hand, energy);
+						growCrop(worldIn, newPos, player, stack, facing, hand, energyPerUseCharged * 9);
 					}
 				}
 			}
@@ -59,33 +65,25 @@ public class ItemShovelGelidEnderium extends ItemShovelFlux{
 		return EnumActionResult.SUCCESS;
     }
 
-    private boolean growCrop(World world, BlockPos pos, EntityPlayer player, ItemStack stack, EnumFacing facing, EnumHand hand, int energy){
+    private void growCrop(World world, BlockPos pos, EntityPlayer player, ItemStack stack, EnumFacing facing, EnumHand hand, int energy){
 
-		if (!player.canPlayerEdit(pos, facing, stack)) {
-			return false;
-		}
+		Block block = player.world.getBlockState(pos).getBlock();
 
-		IBlockState block = player.world.getBlockState(pos);
-
-		if (block.getBlock() instanceof IGrowable) {
-			IGrowable growable = (IGrowable) block.getBlock();
-
-			if (growable.canGrow(world, pos, block, world.isRemote)) {
-				if (!world.isRemote) {
-					if (growable.canUseBonemeal(world, world.rand, pos, block)) {
-						BonemealEvent event = new BonemealEvent(player, world, pos, block, hand, stack);
-						if(event.getResult() == Event.Result.DEFAULT) {
-							growable.grow(world, world.rand, pos, block);
-							if(!player.capabilities.isCreativeMode) {
-								extractEnergy(stack, energy, false);
-							}
-							return true;
-						}
-					}
+		if(!world.isRemote)
+			if (block instanceof IGrowable || block instanceof IPlantable || block == Blocks.MYCELIUM) {
+				//adds an extra 50 percent chance for a second call.
+				if(world.rand.nextBoolean()){
+					world.scheduleBlockUpdate(pos, block, 0, 100);
+				}
+				world.scheduleBlockUpdate(pos, block, 0, 100);
+				if(!player.capabilities.isCreativeMode) {
+					useEnergy(stack, false);
+				}
+				//particle spawn (green bonemeal)
+				if(world.rand.nextFloat() >= .90F) {
+					world.playEvent(2005, pos, 0);
 				}
 			}
-		}
-		return false;
 	}
 
 // TODO: maybe we will revisit this later
