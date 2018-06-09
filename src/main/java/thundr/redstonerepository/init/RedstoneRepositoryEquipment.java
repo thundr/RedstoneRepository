@@ -223,6 +223,9 @@ public class RedstoneRepositoryEquipment{
 		public ItemStack toolAxe;
 		public ItemStack toolSickle;
 
+		//config start
+		public int axeBlocksCutPerTick;
+
 		public boolean[] enable = new boolean[11];
 
 		ToolSet(String name, ToolMaterial material) {
@@ -235,8 +238,14 @@ public class RedstoneRepositoryEquipment{
 			itemSword = new ItemSwordGelidEnderium(TOOL_MATERIAL);
 			itemShovel = new ItemShovelGelidEnderium(TOOL_MATERIAL);
 			itemPickaxe = new ItemPickaxeGelidEnderium(TOOL_MATERIAL);
-			itemAxe = new ItemAxeGelidEnderium(TOOL_MATERIAL);
+			itemAxe = new ItemAxeGelidEnderium(TOOL_MATERIAL, axeBlocksCutPerTick);
 			itemSickle = new ItemSickleGelidEnderium(TOOL_MATERIAL);
+		}
+
+		protected void config() {
+			//axe
+			axeBlocksCutPerTick = RedstoneRepository.CONFIG.getConfiguration().get("Equipment.Tools.Axe", "BlocksPerTick", 3,
+					"Sets the number of blocks per tick the axe attempts to cut in empowered mode. Higher values cause more lag. ").setMinValue(0).setMaxValue(10).getInt();
 		}
 
 		protected void initialize() {
@@ -251,6 +260,8 @@ public class RedstoneRepositoryEquipment{
 			enable[4] = RedstoneRepository.CONFIG.getConfiguration().get(category, "Pickaxe", true).getBoolean(true);
 			enable[5] = RedstoneRepository.CONFIG.getConfiguration().get(category, "Axe", true).getBoolean(true);
 			enable[8] = RedstoneRepository.CONFIG.getConfiguration().get(category, "Sickle", true).getBoolean(true);
+
+			config();
 
 			create();
 

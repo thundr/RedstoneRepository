@@ -76,7 +76,9 @@ public class ItemShovelGelidEnderium extends ItemShovelFlux{
 						BonemealEvent event = new BonemealEvent(player, world, pos, block, hand, stack);
 						if(event.getResult() == Event.Result.DEFAULT) {
 							growable.grow(world, world.rand, pos, block);
-							extractEnergy(stack, energy, false);
+							if(!player.capabilities.isCreativeMode) {
+								extractEnergy(stack, energy, false);
+							}
 							return true;
 						}
 					}
