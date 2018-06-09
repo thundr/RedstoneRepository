@@ -10,15 +10,13 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.WorldInfo;
@@ -118,9 +116,6 @@ public class ItemAxeGelidEnderium extends ItemAxeFlux{
 				{
 					// Call the task to cut tree down asyc
 					MinecraftForge.EVENT_BUS.register(new CutTreeTask(stack, pos, player));
-				}
-				if (!player.capabilities.isCreativeMode) {
-					useEnergy(stack, false);
 				}
 				return true;
 			}
@@ -302,11 +297,15 @@ public class ItemAxeGelidEnderium extends ItemAxeFlux{
 
 					//If we get here, we should actually break the block.
 					axe.harvestBlock(world, curPos, player);
-					//Use energy and check to see if we have enough.
-					if (axe.useEnergy(tool, false) == 0){
-						//Stop, we've run out of energy!
-						break;
+					world.playSound(null, curPos, SoundEvents.BLOCK_WOOD_BREAK, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					if (!player.capabilities.isCreativeMode) {
+						//Use energy and check to see if we have enough.
+						if (axe.useEnergy(tool, false) == 0){
+							//Stop, we've run out of energy!
+							break;
+						}
 					}
+
 					iterationCount++;
 					if (iterationCount > maxIterations){
 						unregister();
