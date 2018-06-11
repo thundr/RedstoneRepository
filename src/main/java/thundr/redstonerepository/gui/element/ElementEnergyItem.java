@@ -86,4 +86,6 @@ public class ElementEnergyItem extends ElementBase {
 
 		return alwaysShowMinimum && storage.getEnergyStored(stack) > 0 ? Math.max(1, MathHelper.round(fraction)) : MathHelper.round(fraction);
 	}
+
+
 }

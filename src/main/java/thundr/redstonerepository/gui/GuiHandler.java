@@ -15,7 +15,7 @@ public class GuiHandler implements IGuiHandler {
 
 		switch (id) {
 			case FEEDER_ID:
-				if(ItemHelper.isPlayerHoldingMainhand(RedstoneRepositoryEquipment.itemFeeder, player)) {
+				if(ItemHelper.isPlayerHoldingMainhand(RedstoneRepositoryEquipment.equipInit.itemFeeder, player)) {
 					return new GuiFeeder(player.inventory, new ContainerFeeder(player.getHeldItemMainhand(), player.inventory));
 				}
 				return null;
@@ -29,7 +29,7 @@ public class GuiHandler implements IGuiHandler {
 
 		switch (id) {
 			case FEEDER_ID:
-				if(ItemHelper.isPlayerHoldingMainhand(RedstoneRepositoryEquipment.itemFeeder, player)) {
+				if(ItemHelper.isPlayerHoldingMainhand(RedstoneRepositoryEquipment.equipInit.itemFeeder, player)) {
 					return new ContainerFeeder(player.getHeldItemMainhand(), player.inventory);
 				}
 				return null;
