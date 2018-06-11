@@ -11,8 +11,10 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import thundr.redstonerepository.gui.GuiHandler;
 import thundr.redstonerepository.init.RedstoneRepositoryBlocks;
 import thundr.redstonerepository.init.RedstoneRepositoryEquipment;
 import thundr.redstonerepository.init.RedstoneRepositoryItems;
@@ -59,6 +61,8 @@ public class RedstoneRepository {
         RedstoneRepositoryEquipment.preInit();
 	    ArmorEventHandler.preInit();
 	    ToolEventHandler.preInit();
+
+	    NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 
         proxy.preInit(event);
     }
