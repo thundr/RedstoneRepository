@@ -22,7 +22,7 @@ item.redstonerepository.bauble.capacitor.hardened.name=Hardened Flux Amulet
 item.redstonerepository.bauble.capacitor.reinforced.name=Reinforced Flux Amulet
 item.redstonerepository.bauble.capacitor.resonant.name=Resonant Flux Amulet
 item.redstonerepository.bauble.capacitor.gelid.name=Gelid Flux Capacitor Amulet
-item.redstonerepository.bauble.feeder.name=Feeder (WIP)
+item.redstonerepository.bauble.feeder.name=Endoscopic Gastrostomizer
 
 #Tools
 item.redstonerepository.tool.enderium.gelid.axe.name=Gelid Enderium Axe
@@ -78,6 +78,10 @@ info.redstonerepository.tooltip.side=Insert Side:
 info.redstonerepository.capacitor.title=Charges items in your inventory. Must be placed in the Baubles slot. 
 info.redstonerepository.capacitor.activate=Use while sneaking to activate.
 info.redstonerepository.capacitor.deactivate=Use while sneaking to deactivate.
+
+info.redstonerepository.feeder.title=Automatically restores hunger and saturation when activated. Must be placed in the Baubles slot.
+info.redstonerepository.feeder.active=Currently %sactive%s. Press (%s) to deactivate.
+info.redstonerepository.feeder.disabled=Currently %sdisabled%s. Press (%s) to activate.
 
 info.redstonerepository.tooltip.armor.lumium.shine=Shining bright like a Glowstone
 info.redstonerepository.tooltip.armor.tuberous.clever.1=Congrats, you have smeared yourself with
