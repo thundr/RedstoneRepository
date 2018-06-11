@@ -15,13 +15,16 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -411,8 +414,6 @@ public class RedstoneRepositoryEquipment{
 			itemFeeder.setRegistryName("feeder");
 			ForgeRegistries.ITEMS.register(itemFeeder);
 			feederStack = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemFeeder), 0);
-
-			mushroomStewBucket = FluidUtil.getFilledBucket(FluidRegistry.getFluidStack("mushroom_stew", 1000));
 			RedstoneRepository.proxy.addIModelRegister(this);
 			return true;
 		}
@@ -430,11 +431,10 @@ public class RedstoneRepositoryEquipment{
 
 			hungerPointsMax = RedstoneRepository.CONFIG.get("Item.Feeder", "MaxHungerPoints", 500, "Set the maximum hunger point storage of the feeder (Default 500)");
 			feederCapacity = RedstoneRepository.CONFIG.get("Item.Feeder", "BaseCapacity", 4000000, "Set the base capacity of the Feeder in RF (Default 4,000,000) ");
-
-
 		}
 
 		public boolean initialize() {
+			mushroomStewBucket = FluidUtil.getFilledBucket(FluidRegistry.getFluidStack("mushroom_stew", 1000));
 			if (enable[0]) {
 				addShapedRecipe(capacitorAmuletGelid,
 						" S ",
@@ -463,6 +463,7 @@ public class RedstoneRepositoryEquipment{
 		@SideOnly (Side.CLIENT)
 		public void registerModels() {
 			ModelLoader.setCustomModelResourceLocation(itemCapacitorAmulet, 0, new ModelResourceLocation(RedstoneRepository.ID + ":" + "capacitor_gelid", "inventory"));
+			ModelLoader.setCustomModelResourceLocation(itemFeeder, 0, new ModelResourceLocation(RedstoneRepository.ID + ":" + "feeder", "inventory"));
 		}
 	}
 }
