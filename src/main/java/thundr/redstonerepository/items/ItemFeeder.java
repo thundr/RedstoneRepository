@@ -37,7 +37,7 @@ import static thundr.redstonerepository.RedstoneRepository.NAME;
 public class ItemFeeder extends ItemCoreRF implements IBauble,IInventoryContainerItem, IHungerStorageItem {
 
     public int hungerPointsMax;
-    public enum MODE{
+    public enum MODE {
         DISABLED(0),
         ENABLED(1);
         private final int value;
@@ -60,13 +60,33 @@ public class ItemFeeder extends ItemCoreRF implements IBauble,IInventoryContaine
         setNoRepair();
         this.hungerPointsMax = hungerPointsMax;
         this.maxEnergy = maxEnergy;
+        this.maxTransfer = 80000; //TODO: move this to config. If possible pull from hardened capacitor automatically
 
         addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> this.getMode(stack) == MODE.ENABLED.getValue() ? 1F : 0F);
     }
 
     @Optional.Method(modid = "baubles")
-    public void onWornTick(ItemStack cap, EntityLivingBase player) {
-
+    public void onWornTick(ItemStack feeder, EntityLivingBase player) {
+        //enjoy your soylent...
+        if (player.isServerWorld()) {
+            if (getMode(feeder) == MODE.ENABLED.getValue()){
+                if (getHungerPoints(feeder) > 0  && (getEnergyStored(feeder) >= getEnergyPerUse(feeder))) {
+                    if (player instanceof EntityPlayer) {
+                        EntityPlayer ePlayer = (EntityPlayer) player;
+                        if (ePlayer.getFoodStats().needFood()) {
+                            HungerHelper.addHunger(ePlayer, 1);
+                            useHungerPoints(feeder, 1, ePlayer);
+                            extractEnergy(feeder, getEnergyPerUse(feeder), false);
+                            //TODO: do we need to send an update to the player here?
+                        } else if (ePlayer.getFoodStats().getSaturationLevel() < 10) {
+                            HungerHelper.addSaturation(ePlayer, 1);
+                            useHungerPoints(feeder, 1, ePlayer);
+                            extractEnergy(feeder, getEnergyPerUse(feeder), false);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override
