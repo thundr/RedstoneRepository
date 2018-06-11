@@ -78,17 +78,16 @@ public class GuiFeeder extends GuiContainerCore {
 	public void handleElementButtonClick(String button, int mouseButton){
 		ItemStack tmpStack = containerFeeder.inventorySlots.get(containerFeeder.inventorySlots.size() - 1).getStack().copy();
 
-		if(mouseButton == 0){ //LMB
-			//Eat single item
-			int hunger = HungerHelper.findHungerValueSingle(tmpStack);
+		if(mouseButton == 0){
+			tmpStack.setCount(1);
+			int hunger = HungerHelper.findHungerValues(tmpStack);
 			int hungerToUse = baseFeeder.receiveHungerPoints(feederStack, hunger, true);
 			if(hunger == hungerToUse){
 				baseFeeder.receiveHungerPoints(feederStack, hunger, false);
-				PacketRR.sendAddFood(hunger, 1);
+				PacketRR.sendAddFood(hunger, tmpStack.getCount());
 			}
 		}
-		else if(mouseButton == 1){ //RMB
-			//Eat as much of stack as possible.
+		else if(mouseButton == 1){
 			int hungerTotal = HungerHelper.findHungerValues(tmpStack);
 			int hungerPerItem = HungerHelper.findHungerValueSingle(tmpStack);
 			int hungerToUse = baseFeeder.receiveHungerPoints(feederStack, hungerTotal, true);
@@ -97,11 +96,10 @@ public class GuiFeeder extends GuiContainerCore {
 				PacketRR.sendAddFood(hungerTotal, tmpStack.getCount());
 			}
 			else{
-				int stacksToDelete = (baseFeeder.getMaxHungerPoints(feederStack) - baseFeeder.getHungerPoints(feederStack)) / hungerPerItem;
+				int stacksToDelete = (hungerTotal - hungerToUse) / hungerPerItem;
 //				RedstoneRepository.LOG.info("hunger not taken " + stacksToDelete + " " + hungerPerItem + " " + hungerToUse);
 				baseFeeder.receiveHungerPoints(feederStack, hungerTotal, false);
-				PacketRR.sendAddFood(hungerPerItem, stacksToDelete);
-
+				PacketRR.sendAddFood(hungerTotal, stacksToDelete);
 			}
 		}
 		playClickSound(0.7F);

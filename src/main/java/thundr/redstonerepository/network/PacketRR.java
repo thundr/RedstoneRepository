@@ -40,7 +40,7 @@ public class PacketRR extends PacketBase {
 	}
 
 	public static void sendAddFood(int hunger, int stackSizeDec){
-		PacketHandler.sendToServer(getPacket(PacketTypes.ADD_FOOD).addInt(hunger * stackSizeDec));
+		PacketHandler.sendToServer(getPacket(PacketTypes.ADD_FOOD).addInt(hunger).addInt(stackSizeDec));
 	}
 
 	public static PacketBase getPacket(PacketTypes theType) {
