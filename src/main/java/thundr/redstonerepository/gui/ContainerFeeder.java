@@ -64,7 +64,7 @@ public class ContainerFeeder extends ContainerInventoryItem implements ISlotVali
 	@Override
 	protected int getPlayerInventoryHorizontalOffset() {
 
-		return 8 + 9 * (1-9);
+		return 8;
 	}
 
 }
