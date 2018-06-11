@@ -21,6 +21,7 @@ public class GuiFeeder extends GuiContainerCore {
 	ElementEnergyItem energy;
 	ElementHungerPoints hungerPoints;
 
+
 	String PATH_BUTTON = RedstoneRepositoryProps.PATH_GUI + "storage_1.png";
 
 	ItemStack feederStack;
@@ -63,13 +64,15 @@ public class GuiFeeder extends GuiContainerCore {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
-
+		ItemStack tmpStack = containerFeeder.inventorySlots.get(containerFeeder.inventorySlots.size() - 1).getStack().copy();
 		if (drawTitle & name != null) {
 			fontRenderer.drawString(StringHelper.localize(name), 6, 6, 0x404040);
 		}
 		if (drawInventory) {
 			fontRenderer.drawString(StringHelper.localize("container.inventory"), 8, ySize - 96 + 3, 0x404040);
 		}
+		fontRenderer.drawString(StringHelper.localize("gui.redstonerepository.food.1") + " "  +HungerHelper.findHungerValueSingle(tmpStack), 65, 48, 0x00b800);
+		fontRenderer.drawString(StringHelper.localize("gui.redstonerepository.food.2") + " " + HungerHelper.findHungerValues(tmpStack), 65, 56, 0x00b800);
 		drawElements(0, true);
 		drawTabs(0, true);
 	}
@@ -95,11 +98,14 @@ public class GuiFeeder extends GuiContainerCore {
 				baseFeeder.receiveHungerPoints(feederStack, hungerTotal, false);
 				PacketRR.sendAddFood(hungerTotal, tmpStack.getCount());
 			}
+			else if(hungerToUse < hungerPerItem){
+				//do nothing if there isnt enough space to add an item.
+			}
 			else{
-				int stacksToDelete = (hungerTotal - hungerToUse) / hungerPerItem;
-//				RedstoneRepository.LOG.info("hunger not taken " + stacksToDelete + " " + hungerPerItem + " " + hungerToUse);
-				baseFeeder.receiveHungerPoints(feederStack, hungerTotal, false);
-				PacketRR.sendAddFood(hungerTotal, stacksToDelete);
+				int stacksToDelete = ( hungerToUse / hungerPerItem);
+				RedstoneRepository.LOG.info("hunger not taken " + stacksToDelete + " " + hungerPerItem + " " + hungerToUse + " " + hungerTotal);
+				baseFeeder.receiveHungerPoints(feederStack, hungerPerItem * stacksToDelete, false);
+				PacketRR.sendAddFood(hungerPerItem * stacksToDelete, stacksToDelete);
 			}
 		}
 		playClickSound(0.7F);

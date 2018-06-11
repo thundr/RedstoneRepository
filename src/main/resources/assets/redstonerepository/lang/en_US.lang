@@ -132,3 +132,7 @@ tab.redstonerepository.feeder.0=RF and Hunger Points are consumed to feed you.
 
 #Util
 info.redstonerepository.hungerPoints=Stored Hunger Points
+
+#Gui elements
+gui.redstonerepository.food.1=HP per item:
+gui.redstonerepository.food.2=HP total:
