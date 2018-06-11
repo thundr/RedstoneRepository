@@ -80,6 +80,7 @@ info.redstonerepository.capacitor.activate=Use while sneaking to activate.
 info.redstonerepository.capacitor.deactivate=Use while sneaking to deactivate.
 
 info.redstonerepository.feeder.title=Automatically restores hunger and saturation when activated. Must be placed in the Baubles slot.
+info.redstonerepository.feeder.short=Automatic food eating bauble.
 info.redstonerepository.feeder.active=Currently %sactive%s. Press (%s) to deactivate.
 info.redstonerepository.feeder.disabled=Currently %sdisabled%s. Press (%s) to activate.
 
@@ -128,3 +129,6 @@ config.redstonerepository.title=Redstone Repository Configuration
 tab.redstonerepository.feeder.0=It's an automatic feeding device. It will keep your food topped up.
 tab.redstonerepository.feeder.1=It requires food items to generate Hunger Points
 tab.redstonerepository.feeder.0=RF and Hunger Points are consumed to feed you.
+
+#Util
+info.redstonerepository.hungerPoints=Stored Hunger Points

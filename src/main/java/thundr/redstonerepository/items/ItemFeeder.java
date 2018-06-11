@@ -71,11 +71,11 @@ public class ItemFeeder extends ItemCoreRF implements IBauble,IInventoryContaine
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-
         if (StringHelper.displayShiftForDetail && !StringHelper.isShiftKeyDown()) {
             tooltip.add(StringHelper.shiftForDetails());
         }
         if (!StringHelper.isShiftKeyDown()) {
+            tooltip.add(StringHelper.getInfoText("info.redstonerepository.feeder.short"));
             return;
         }
         tooltip.add(StringHelper.getInfoText("info.redstonerepository.feeder.title"));
@@ -91,6 +91,7 @@ public class ItemFeeder extends ItemCoreRF implements IBauble,IInventoryContaine
         if(!RedstoneRepositoryEquipment.EquipmentInit.enable[1]){
             tooltip.add(StringHelper.RED + "Baubles not loaded: Recipe disabled.");
         }
+        tooltip.add(StringHelper.localize("info.redstonerepository.hungerPoints") + ": " + StringHelper.getScaledNumber(getHungerPoints(stack)) + " / " + StringHelper.getScaledNumber(getMaxHungerPoints(stack)));
         tooltip.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.getScaledNumber(getEnergyStored(stack)) + " / " + StringHelper.getScaledNumber(getCapacity(stack)) + " RF");
     }
 
