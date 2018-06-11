@@ -71,8 +71,11 @@ public class GuiFeeder extends GuiContainerCore {
 		if (drawInventory) {
 			fontRenderer.drawString(StringHelper.localize("container.inventory"), 8, ySize - 96 + 3, 0x404040);
 		}
-		fontRenderer.drawString(StringHelper.localize("gui.redstonerepository.food.1") + " "  +HungerHelper.findHungerValueSingle(tmpStack), 65, 48, 0x00b800);
-		fontRenderer.drawString(StringHelper.localize("gui.redstonerepository.food.2") + " " + HungerHelper.findHungerValues(tmpStack), 65, 56, 0x00b800);
+		if(!tmpStack.isEmpty()) {
+			fontRenderer.drawString(StringHelper.localize("gui.redstonerepository.food.1") + " " + HungerHelper.findHungerValueSingle(tmpStack), 65, 48, 0x00b800);
+			fontRenderer.drawString(StringHelper.localize("gui.redstonerepository.food.2") + " " + HungerHelper.findHungerValues(tmpStack), 65, 56, 0x00b800);
+		}
+
 		drawElements(0, true);
 		drawTabs(0, true);
 	}

@@ -67,6 +67,7 @@ public class ItemFeeder extends ItemCoreRF implements IBauble, IInventoryContain
         this.hungerPointsMax = hungerPointsMax;
         this.maxEnergy = maxEnergy;
         this.maxTransfer = 80000; //TODO: move this to config. If possible pull from hardened capacitor automatically
+	    this.energyPerUse = 30000;
 
         addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> this.getMode(stack) == MODE.ENABLED.getValue() ? 1F : 0F);
     }
@@ -82,12 +83,12 @@ public class ItemFeeder extends ItemCoreRF implements IBauble, IInventoryContain
                         if (ePlayer.getFoodStats().needFood()) {
                             HungerHelper.addHunger(ePlayer, 1);
                             useHungerPoints(feeder, 1, ePlayer);
-                            useEnergy(feeder, getEnergyPerUse(feeder), false);
+	                        RedstoneRepository.LOG.info(useEnergy(feeder, 1, false));
                             //TODO: do we need to send an update to the player here?
                         } else if (ePlayer.getFoodStats().getSaturationLevel() < 10) {
                             HungerHelper.addSaturation(ePlayer, 1);
                             useHungerPoints(feeder, 1, ePlayer);
-                            useEnergy(feeder, getEnergyPerUse(feeder), false);
+                            RedstoneRepository.LOG.info(useEnergy(feeder, 1, false));
                         }
                     }
                 }
