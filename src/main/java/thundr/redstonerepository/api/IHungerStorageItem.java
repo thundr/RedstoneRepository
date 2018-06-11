@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 
 public interface IHungerStorageItem {
 
-	int receiveHungerPoints(ItemStack container, int maxReceive);
+	int receiveHungerPoints(ItemStack container, int maxReceive, boolean simulate);
 
 	int useHungerPoints(ItemStack container, int maxExtract, EntityPlayer player);
 

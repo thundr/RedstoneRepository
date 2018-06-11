@@ -2,6 +2,7 @@ package thundr.redstonerepository;
 
 
 import cofh.core.init.CoreProps;
+import cofh.core.network.PacketHandler;
 import cofh.core.util.ConfigHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.config.Configuration;
@@ -19,6 +20,7 @@ import thundr.redstonerepository.init.RedstoneRepositoryBlocks;
 import thundr.redstonerepository.init.RedstoneRepositoryEquipment;
 import thundr.redstonerepository.init.RedstoneRepositoryItems;
 import thundr.redstonerepository.init.RedstoneRepositoryProps;
+import thundr.redstonerepository.network.PacketRR;
 import thundr.redstonerepository.proxies.CommonProxy;
 import thundr.redstonerepository.util.ArmorEventHandler;
 import thundr.redstonerepository.util.ToolEventHandler;
@@ -62,6 +64,7 @@ public class RedstoneRepository {
 	    ArmorEventHandler.preInit();
 	    ToolEventHandler.preInit();
 
+	    PacketHandler.INSTANCE.registerPacket(PacketRR.class);
 	    NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 
         proxy.preInit(event);

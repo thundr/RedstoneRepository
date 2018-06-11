@@ -147,12 +147,12 @@ public class ItemFeeder extends ItemCoreRF implements IBauble,IInventoryContaine
 	}
 
 
-	public int receiveHungerPoints(ItemStack container, int maxReceive){
+	public int receiveHungerPoints(ItemStack container, int maxReceive, boolean simulate){
 		HungerHelper.setDefaultHungerTag(container);
 		int stored = Math.min(container.getTagCompound().getInteger("Hunger"), getMaxHungerPoints(container));
-		int receive = Math.min(maxReceive, getMaxEnergyStored(container) - stored);
+		int receive = Math.min(maxReceive, getMaxHungerPoints(container) - stored);
 
-		if (!isCreative) {
+		if (!isCreative && !simulate) {
 			stored += receive;
 			container.getTagCompound().setInteger("Hunger", stored);
 		}

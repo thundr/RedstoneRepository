@@ -23,8 +23,16 @@ public class HungerHelper {
 		if (!(food.getItem() instanceof ItemFood)) {
 			return 0;
 		}
+		return (food.getCount() * findHungerValueSingle(food));
+	}
+
+	//finds a single food item's value.
+	public static int findHungerValueSingle(ItemStack food){
+		if (!(food.getItem() instanceof ItemFood)) {
+			return 0;
+		}
 		ItemFood itemFood = (ItemFood) food.getItem();
-		return (int) (food.getCount() * ((itemFood.getHealAmount(food) * itemFood.getSaturationModifier(food) * 2.0F) + itemFood.getHealAmount(food)));
+		return Math.max (1, (int) ((itemFood.getHealAmount(food) * itemFood.getSaturationModifier(food) * 2.0F) + itemFood.getHealAmount(food)));
 	}
 
 	public static void addHunger(EntityPlayer player, int amount) {
