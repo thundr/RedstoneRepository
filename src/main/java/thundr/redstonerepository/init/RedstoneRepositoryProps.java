@@ -34,8 +34,8 @@ public class RedstoneRepositoryProps {
     }
 
     //textures
-	public static final String PATH_GUI_STORAGE = "redstonerepository:textures/gui/storage/";
+	public static final String PATH_GUI = "redstonerepository:textures/gui/";
 
-	public static final ResourceLocation FEEDER_GUI_STORAGE = new ResourceLocation(PATH_GUI_STORAGE + "storage_1.png");
+	public static final ResourceLocation FEEDER_GUI_STORAGE = new ResourceLocation(PATH_GUI + "storage_1.png");
 
 }

@@ -2,8 +2,6 @@ package thundr.redstonerepository.gui;
 
 import cofh.core.gui.GuiContainerCore;
 import cofh.core.gui.element.ElementButton;
-import cofh.core.gui.element.ElementEnergyStored;
-import cofh.core.gui.element.ElementFluidTank;
 import cofh.core.gui.element.tab.TabInfo;
 import net.minecraft.entity.player.InventoryPlayer;
 import org.lwjgl.input.Keyboard;
@@ -25,9 +23,7 @@ public class GuiFeeder extends GuiContainerCore {
 		xSize = 14 + 18 * 9;
 		ySize = 112 + 18 * 2;
 		texture = RedstoneRepositoryProps.FEEDER_GUI_STORAGE;
-
-
-
+		
 		generateInfo("tab.redstonerepository.feeder");
 	}
 
@@ -38,9 +34,11 @@ public class GuiFeeder extends GuiContainerCore {
 			addTab(new TabInfo(this, myInfo));
 		}
 
-		energy = new ElementEnergyItem(this, 150, 42, ((ContainerFeeder)inventorySlots).getContainerStack());
-		hungerPoints = new ElementHungerPoints(this, 159, 43,  ((ContainerFeeder)inventorySlots).getContainerStack());
+		addFood = new ElementButton(this, 95, 55, "AddFood", 208, 128, 208, 144, 208, 160, 16, 16, RedstoneRepositoryProps.PATH_GUI);
+		energy = new ElementEnergyItem(this, 151, 6, ((ContainerFeeder)inventorySlots).getContainerStack());
+		hungerPoints = new ElementHungerPoints(this, 160, 6,  ((ContainerFeeder)inventorySlots).getContainerStack());
 
+		addElement(addFood);
 		addElement(energy);
 		addElement(hungerPoints);
 
