@@ -22,6 +22,7 @@ item.redstonerepository.bauble.capacitor.hardened.name=Hardened Flux Amulet
 item.redstonerepository.bauble.capacitor.reinforced.name=Reinforced Flux Amulet
 item.redstonerepository.bauble.capacitor.resonant.name=Resonant Flux Amulet
 item.redstonerepository.bauble.capacitor.gelid.name=Gelid Flux Capacitor Amulet
+item.redstonerepository.bauble.feeder.name=Feeder (WIP)
 
 #Tools
 item.redstonerepository.tool.enderium.gelid.axe.name=Gelid Enderium Axe
