@@ -37,8 +37,8 @@ public class GuiFeeder extends GuiContainerCore {
 			addTab(new TabInfo(this, myInfo));
 		}
 
-		addFood = new ElementButton(this, 109, 42, "AddFood", 177, 64,
-				177, 84, 177, 104, 38, 20, PATH_BUTTON);
+		addFood = new ElementButton(this, 101, 26, "AddFood", 177, 64,
+				177, 80, 177, 96, 16, 16, PATH_BUTTON);
 		energy = new ElementEnergyItem(this, 151, 6, ((ContainerFeeder)inventorySlots).getContainerStack());
 		hungerPoints = new ElementHungerPoints(this, 160, 6,  ((ContainerFeeder)inventorySlots).getContainerStack());
 
