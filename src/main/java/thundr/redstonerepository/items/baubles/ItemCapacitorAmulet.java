@@ -83,7 +83,7 @@ public class ItemCapacitorAmulet extends ItemCoreRF implements IBauble, IEnergyC
 
 	@Optional.Method(modid = "baubles")
 	public void onWornTick(ItemStack cap, EntityLivingBase player){
-		if (player.world.isRemote || CoreUtils.isFakePlayer(player) || !(player instanceof EntityPlayer)) {
+		if (!isActive(cap) || player.world.isRemote || CoreUtils.isFakePlayer(player) || !(player instanceof EntityPlayer)) {
 			return;
 		}
 		EntityPlayer entityPlayer = (EntityPlayer) player;
