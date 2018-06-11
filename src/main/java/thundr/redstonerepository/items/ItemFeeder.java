@@ -21,6 +21,7 @@ import thundr.redstonerepository.init.RedstoneRepositoryEquipment;
 
 import javax.annotation.Nullable;
 import java.util.List;
+
 import cofh.api.item.IInventoryContainerItem;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -34,17 +35,22 @@ import static thundr.redstonerepository.RedstoneRepository.NAME;
 
 //@TODO Change name ItemEndoscopicGastrostomizer?
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles")
-public class ItemFeeder extends ItemCoreRF implements IBauble,IInventoryContainerItem, IHungerStorageItem {
+public class ItemFeeder extends ItemCoreRF implements IBauble, IInventoryContainerItem, IHungerStorageItem {
 
     public int hungerPointsMax;
-    public enum MODE{
+
+    public enum MODE {
         DISABLED(0),
         ENABLED(1);
         private final int value;
+
         MODE(final int newValue) {
             value = newValue;
         }
-        public int getValue() { return value; }
+
+        public int getValue() {
+            return value;
+        }
     }
 
     public ItemFeeder() {
@@ -60,13 +66,33 @@ public class ItemFeeder extends ItemCoreRF implements IBauble,IInventoryContaine
         setNoRepair();
         this.hungerPointsMax = hungerPointsMax;
         this.maxEnergy = maxEnergy;
+        this.maxTransfer = 80000; //TODO: move this to config. If possible pull from hardened capacitor automatically
 
         addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> this.getMode(stack) == MODE.ENABLED.getValue() ? 1F : 0F);
     }
 
     @Optional.Method(modid = "baubles")
-    public void onWornTick(ItemStack cap, EntityLivingBase player) {
-
+    public void onWornTick(ItemStack feeder, EntityLivingBase player) {
+        //enjoy your soylent...
+        if (player.isServerWorld()) {
+            if (getMode(feeder) == MODE.ENABLED.getValue()) {
+                if (getHungerPoints(feeder) > 0 && (getEnergyStored(feeder) >= getEnergyPerUse(feeder))) {
+                    if (player instanceof EntityPlayer) {
+                        EntityPlayer ePlayer = (EntityPlayer) player;
+                        if (ePlayer.getFoodStats().needFood()) {
+                            HungerHelper.addHunger(ePlayer, 1);
+                            useHungerPoints(feeder, 1, ePlayer);
+                            useEnergy(feeder, getEnergyPerUse(feeder), false);
+                            //TODO: do we need to send an update to the player here?
+                        } else if (ePlayer.getFoodStats().getSaturationLevel() < 10) {
+                            HungerHelper.addSaturation(ePlayer, 1);
+                            useHungerPoints(feeder, 1, ePlayer);
+                            useEnergy(feeder, getEnergyPerUse(feeder), false);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -83,12 +109,11 @@ public class ItemFeeder extends ItemCoreRF implements IBauble,IInventoryContaine
         //Display active/disabled text
         if (getMode(stack) == MODE.ENABLED.getValue()) {
             tooltip.add(StringHelper.localizeFormat("info.redstonerepository.feeder.active", StringHelper.BRIGHT_GREEN, StringHelper.END, StringHelper.getKeyName(KeyBindingItemMultiMode.INSTANCE.getKey())));
-        }
-        else {
+        } else {
             tooltip.add(StringHelper.localizeFormat("info.redstonerepository.feeder.disabled", StringHelper.LIGHT_RED, StringHelper.END, StringHelper.getKeyName(KeyBindingItemMultiMode.INSTANCE.getKey())));
         }
 
-        if(!RedstoneRepositoryEquipment.EquipmentInit.enable[1]){
+        if (!RedstoneRepositoryEquipment.EquipmentInit.enable[1]) {
             tooltip.add(StringHelper.RED + "Baubles not loaded: Recipe disabled.");
         }
         tooltip.add(StringHelper.localize("info.redstonerepository.hungerPoints") + ": " + StringHelper.getScaledNumber(getHungerPoints(stack)) + " / " + StringHelper.getScaledNumber(getMaxHungerPoints(stack)));
@@ -101,10 +126,9 @@ public class ItemFeeder extends ItemCoreRF implements IBauble,IInventoryContaine
     }
 
     @Override
-    public int getMaxEnergyStored(ItemStack stack){
+    public int getMaxEnergyStored(ItemStack stack) {
         return getCapacity(stack);
     }
-
 
 
     @Override
@@ -125,57 +149,57 @@ public class ItemFeeder extends ItemCoreRF implements IBauble,IInventoryContaine
     }
 
     @Optional.Method(modid = "baubles")
-    public BaubleType getBaubleType(ItemStack itemstack){
+    public BaubleType getBaubleType(ItemStack itemstack) {
         return BaubleType.BELT;
     }
 
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-    	ItemStack stack = player.getHeldItem(hand);
-		player.openGui(RedstoneRepository.instance, GuiHandler.FEEDER_ID, world, 0, 0, 0);
-		return new ActionResult<>(EnumActionResult.SUCCESS, stack);
-	}
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+        ItemStack stack = player.getHeldItem(hand);
+        player.openGui(RedstoneRepository.instance, GuiHandler.FEEDER_ID, world, 0, 0, 0);
+        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+    }
 
-	@Override
-	public int getSizeInventory(ItemStack container) {
-		return 1;
-	}
+    @Override
+    public int getSizeInventory(ItemStack container) {
+        return 1;
+    }
 
-	@Override
-	public int getHungerPoints(ItemStack container) {
-		HungerHelper.setDefaultHungerTag(container);
-		return Math.min(container.getTagCompound().getInteger("Hunger"), getMaxHungerPoints(container));
-	}
+    @Override
+    public int getHungerPoints(ItemStack container) {
+        HungerHelper.setDefaultHungerTag(container);
+        return Math.min(container.getTagCompound().getInteger("Hunger"), getMaxHungerPoints(container));
+    }
 
 
-	public int receiveHungerPoints(ItemStack container, int maxReceive, boolean simulate){
-		HungerHelper.setDefaultHungerTag(container);
-		int stored = Math.min(container.getTagCompound().getInteger("Hunger"), getMaxHungerPoints(container));
-		int receive = Math.min(maxReceive, getMaxHungerPoints(container) - stored);
+    public int receiveHungerPoints(ItemStack container, int maxReceive, boolean simulate) {
+        HungerHelper.setDefaultHungerTag(container);
+        int stored = Math.min(container.getTagCompound().getInteger("Hunger"), getMaxHungerPoints(container));
+        int receive = Math.min(maxReceive, getMaxHungerPoints(container) - stored);
 
-		if (!isCreative && !simulate) {
-			stored += receive;
-			container.getTagCompound().setInteger("Hunger", stored);
-		}
-		return receive;
-	}
+        if (!isCreative && !simulate) {
+            stored += receive;
+            container.getTagCompound().setInteger("Hunger", stored);
+        }
+        return receive;
+    }
 
-	public int useHungerPoints(ItemStack container, int maxExtract, EntityPlayer player){
-		if (isCreative) {
-			return maxExtract;
-		}
-		HungerHelper.setDefaultHungerTag(container);
-		int stored = Math.min(container.getTagCompound().getInteger("Hunger"), getMaxHungerPoints(container));
-		int extract = Math.min(maxExtract, stored);
+    public int useHungerPoints(ItemStack container, int maxExtract, EntityPlayer player) {
+        if (isCreative) {
+            return maxExtract;
+        }
+        HungerHelper.setDefaultHungerTag(container);
+        int stored = Math.min(container.getTagCompound().getInteger("Hunger"), getMaxHungerPoints(container));
+        int extract = Math.min(maxExtract, stored);
 
-		stored -= extract;
-		container.getTagCompound().setInteger("Hunger", stored);
+        stored -= extract;
+        container.getTagCompound().setInteger("Hunger", stored);
 
-		return extract;
-	}
+        return extract;
+    }
 
-	public int getMaxHungerPoints(ItemStack container){
-		int enchant = EnchantmentHelper.getEnchantmentLevel(CoreEnchantments.holding, container);
-		return hungerPointsMax + hungerPointsMax * enchant / 2;
-	}
+    public int getMaxHungerPoints(ItemStack container) {
+        int enchant = EnchantmentHelper.getEnchantmentLevel(CoreEnchantments.holding, container);
+        return hungerPointsMax + hungerPointsMax * enchant / 2;
+    }
 }
