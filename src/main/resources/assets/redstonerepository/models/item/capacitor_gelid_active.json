@@ -1,6 +1,6 @@
 {
 	"parent": "redstonerepository:item/capacitor_gelid",
 	"textures": {
-		"layer0": "redstonerepository:items/capacitor/capacitor_amulet_gelid_active"
+		"layer0": "redstonerepository:items/equipment/capacitor_amulet_gelid_active"
 	}
 }

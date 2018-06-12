@@ -2,6 +2,7 @@ package thundr.redstonerepository;
 
 
 import cofh.core.init.CoreProps;
+import cofh.core.network.PacketHandler;
 import cofh.core.util.ConfigHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.config.Configuration;
@@ -11,12 +12,15 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import thundr.redstonerepository.gui.GuiHandler;
 import thundr.redstonerepository.init.RedstoneRepositoryBlocks;
 import thundr.redstonerepository.init.RedstoneRepositoryEquipment;
 import thundr.redstonerepository.init.RedstoneRepositoryItems;
 import thundr.redstonerepository.init.RedstoneRepositoryProps;
+import thundr.redstonerepository.network.PacketRR;
 import thundr.redstonerepository.proxies.CommonProxy;
 import thundr.redstonerepository.util.ArmorEventHandler;
 import thundr.redstonerepository.util.ToolEventHandler;
@@ -59,6 +63,9 @@ public class RedstoneRepository {
         RedstoneRepositoryEquipment.preInit();
 	    ArmorEventHandler.preInit();
 	    ToolEventHandler.preInit();
+
+	    PacketHandler.INSTANCE.registerPacket(PacketRR.class);
+	    NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 
         proxy.preInit(event);
     }

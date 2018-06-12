@@ -22,6 +22,7 @@ item.redstonerepository.bauble.capacitor.hardened.name=Hardened Flux Amulet
 item.redstonerepository.bauble.capacitor.reinforced.name=Reinforced Flux Amulet
 item.redstonerepository.bauble.capacitor.resonant.name=Resonant Flux Amulet
 item.redstonerepository.bauble.capacitor.gelid.name=Gelid Flux Capacitor Amulet
+item.redstonerepository.bauble.feeder.name=Endoscopic Gastrostomizer
 
 #Tools
 item.redstonerepository.tool.enderium.gelid.axe.name=Gelid Enderium Axe
@@ -78,6 +79,11 @@ info.redstonerepository.capacitor.title=Charges items in your inventory. Must be
 info.redstonerepository.capacitor.activate=Use while sneaking to activate.
 info.redstonerepository.capacitor.deactivate=Use while sneaking to deactivate.
 
+info.redstonerepository.feeder.title=Automatically restores hunger and saturation when activated. Must be placed in the Baubles slot.
+info.redstonerepository.feeder.short=Automatic food eating bauble.
+info.redstonerepository.feeder.active=Currently %sactive%s. Press (%s) while in hand to deactivate.
+info.redstonerepository.feeder.disabled=Currently %sdisabled%s. Press (%s) while in hand to activate.
+
 info.redstonerepository.tooltip.armor.lumium.shine=Shining bright like a Glowstone
 info.redstonerepository.tooltip.armor.tuberous.clever.1=Congrats, you have smeared yourself with
 info.redstonerepository.tooltip.armor.tuberous.clever.2=potatoes. You have achieved "Protatotection".
@@ -118,3 +124,15 @@ info.redstonerepository.console.compat.thermalexpansion=Registering compatabilit
 
 #Config
 config.redstonerepository.title=Redstone Repository Configuration
+
+#Gui Tabs
+tab.redstonerepository.feeder.0=It's an automatic feeding device. It will keep your food topped up.
+tab.redstonerepository.feeder.1=It requires food items to generate Hunger Points (HP).
+tab.redstonerepository.feeder.2=RF and HP are consumed to feed you.
+
+#Util
+info.redstonerepository.hungerPoints=Stored Hunger Points
+
+#Gui elements
+gui.redstonerepository.food.1=HP per item:
+gui.redstonerepository.food.2=HP total:

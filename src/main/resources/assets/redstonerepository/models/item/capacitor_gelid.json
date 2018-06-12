@@ -1,7 +1,7 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "redstonerepository:items/capacitor/capacitor_amulet_gelid"
+		"layer0": "redstonerepository:items/equipment/capacitor_amulet_gelid"
 	},
 	"overrides": [
 		{

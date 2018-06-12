@@ -1,0 +1,6 @@
+{
+	"parent": "redstonerepository:item/feeder",
+	"textures": {
+		"layer0": "redstonerepository:items/equipment/feeder_active"
+	}
+}
