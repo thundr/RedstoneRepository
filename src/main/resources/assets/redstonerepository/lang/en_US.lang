@@ -81,8 +81,8 @@ info.redstonerepository.capacitor.deactivate=Use while sneaking to deactivate.
 
 info.redstonerepository.feeder.title=Automatically restores hunger and saturation when activated. Must be placed in the Baubles slot.
 info.redstonerepository.feeder.short=Automatic food eating bauble.
-info.redstonerepository.feeder.active=Currently %sactive%s. Press (%s) to deactivate.
-info.redstonerepository.feeder.disabled=Currently %sdisabled%s. Press (%s) to activate.
+info.redstonerepository.feeder.active=Currently %sactive%s. Press (%s) while in hand to deactivate.
+info.redstonerepository.feeder.disabled=Currently %sdisabled%s. Press (%s) while in hand to activate.
 
 info.redstonerepository.tooltip.armor.lumium.shine=Shining bright like a Glowstone
 info.redstonerepository.tooltip.armor.tuberous.clever.1=Congrats, you have smeared yourself with

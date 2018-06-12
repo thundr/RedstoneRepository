@@ -38,6 +38,7 @@ import static thundr.redstonerepository.RedstoneRepository.NAME;
 public class ItemFeeder extends ItemCoreRF implements IBauble, IInventoryContainerItem, IHungerStorageItem {
 
     public int hungerPointsMax;
+    private int saturationFillMax;
 
     public enum MODE {
         DISABLED(0),
@@ -59,7 +60,7 @@ public class ItemFeeder extends ItemCoreRF implements IBauble, IInventoryContain
         setCreativeTab(RedstoneRepository.tabCommon);
     }
 
-    public ItemFeeder(int hungerPointsMax, int maxEnergy, int maxTransfer, int energyPerUse) {
+    public ItemFeeder(int hungerPointsMax, int maxEnergy, int maxTransfer, int energyPerUse, int saturationFillMax) {
         super(NAME);
         setMaxStackSize(1);
         setCreativeTab(RedstoneRepository.tabCommon);
@@ -68,6 +69,7 @@ public class ItemFeeder extends ItemCoreRF implements IBauble, IInventoryContain
         this.maxEnergy = maxEnergy;
         this.maxTransfer = maxTransfer;
 	    this.energyPerUse = energyPerUse;
+	    this.saturationFillMax = saturationFillMax;
 
         addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> this.getMode(stack) == MODE.ENABLED.getValue() ? 1F : 0F);
     }
@@ -84,7 +86,7 @@ public class ItemFeeder extends ItemCoreRF implements IBauble, IInventoryContain
                             HungerHelper.addHunger(ePlayer, 1);
                             useHungerPoints(feeder, 1, ePlayer);
                             //TODO: do we need to send an update to the player here?
-                        } else if (ePlayer.getFoodStats().getSaturationLevel() < 5) {
+                        } else if (ePlayer.getFoodStats().getSaturationLevel() < saturationFillMax) {
                             HungerHelper.addSaturation(ePlayer, 1);
                             useHungerPoints(feeder, 1, ePlayer);
                         }
@@ -115,8 +117,8 @@ public class ItemFeeder extends ItemCoreRF implements IBauble, IInventoryContain
         if (!RedstoneRepositoryEquipment.EquipmentInit.enable[1]) {
             tooltip.add(StringHelper.RED + "Baubles not loaded: Recipe disabled.");
         }
-        tooltip.add(StringHelper.localize("info.redstonerepository.hungerPoints") + ": " + StringHelper.getScaledNumber(getHungerPoints(stack)) + " / " + StringHelper.getScaledNumber(getMaxHungerPoints(stack)));
-        tooltip.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.getScaledNumber(getEnergyStored(stack)) + " / " + StringHelper.getScaledNumber(getCapacity(stack)) + " RF");
+        tooltip.add(StringHelper.localize("info.redstonerepository.hungerPoints") + ": " + StringHelper.ORANGE +  StringHelper.getScaledNumber(getHungerPoints(stack)) + " / " + StringHelper.getScaledNumber(getMaxHungerPoints(stack)));
+        tooltip.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.RED +  StringHelper.getScaledNumber(getEnergyStored(stack)) + " / " + StringHelper.getScaledNumber(getCapacity(stack)) + " RF");
     }
 
     protected int getCapacity(ItemStack stack) {

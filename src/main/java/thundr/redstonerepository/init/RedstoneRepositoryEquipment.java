@@ -397,6 +397,7 @@ public class RedstoneRepositoryEquipment{
 		public static int feederCapacity;
 		public static int feederMaxTransfer;
 		public static int feederEnergyPerUse;
+		public static int feederMaxSat;
 
 		public boolean preInit() {
 			config();
@@ -407,7 +408,7 @@ public class RedstoneRepositoryEquipment{
 			ForgeRegistries.ITEMS.register(itemCapacitorAmulet);
 			capacitorAmuletGelid = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemCapacitorAmulet), 0);
 
-			itemFeeder = new ItemFeeder(hungerPointsMax, feederCapacity, feederMaxTransfer, feederEnergyPerUse);
+			itemFeeder = new ItemFeeder(hungerPointsMax, feederCapacity, feederMaxTransfer, feederEnergyPerUse, feederMaxSat);
 			itemFeeder.setUnlocalizedName("redstonerepository.bauble.feeder").setCreativeTab(RedstoneRepository.tabCommon);
 			itemFeeder.setRegistryName("feeder");
 			ForgeRegistries.ITEMS.register(itemFeeder);
@@ -425,13 +426,14 @@ public class RedstoneRepositoryEquipment{
 			capacity = RedstoneRepository.CONFIG.get("Item.Capacitor", "BaseCapacity", 100000000, "Set the base capacity of the Gelid Capacitor Amulet in RF/t (Default 100,000,000) ");
 
 			//Feeder config
-			boolean enableFeederConfig = RedstoneRepository.CONFIG.get("Item.Feeder", "Enable", true, "Enable the Automatic Feeder");
+			boolean enableFeederConfig = RedstoneRepository.CONFIG.get("Item.Feeder", "Enable", true, "Enable the Endoscopic Gastrostomizer (Automatic Feeder)");
 			enable[1] = enableFeederConfig && enableLoaded;
 
-			hungerPointsMax = RedstoneRepository.CONFIG.get("Item.Feeder", "MaxHungerPoints", 500, "Set the maximum hunger point storage of the feeder (Default 500)");
-			feederCapacity = RedstoneRepository.CONFIG.get("Item.Feeder", "BaseCapacity", 4000000, "Set the base capacity of the Feeder in RF (Default 4,000,000) ");
+			hungerPointsMax = RedstoneRepository.CONFIG.get("Item.Feeder", "MaxHungerPoints", 500, "Set the maximum hunger point storage of the Endoscopic Gastrostomizer (EG) (Default 500)");
+			feederCapacity = RedstoneRepository.CONFIG.get("Item.Feeder", "BaseCapacity", 4000000, "Set the base capacity of the E.G. in RF (Default 4,000,000) ");
 			feederMaxTransfer = RedstoneRepository.CONFIG.get("Item.Feeder", "MaxTransfer", 8000, "Set the maximum transfer rate into the item in RF/t (Default 8000)");
 			feederEnergyPerUse = RedstoneRepository.CONFIG.get("Item.Feeder", "EnergyPerUse", 30000, "Set amount of energy used per food point in RF (Default 3000)");
+			feederMaxSat = RedstoneRepository.CONFIG.get("Item.Feeder", "SaturationFillLevel", 5, "Maximum amount of hunger saturation to automatically fill to. Higher numbers consume hunger points more quickly. (Default 5, Max 20)");
 		}
 
 		public boolean initialize() {
