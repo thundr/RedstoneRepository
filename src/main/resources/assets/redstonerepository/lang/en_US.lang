@@ -127,8 +127,8 @@ config.redstonerepository.title=Redstone Repository Configuration
 
 #Gui Tabs
 tab.redstonerepository.feeder.0=It's an automatic feeding device. It will keep your food topped up.
-tab.redstonerepository.feeder.1=It requires food items to generate Hunger Points
-tab.redstonerepository.feeder.0=RF and Hunger Points are consumed to feed you.
+tab.redstonerepository.feeder.1=It requires food items to generate Hunger Points (HP).
+tab.redstonerepository.feeder.2=RF and HP are consumed to feed you.
 
 #Util
 info.redstonerepository.hungerPoints=Stored Hunger Points

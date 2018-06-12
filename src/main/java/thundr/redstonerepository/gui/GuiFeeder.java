@@ -15,6 +15,8 @@ import thundr.redstonerepository.items.ItemFeeder;
 import thundr.redstonerepository.network.PacketRR;
 import thundr.redstonerepository.util.HungerHelper;
 
+import java.io.IOException;
+
 public class GuiFeeder extends GuiContainerCore {
 
 	ElementButton addFood;
@@ -59,7 +61,25 @@ public class GuiFeeder extends GuiContainerCore {
 		addElement(energy);
 		addElement(hungerPoints);
 
+
 		Keyboard.enableRepeatEvents(true);
+	}
+
+	@Override
+	protected void mouseClicked(int mX, int mY, int mButton) throws IOException {
+
+		super.mouseClicked(mX, mY, mButton);
+	}
+
+	protected void updateButtons(){
+		ItemStack tmpStack = containerFeeder.inventorySlots.get(containerFeeder.inventorySlots.size() - 1).getStack().copy();
+
+		if(tmpStack.isEmpty() ||  HungerHelper.findHungerValueSingle(tmpStack) > baseFeeder.getMaxHungerPoints(feederStack) - baseFeeder.getHungerPoints(feederStack)){
+			addFood.setDisabled();
+		}
+		else{
+			addFood.setEnabled(true);
+		}
 	}
 
 	@Override
@@ -78,6 +98,7 @@ public class GuiFeeder extends GuiContainerCore {
 
 		drawElements(0, true);
 		drawTabs(0, true);
+		updateButtons();
 	}
 
 	@Override
