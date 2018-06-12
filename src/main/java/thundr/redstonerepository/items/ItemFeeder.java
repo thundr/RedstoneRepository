@@ -59,15 +59,15 @@ public class ItemFeeder extends ItemCoreRF implements IBauble, IInventoryContain
         setCreativeTab(RedstoneRepository.tabCommon);
     }
 
-    public ItemFeeder(int hungerPointsMax, int maxEnergy) {
+    public ItemFeeder(int hungerPointsMax, int maxEnergy, int maxTransfer, int energyPerUse) {
         super(NAME);
         setMaxStackSize(1);
         setCreativeTab(RedstoneRepository.tabCommon);
         setNoRepair();
         this.hungerPointsMax = hungerPointsMax;
         this.maxEnergy = maxEnergy;
-        this.maxTransfer = 80000; //TODO: move this to config. If possible pull from hardened capacitor automatically
-	    this.energyPerUse = 30000;
+        this.maxTransfer = maxTransfer;
+	    this.energyPerUse = energyPerUse;
 
         addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> this.getMode(stack) == MODE.ENABLED.getValue() ? 1F : 0F);
     }

@@ -15,16 +15,12 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -399,6 +395,8 @@ public class RedstoneRepositoryEquipment{
 		public static int transfer;
 		public static int hungerPointsMax;
 		public static int feederCapacity;
+		public static int feederMaxTransfer;
+		public static int feederEnergyPerUse;
 
 		public boolean preInit() {
 			config();
@@ -409,7 +407,7 @@ public class RedstoneRepositoryEquipment{
 			ForgeRegistries.ITEMS.register(itemCapacitorAmulet);
 			capacitorAmuletGelid = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemCapacitorAmulet), 0);
 
-			itemFeeder = new ItemFeeder(hungerPointsMax, feederCapacity);
+			itemFeeder = new ItemFeeder(hungerPointsMax, feederCapacity, feederMaxTransfer, feederEnergyPerUse);
 			itemFeeder.setUnlocalizedName("redstonerepository.bauble.feeder").setCreativeTab(RedstoneRepository.tabCommon);
 			itemFeeder.setRegistryName("feeder");
 			ForgeRegistries.ITEMS.register(itemFeeder);
@@ -425,12 +423,15 @@ public class RedstoneRepositoryEquipment{
 
 			transfer = RedstoneRepository.CONFIG.get("Item.Capacitor", "BaseTransfer", 100000, "Set the base transfer rate of the Gelid Capacitor Amulet in RF/t (Default 100,000) ");
 			capacity = RedstoneRepository.CONFIG.get("Item.Capacitor", "BaseCapacity", 100000000, "Set the base capacity of the Gelid Capacitor Amulet in RF/t (Default 100,000,000) ");
+
 			//Feeder config
 			boolean enableFeederConfig = RedstoneRepository.CONFIG.get("Item.Feeder", "Enable", true, "Enable the Automatic Feeder");
 			enable[1] = enableFeederConfig && enableLoaded;
 
 			hungerPointsMax = RedstoneRepository.CONFIG.get("Item.Feeder", "MaxHungerPoints", 500, "Set the maximum hunger point storage of the feeder (Default 500)");
 			feederCapacity = RedstoneRepository.CONFIG.get("Item.Feeder", "BaseCapacity", 4000000, "Set the base capacity of the Feeder in RF (Default 4,000,000) ");
+			feederMaxTransfer = RedstoneRepository.CONFIG.get("Item.Feeder", "MaxTransfer", 8000, "Set the maximum transfer rate into the item in RF/t (Default 8000)");
+			feederEnergyPerUse = RedstoneRepository.CONFIG.get("Item.Feeder", "EnergyPerUse", 30000, "Set amount of energy used per food point in RF (Default 3000)");
 		}
 
 		public boolean initialize() {
@@ -454,7 +455,7 @@ public class RedstoneRepositoryEquipment{
 						'S', ItemMaterial.stringFluxed,
 						'C', hardenedCapacitor,
 						'M', mushroomStewBucket,
-						'P', ItemMaterial.plateArmorGelidEnderium,
+						'P', ItemMaterial.plateGelidEnderium,
 						'G', ItemMaterial.gearGelidEnderium);
 			}
 			return true;
