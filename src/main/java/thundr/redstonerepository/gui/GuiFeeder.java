@@ -127,7 +127,6 @@ public class GuiFeeder extends GuiContainerCore {
 			}
 			else{
 				int stacksToDelete = ( hungerToUse / hungerPerItem);
-				RedstoneRepository.LOG.info("hunger not taken " + stacksToDelete + " " + hungerPerItem + " " + hungerToUse + " " + hungerTotal);
 				baseFeeder.receiveHungerPoints(feederStack, hungerPerItem * stacksToDelete, false);
 				PacketRR.sendAddFood(hungerPerItem * stacksToDelete, stacksToDelete);
 			}

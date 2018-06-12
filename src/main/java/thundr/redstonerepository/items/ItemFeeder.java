@@ -83,12 +83,10 @@ public class ItemFeeder extends ItemCoreRF implements IBauble, IInventoryContain
                         if (ePlayer.getFoodStats().needFood()) {
                             HungerHelper.addHunger(ePlayer, 1);
                             useHungerPoints(feeder, 1, ePlayer);
-	                        RedstoneRepository.LOG.info(useEnergy(feeder, 1, false));
                             //TODO: do we need to send an update to the player here?
                         } else if (ePlayer.getFoodStats().getSaturationLevel() < 5) {
                             HungerHelper.addSaturation(ePlayer, 1);
                             useHungerPoints(feeder, 1, ePlayer);
-                            RedstoneRepository.LOG.info(useEnergy(feeder, 1, false));
                         }
                     }
                 }
