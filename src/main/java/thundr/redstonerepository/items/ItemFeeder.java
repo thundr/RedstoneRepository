@@ -33,7 +33,6 @@ import thundr.redstonerepository.util.HungerHelper;
 import static thundr.redstonerepository.RedstoneRepository.NAME;
 
 
-//@TODO Change name ItemEndoscopicGastrostomizer?
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles")
 public class ItemFeeder extends ItemCoreRF implements IBauble, IInventoryContainerItem, IHungerStorageItem {
 
@@ -85,10 +84,11 @@ public class ItemFeeder extends ItemCoreRF implements IBauble, IInventoryContain
                         if (ePlayer.getFoodStats().needFood()) {
                             HungerHelper.addHunger(ePlayer, 1);
                             useHungerPoints(feeder, 1, ePlayer);
-                            //TODO: do we need to send an update to the player here?
+                            useEnergy(feeder, 1, false);
                         } else if (ePlayer.getFoodStats().getSaturationLevel() < saturationFillMax) {
                             HungerHelper.addSaturation(ePlayer, 1);
                             useHungerPoints(feeder, 1, ePlayer);
+	                        useEnergy(feeder, 1, false);
                         }
                     }
                 }
