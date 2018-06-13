@@ -7,6 +7,7 @@ import cofh.core.util.helpers.EnergyHelper;
 import cofh.core.util.helpers.StringHelper;
 import cofh.redstonearsenal.init.RAEquipment;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -32,6 +33,7 @@ import thundr.redstonerepository.items.ItemFeeder;
 import thundr.redstonerepository.items.ItemMaterial;
 import thundr.redstonerepository.items.armor.ItemArmorEnderium;
 import thundr.redstonerepository.items.baubles.ItemCapacitorAmulet;
+import thundr.redstonerepository.items.baubles.ItemEffectRing;
 import thundr.redstonerepository.items.tools.gelidenderium.*;
 
 import java.util.Locale;
@@ -377,6 +379,7 @@ public class RedstoneRepositoryEquipment{
 
 		public static ItemFeeder itemFeeder;
 		public static ItemCapacitorAmulet itemCapacitorAmulet;
+		public static ItemEffectRing itemEffectRing;
 
 		@GameRegistry.ItemStackHolder(value = "thermalexpansion:capacitor", meta = 4)
 		public static final ItemStack resonantCapacitor = null;
@@ -387,6 +390,7 @@ public class RedstoneRepositoryEquipment{
 		public static ItemStack capacitorAmuletGelid;
 
 		public static ItemStack feederStack;
+		public static ItemStack effectRingStack;
 		public static ItemStack mushroomStewBucket;
 
 
@@ -413,6 +417,13 @@ public class RedstoneRepositoryEquipment{
 			itemFeeder.setRegistryName("feeder");
 			ForgeRegistries.ITEMS.register(itemFeeder);
 			feederStack = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemFeeder), 0);
+
+			itemEffectRing = new ItemEffectRing();
+			itemEffectRing.setUnlocalizedName("redstonerepository.bauble.ring.effect").setCreativeTab(RedstoneRepository.tabCommon);
+			itemEffectRing.setRegistryName("effect_ring");
+			ForgeRegistries.ITEMS.register(itemEffectRing);
+			effectRingStack = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemEffectRing), 0);
+
 			RedstoneRepository.proxy.addIModelRegister(this);
 			return true;
 		}
@@ -460,6 +471,16 @@ public class RedstoneRepositoryEquipment{
 						'P', ItemMaterial.plateGelidEnderium,
 						'G', ItemMaterial.gearGelidEnderium);
 			}
+			if (true){
+				ItemStack gelidCryotheumBucket = FluidUtil.getFilledBucket(FluidRegistry.getFluidStack("cryotheum", 1000));
+				addShapedRecipe(effectRingStack,
+						"   ",
+						"N N",
+						"GCG",
+						'N', Items.NETHER_STAR,
+						'C', hardenedCapacitor,
+						'G', gelidCryotheumBucket);
+			}
 			return true;
 		}
 
@@ -467,6 +488,7 @@ public class RedstoneRepositoryEquipment{
 		public void registerModels() {
 			ModelLoader.setCustomModelResourceLocation(itemCapacitorAmulet, 0, new ModelResourceLocation(RedstoneRepository.ID + ":" + "capacitor_gelid", "inventory"));
 			ModelLoader.setCustomModelResourceLocation(itemFeeder, 0, new ModelResourceLocation(RedstoneRepository.ID + ":" + "feeder", "inventory"));
+			ModelLoader.setCustomModelResourceLocation(itemEffectRing, 0, new ModelResourceLocation(RedstoneRepository.ID + ":" + "effect_ring", "inventory"));
 		}
 	}
 }

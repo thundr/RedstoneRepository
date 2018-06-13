@@ -2,15 +2,15 @@ package thundr.redstonerepository.items.baubles;
 
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
+import cofh.core.item.ItemCore;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Optional;
 import thundr.redstonerepository.RedstoneRepository;
 import thundr.redstonerepository.items.ItemCoreRF;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles")
-public class ItemEffectRing extends ItemCoreRF implements IBauble {
-
-    public ItemEffectRing() {
+public class ItemBaseRing extends ItemCore implements IBauble {
+    public ItemBaseRing(){
         super(RedstoneRepository.NAME);
     }
 
