@@ -431,7 +431,7 @@ public class RedstoneRepositoryEquipment{
 			itemBaseRing.setUnlocalizedName("redstonerepository.bauble.ring.base").setCreativeTab(RedstoneRepository.tabCommon);
 			itemBaseRing.setRegistryName("ring_base");
 			ForgeRegistries.ITEMS.register(itemBaseRing);
-			baseRingStack = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemEffectRing), 0);
+			baseRingStack = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemBaseRing), 0);
 
 			RedstoneRepository.proxy.addIModelRegister(this);
 			return true;
