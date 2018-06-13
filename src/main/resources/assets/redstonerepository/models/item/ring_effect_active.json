@@ -1,0 +1,6 @@
+{
+	"parent": "redstonerepository:item/ring_effect",
+	"textures": {
+		"layer0": "redstonerepository:items/equipment/ring_effect_active"
+	}
+}

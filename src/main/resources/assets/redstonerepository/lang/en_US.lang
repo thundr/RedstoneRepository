@@ -24,6 +24,9 @@ item.redstonerepository.bauble.capacitor.resonant.name=Resonant Flux Amulet
 item.redstonerepository.bauble.capacitor.gelid.name=Gelid Flux Capacitor Amulet
 item.redstonerepository.bauble.feeder.name=Endoscopic Gastrostomizer
 
+item.redstonerepository.bauble.ring.effect.name=Cryotheum Stasis Ring
+item.redstonerepository.bauble.ring.base.name=Cryotheum Base Ring
+
 #Tools
 item.redstonerepository.tool.enderium.gelid.axe.name=Gelid Enderium Axe
 item.redstonerepository.tool.enderium.gelid.battlewrench.name=Gelid Enderium Battle-Wrench

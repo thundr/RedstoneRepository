@@ -14,9 +14,9 @@ import thundr.redstonerepository.items.ItemCoreRF;
 import java.util.ArrayList;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles")
-public class ItemEffectRing extends ItemCoreRF implements IBauble {
+public class ItemRingEffect extends ItemCoreRF implements IBauble {
 
-    public ItemEffectRing() {
+    public ItemRingEffect() {
         super(RedstoneRepository.NAME);
     }
 

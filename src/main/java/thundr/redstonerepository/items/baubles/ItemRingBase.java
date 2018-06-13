@@ -9,8 +9,8 @@ import thundr.redstonerepository.RedstoneRepository;
 import thundr.redstonerepository.items.ItemCoreRF;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles")
-public class ItemBaseRing extends ItemCore implements IBauble {
-    public ItemBaseRing(){
+public class ItemRingBase extends ItemCore implements IBauble {
+    public ItemRingBase(){
         super(RedstoneRepository.NAME);
     }
 
