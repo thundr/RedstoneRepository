@@ -10,6 +10,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
@@ -40,20 +41,6 @@ public class ItemFeeder extends ItemCoreRF implements IBauble, IInventoryContain
     public int hungerPointsMax;
     private int saturationFillMax;
 
-    public enum MODE {
-        DISABLED(0),
-        ENABLED(1);
-        private final int value;
-
-        MODE(final int newValue) {
-            value = newValue;
-        }
-
-        public int getValue() {
-            return value;
-        }
-    }
-
     public ItemFeeder() {
         super(NAME);
         setMaxStackSize(1);
@@ -71,14 +58,14 @@ public class ItemFeeder extends ItemCoreRF implements IBauble, IInventoryContain
 	    this.energyPerUse = energyPerUse;
 	    this.saturationFillMax = saturationFillMax;
 
-        addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> this.getMode(stack) == MODE.ENABLED.getValue() ? 1F : 0F);
+        addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> this.isActive(stack) ? 1F : 0F);
     }
 
     @Optional.Method(modid = "baubles")
     public void onWornTick(ItemStack feeder, EntityLivingBase player) {
         //enjoy your soylent...
         if (player.isServerWorld()) {
-            if (getMode(feeder) == MODE.ENABLED.getValue()) {
+            if (isActive(feeder)) {
                 if (getHungerPoints(feeder) > 0 && (getEnergyStored(feeder) >= getEnergyPerUse(feeder))) {
                     if (player instanceof EntityPlayer) {
                         EntityPlayer ePlayer = (EntityPlayer) player;
@@ -108,7 +95,7 @@ public class ItemFeeder extends ItemCoreRF implements IBauble, IInventoryContain
         tooltip.add(StringHelper.getInfoText("info.redstonerepository.feeder.title"));
 
         //Display active/disabled text
-        if (getMode(stack) == MODE.ENABLED.getValue()) {
+        if (isActive(stack)) {
             tooltip.add(StringHelper.localizeFormat("info.redstonerepository.feeder.active", StringHelper.BRIGHT_GREEN, StringHelper.END, StringHelper.getKeyName(KeyBindingItemMultiMode.INSTANCE.getKey())));
         } else {
             tooltip.add(StringHelper.localizeFormat("info.redstonerepository.feeder.disabled", StringHelper.LIGHT_RED, StringHelper.END, StringHelper.getKeyName(KeyBindingItemMultiMode.INSTANCE.getKey())));
@@ -118,36 +105,9 @@ public class ItemFeeder extends ItemCoreRF implements IBauble, IInventoryContain
             tooltip.add(StringHelper.RED + "Baubles not loaded: Recipe disabled.");
         }
         tooltip.add(StringHelper.localize("info.redstonerepository.hungerPoints") + ": " + StringHelper.ORANGE +  StringHelper.getScaledNumber(getHungerPoints(stack)) + " / " + StringHelper.getScaledNumber(getMaxHungerPoints(stack)));
-        tooltip.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.RED +  StringHelper.getScaledNumber(getEnergyStored(stack)) + " / " + StringHelper.getScaledNumber(getCapacity(stack)) + " RF");
+        tooltip.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.RED +  StringHelper.getScaledNumber(getEnergyStored(stack)) + " / " + StringHelper.getScaledNumber(getMaxEnergyStored(stack)) + " RF");
     }
 
-    protected int getCapacity(ItemStack stack) {
-        int enchant = EnchantmentHelper.getEnchantmentLevel(CoreEnchantments.holding, stack);
-        return maxEnergy + maxEnergy * enchant / 2;
-    }
-
-    @Override
-    public int getMaxEnergyStored(ItemStack stack) {
-        return getCapacity(stack);
-    }
-
-
-    @Override
-    public void onModeChange(EntityPlayer player, ItemStack stack) {
-        if (getMode(stack) == MODE.ENABLED.getValue()) {
-            player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.2F, 0.8F);
-        } else {
-            player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.2F, 0.5F);
-        }
-    }
-
-    @Override
-    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-        if (isInCreativeTab(tab)) {
-            items.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(this, 1, 0), 0));
-            items.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(this, 1, 0), maxEnergy));
-        }
-    }
 
     @Optional.Method(modid = "baubles")
     public BaubleType getBaubleType(ItemStack itemstack) {
@@ -171,7 +131,6 @@ public class ItemFeeder extends ItemCoreRF implements IBauble, IInventoryContain
         HungerHelper.setDefaultHungerTag(container);
         return Math.min(container.getTagCompound().getInteger("Hunger"), getMaxHungerPoints(container));
     }
-
 
     public int receiveHungerPoints(ItemStack container, int maxReceive, boolean simulate) {
         HungerHelper.setDefaultHungerTag(container);
@@ -203,4 +162,9 @@ public class ItemFeeder extends ItemCoreRF implements IBauble, IInventoryContain
         int enchant = EnchantmentHelper.getEnchantmentLevel(CoreEnchantments.holding, container);
         return hungerPointsMax + hungerPointsMax * enchant / 2;
     }
+
+	@Override
+	public EnumRarity getRarity(ItemStack stack) {
+		return EnumRarity.RARE;
+	}
 }

@@ -27,6 +27,20 @@ public class ItemCoreRF extends ItemCore implements IMultiModeItem, IEnergyConta
     protected boolean isCreative = false;
     protected boolean showInCreative = true;
 
+	public enum MODE {
+		DISABLED(0),
+		ENABLED(1);
+		private final int value;
+
+		MODE(final int newValue) {
+			value = newValue;
+		}
+
+		public int getValue() {
+			return value;
+		}
+	}
+
     public ItemCoreRF(String modName) {
 
         super(modName);
@@ -114,6 +128,10 @@ public class ItemCoreRF extends ItemCore implements IMultiModeItem, IEnergyConta
             EnergyHelper.setDefaultEnergyTag(stack, 0);
         }
         return 1D - (double) stack.getTagCompound().getInteger(CoreProps.ENERGY) / (double) getMaxEnergyStored(stack);
+    }
+
+    public boolean isActive(ItemStack stack){
+	    return getMode(stack) == MODE.ENABLED.getValue();
     }
 
     /* HELPERS */
