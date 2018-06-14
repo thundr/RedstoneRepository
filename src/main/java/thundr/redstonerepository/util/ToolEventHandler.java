@@ -1,5 +1,7 @@
 package thundr.redstonerepository.util;
 
+import cofh.core.util.helpers.BaublesHelper;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -8,12 +10,14 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.event.entity.living.PotionColorCalculationEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import thundr.redstonerepository.RedstoneRepository;
+import thundr.redstonerepository.items.baubles.ItemRingEffect;
 import thundr.redstonerepository.items.tools.gelidenderium.ItemPickaxeGelidEnderium;
 
 
@@ -104,4 +108,16 @@ public class ToolEventHandler {
     	ItemPickaxeGelidEnderium pick = (ItemPickaxeGelidEnderium)stack.getItem();
 	    return pick.getMode(stack) == 1 && pick.getEnergyStored(stack) >= pick.getEnergyPerUseCharged();
     }
+
+	@SubscribeEvent
+	public void potionListener(PotionColorCalculationEvent event) {
+		if (event.getEntity() instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) event.getEntity();
+			for (ItemStack item : BaublesHelper.getBaubles(player)) {
+				if (item.getItem() instanceof ItemRingEffect) {
+					RedstoneRepository.LOG.info("RingEffect: Caught potion event on player wearing ring");
+				}
+			}
+		}
+	}
 }
