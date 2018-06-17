@@ -120,20 +120,19 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 		}
 	}
 
-	@SubscribeEvent
-	public void potionListener(PotionColorCalculationEvent event) {
-		if (event.getEntity() instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) event.getEntity();
-			for (ItemStack item : BaublesHelper.getBaubles(player)) {
-				if (item.getItem() instanceof ItemRingEffect) {
-					RedstoneRepository.LOG.info("RingEffect: Caught potion event on player wearing ring");
-					ArrayList<PotionEffect> neweffects = new ArrayList<>(event.getEffects());
-					for(PotionEffect p : neweffects){
-
-					}
-				}
-			}
-		}
-
-	}
+//	@SubscribeEvent
+//	public void potionListener(PotionColorCalculationEvent event) {
+//		if (event.getEntity() instanceof EntityPlayer) {
+//			EntityPlayer player = (EntityPlayer) event.getEntity();
+//			for (ItemStack item : BaublesHelper.getBaubles(player)) {
+//				if (item.getItem() instanceof ItemRingEffect) {
+//					RedstoneRepository.LOG.info("RingEffect: Caught potion event on player wearing ring");
+//					ArrayList<PotionEffect> playerEffects = new ArrayList<>(event.getEffects());
+//					for(PotionEffect p : playerEffects){
+//					}
+//				}
+//			}
+//		}
+//
+//	}
 }
