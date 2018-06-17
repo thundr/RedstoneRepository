@@ -43,6 +43,6 @@ public class HungerHelper {
 	public static void addSaturation(EntityPlayer player, int amount) {
 		FoodStats foodStats = player.getFoodStats();
 		//Cap saturation at 20 points.
-		foodStats.setFoodSaturationLevel(Math.min(foodStats.getSaturationLevel() + amount, 20.0F));
+		foodStats.addStats(amount, 0.5F);
 	}
 }
