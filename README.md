@@ -3,6 +3,12 @@ Redstone Repository Repository
 
 ![](https://github.com/thundR/RedstoneRepository/raw/master/src/main/resources/assets/redstonerepository/textures/logo.png "Redstone Repository")
 
+[Jenkins](https://ci.thundr.pw/)
+
+[Twitter](https://twitter.com/rdnuht)
+
+[Curse](https://minecraft.curseforge.com/projects/redstone-repository)
+
 This mod was an addon for Redstone Arsenal by TeamCoFH, and will eventally be a home to content that enhances many aspects of the CoFH library of mods. Original mod written by TehNut and Tombenpotter for MC1.6/1.7. This is a rewrite for 1.12+ by thundR. 
 
 ## Dev setup
