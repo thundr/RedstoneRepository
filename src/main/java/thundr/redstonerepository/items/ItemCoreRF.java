@@ -16,6 +16,7 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 public class ItemCoreRF extends ItemCore implements IMultiModeItem, IEnergyContainerItem, IEnchantableItem {
@@ -42,8 +43,9 @@ public class ItemCoreRF extends ItemCore implements IMultiModeItem, IEnergyConta
 	}
 
     public ItemCoreRF(String modName) {
-
         super(modName);
+
+	    addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> this.isActive(stack) ? 1F : 0F);
     }
 
     public ItemCoreRF setEnergyParams(int maxEnergy, int maxTransfer, int energyPerUse) {
@@ -131,7 +133,7 @@ public class ItemCoreRF extends ItemCore implements IMultiModeItem, IEnergyConta
     }
 
     public boolean isActive(ItemStack stack){
-	    return getMode(stack) == MODE.ENABLED.getValue();
+	    return getMode(stack) == MODE.ENABLED.getValue() && getEnergyStored(stack) > getEnergyPerUse(stack);
     }
 
     /* HELPERS */
@@ -157,6 +159,15 @@ public class ItemCoreRF extends ItemCore implements IMultiModeItem, IEnergyConta
         int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
         return extractEnergy(stack, count * energyPerUse * (5 - unbreakingLevel) / 5, simulate);
     }
+
+	protected int useEnergyExact(ItemStack stack, int toUse, boolean simulate) {
+
+		if (isCreative) {
+			return 0;
+		}
+		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack), 0, 4);
+		return extractEnergy(stack, toUse * (5 - unbreakingLevel) / 5, simulate);
+	}
 
     /* IEnergyContainerItem */
     @Override

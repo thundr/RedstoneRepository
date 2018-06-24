@@ -8,7 +8,7 @@
 			"predicate": {
 				"active": 1.0
 			},
-			"model": "redstonerepository:item/ring_effect"
+			"model": "redstonerepository:item/ring_effect_active"
 		}
 	]
 }

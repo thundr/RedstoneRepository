@@ -63,7 +63,7 @@ public class ArmorEventHandler {
 
 			if(!player.world.isRemote){
 				ArmorSummary summary = new ArmorSummary().getSummary(player);
-
+				RedstoneRepository.LOG.info(event.getSource().getDamageType());
 				if(summary.isFullSet){
 					//the enderium armor is made out of cryotheum, after all...
 					if(event.getSource().isFireDamage()){
@@ -85,7 +85,12 @@ public class ArmorEventHandler {
 	private boolean doFullArmorDrain(int toDrain, ArmorSummary summary, EntityPlayer player){
 		if(summary.totalEnergyStored >= toDrain){
 			Iterator armor = player.getArmorInventoryList().iterator();
-			summary.enderiumPieces.forEach((key, value) -> value.extractEnergy((ItemStack)armor.next(), toDrain/4, false));
+			summary.enderiumPieces.forEach((key, value) -> RedstoneRepository.LOG.info(
+					value.extractEnergy((ItemStack)armor.next(), toDrain/4, false) +
+							"  1 "
+			));
+			RedstoneRepository.LOG.info(summary.enderiumPieces);
+			RedstoneRepository.LOG.info(player.getArmorInventoryList());
 			return true;
 		}
 		else {

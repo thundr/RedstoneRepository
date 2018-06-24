@@ -57,7 +57,6 @@ public class ItemFeeder extends ItemCoreRF implements IBauble, IInventoryContain
 	    this.energyPerUse = energyPerUse;
 	    this.saturationFillMax = saturationFillMax;
 
-        addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> this.isActive(stack) ? 1F : 0F);
     }
 
     @Optional.Method(modid = "baubles")

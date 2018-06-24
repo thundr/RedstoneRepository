@@ -108,16 +108,4 @@ public class ToolEventHandler {
     	ItemPickaxeGelidEnderium pick = (ItemPickaxeGelidEnderium)stack.getItem();
 	    return pick.getMode(stack) == 1 && pick.getEnergyStored(stack) >= pick.getEnergyPerUseCharged();
     }
-
-	@SubscribeEvent
-	public void potionListener(PotionColorCalculationEvent event) {
-		if (event.getEntity() instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) event.getEntity();
-			for (ItemStack item : BaublesHelper.getBaubles(player)) {
-				if (item.getItem() instanceof ItemRingEffect) {
-					RedstoneRepository.LOG.info("RingEffect: Caught potion event on player wearing ring");
-				}
-			}
-		}
-	}
 }

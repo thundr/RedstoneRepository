@@ -48,7 +48,6 @@ public class ItemCapacitorAmulet extends ItemCoreRF implements IBauble, INBTCopy
 		setMaxStackSize(1);
 		setNoRepair();
 
-		addPropertyOverride(new ResourceLocation("active"), (stack, world, entity) -> ItemCapacitorAmulet.this.isActive(stack) ? 1F : 0F);
 	}
 
 	@Override
