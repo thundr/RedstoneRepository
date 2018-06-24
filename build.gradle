@@ -120,59 +120,6 @@ task srcJar(type: Jar) {
 
 tasks.build.dependsOn srcJar, deobfJar
 
-//tasks.withType(JavaCompile) { task ->
-//	task.options.encoding = 'UTF-8'
-//}
-
-// publishing {
-// 	tasks.publish.dependsOn 'build'
-// 	publications {
-// 		mavenJava(MavenPublication) {
-// 			from components.java
-// 			artifact sourceJar
-// 			artifact javadocJar
-// 			artifact deobfJar
-// 		}
-// 	}
-// 	repositories {
-// 		if (project.hasProperty('maven_repo')) {
-// 			maven { url maven_repo }
-// 		} else {
-// 			mavenLocal()
-// 		}
-// 	}
-// }
-
-// def curseRelations = {
-// 	requiredLibrary 'cofhcore'
-// 	requiredLibrary 'thermal-foundation'
-// 	requiredLibrary 'redstone-arsenal'
-// 	requiredLibrary 'ttcore'
-// 	requiredLibrary 'thermalexpansion'
-// }
- 
-// curseforge {
-// 	if (project.hasProperty('curse_key'))
-// 		apiKey = project.curse_key
- 
-// 	project {
-// 		id = "${curse_id}"
-// 		changelog = project.hasProperty('changelog') ? project.changelog : ''
-// 		releaseType = 'release'
- 
-// 		mainArtifact(jar) {
-// 			displayName = "${mod_name} - ${mod_version}-${build_number}"
-// 			relations curseRelations
-// 		}
- 
-// 		addArtifact(deobfJar) {
-// 			relations curseRelations
-// 		}
- 
-// 		addArtifact sourceJar
-// 		addArtifact javadocJar
-// 	}
-// }
 idea {
 	module {
 		inheritOutputDirs = true
@@ -181,4 +128,23 @@ idea {
 //testing
 task wrapper(type: Wrapper) {
   gradleVersion = '2.6'
+}
+
+artifacts {
+	archives srcJar
+	archives deobfJar
+}
+
+task("uploadJars", dependsOn: "build") {
+	description = "uploads JARs"
+	if (project.hasProperty("local_maven")) {
+		apply plugin: 'maven'
+		uploadArchives {
+			repositories {
+				mavenDeployer {
+					repository(url: "file://${local_maven}")
+				}
+			}
+		}
+	}
 }
