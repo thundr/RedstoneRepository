@@ -143,6 +143,9 @@ task("uploadJars", dependsOn: "build") {
 			repositories {
 				mavenDeployer {
 					repository(url: "file://${local_maven}")
+					pom {
+						artifactId = project.archivesBaseName
+					}
 				}
 			}
 		}
