@@ -19,6 +19,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.PotionColorCalculationEvent;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -43,6 +44,7 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 		maxEnergy = 4000000;
 		maxTransfer = 100000;
 		energyPerUse = 1000;
+		setMaxStackSize(1);
 	}
 
 	@Override
@@ -127,10 +129,10 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 			}
 
 			if (isActive(ring) && (getEnergyStored(ring) >= getEnergyPerUse(ring))) {
-				if(entityPlayer.getActivePotionEffects().size() > cacheEffects.size()){
-					entityPlayer.clearActivePotions();
-					useEnergy(ring,  entityPlayer.getActivePotionEffects().size() - cacheEffects.size(), false);
-				}
+//				if(entityPlayer.getActivePotionEffects().size() > cacheEffects.size()){
+//					entityPlayer.clearActivePotions();
+//					useEnergy(ring,  entityPlayer.getActivePotionEffects().size() - cacheEffects.size(), false);
+//				}
 
 				for (PotionEffect p : globalMap.get(entityPlayer.getUniqueID())) {
 					PotionEffect pot = new PotionEffect(p.getPotion(), 290);
@@ -186,5 +188,4 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 			ring.getTagCompound().setTag("pwrTick", perTick);
 		}
 	}
-
 }

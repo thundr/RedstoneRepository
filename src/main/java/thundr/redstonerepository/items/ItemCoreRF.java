@@ -151,7 +151,7 @@ public class ItemCoreRF extends ItemCore implements IMultiModeItem, IEnergyConta
         return maxTransfer;
     }
 
-    protected int useEnergy(ItemStack stack, int count, boolean simulate) {
+    public int useEnergy(ItemStack stack, int count, boolean simulate) {
 
         if (isCreative) {
             return 0;
