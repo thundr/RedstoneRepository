@@ -9,14 +9,13 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import thundr.redstonerepository.RedstoneRepository;
 import thundr.redstonerepository.api.IArmorEnderium;
 import thundr.redstonerepository.init.RedstoneRepositoryEquipment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class ArmorEventHandler {
 
@@ -102,7 +101,7 @@ public class ArmorEventHandler {
 
 		// energy stored in armor from top piece down (helm, chest, legs, boots)
 		// 0 if no armor or depleted
-		public Map<String, Integer> energyStored = new HashMap<String, Integer>();
+		public LinkedHashMap<String, Integer> energyStored = new LinkedHashMap<>();
 
 		public int totalEnergyStored = 0;
 
@@ -110,20 +109,20 @@ public class ArmorEventHandler {
 		ArrayList<ItemStack> armorStacks = new ArrayList<>();
 
 		//our armor on player
-		public Map<String, IArmorEnderium> enderiumPieces = new HashMap<>();
+		public LinkedHashMap<String, IArmorEnderium> enderiumPieces = new LinkedHashMap<>();
 
 		public boolean isFullSet = false;
 
 		public ArmorSummary getSummary(EntityPlayer player){
-			energyStored.put("Helm", 0);
-			energyStored.put("Chest", 0);
-			energyStored.put("Legs", 0);
 			energyStored.put("Boots", 0);
+			energyStored.put("Legs", 0);
+			energyStored.put("Chest", 0);
+			energyStored.put("Head", 0);
 
-			armorStacks.add(player.getItemStackFromSlot(EntityEquipmentSlot.HEAD));
-			armorStacks.add(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST));
-			armorStacks.add(player.getItemStackFromSlot(EntityEquipmentSlot.LEGS));
 			armorStacks.add(player.getItemStackFromSlot(EntityEquipmentSlot.FEET));
+			armorStacks.add(player.getItemStackFromSlot(EntityEquipmentSlot.LEGS));
+			armorStacks.add(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST));
+			armorStacks.add(player.getItemStackFromSlot(EntityEquipmentSlot.HEAD));
 
 			//slot iterator
 			int iter = 0;
@@ -138,24 +137,24 @@ public class ArmorEventHandler {
 				int energy = armor.getEnergyStored(i);
 				switch (iter){
 					case 0:
-						energyStored.replace("Helm", 0, energy);
+						energyStored.replace("Boots", 0, energy);
 						totalEnergyStored += energy;
-						enderiumPieces.put("Helm", armor);
+						enderiumPieces.put("Boots", armor);
 						break;
 					case 1:
-						energyStored.replace("Chest", 0, energy);
-						totalEnergyStored += energy;
-						enderiumPieces.put("Chest", armor);
-						break;
-					case 2:
 						energyStored.replace("Legs", 0, energy);
 						totalEnergyStored += energy;
 						enderiumPieces.put("Legs", armor);
 						break;
-					case 3:
-						energyStored.replace("Boots", 0, energy);
+					case 2:
+						energyStored.replace("Chest", 0, energy);
 						totalEnergyStored += energy;
-						enderiumPieces.put("Boots", armor);
+						enderiumPieces.put("Chest", armor);
+						break;
+					case 3:
+						energyStored.replace("Head", 0, energy);
+						totalEnergyStored += energy;
+						enderiumPieces.put("Head", armor);
 						break;
 					default:
 						break;
