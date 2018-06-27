@@ -10,6 +10,7 @@ import cofh.core.util.helpers.StringHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagInt;
@@ -84,15 +85,20 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 		EntityPlayer entityPlayer = (EntityPlayer) player;
 
 		if (isActive(ring) && (getEnergyStored(ring) >= getEnergyPerUse(ring))) {
-			ArrayList<PotionEffect> effects = new ArrayList<>(player.getActivePotionEffects());
-			writePotionEffectsToNBT(effects, ring);
-			globalMap.put(entityPlayer.getUniqueID(), effects);
-			entityPlayer.clearActivePotions();
-			int sum = getEnergyPerUse(ring);
-			for(PotionEffect p : effects){
-				sum += p.getAmplifier() * getEnergyPerUse(ring);
+			ArrayList<PotionEffect> effects = new ArrayList<>(10);
+			int powerUsage = getEnergyPerUse(ring); //use basic energy level when ring is active
+			for (PotionEffect p: player.getActivePotionEffects()){
+				effects.add(new PotionEffect(p.getPotion(), 290, p.getAmplifier()));
+				//add to power usage per tick per potion and level
+				powerUsage += p.getAmplifier() * getEnergyPerUse(ring);
 			}
-			writePowerToNBT(ring, sum);
+			//Write potion list to NBT
+			writePotionEffectsToNBT(effects, ring);
+			//Update global potion map and power usage
+			globalMap.put(entityPlayer.getUniqueID(), effects);
+			writePowerToNBT(ring, powerUsage);
+			// Kill the old potions.
+			entityPlayer.clearActivePotions();
 		}
 	}
 
@@ -121,26 +127,27 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 			}
 
 			EntityPlayer entityPlayer = (EntityPlayer) player;
-
+			//Read potion list from cache
 			ArrayList<PotionEffect> cacheEffects =  globalMap.get(entityPlayer.getUniqueID());
 			if (cacheEffects == null && ring.hasTagCompound()){
+				//Try to load potion list from NBT
 				cacheEffects = readPotionEffectsFromNBT(ring.getTagCompound());
 				globalMap.put(entityPlayer.getUniqueID(), cacheEffects);
 			}
 
 			if (isActive(ring) && (getEnergyStored(ring) >= getEnergyPerUse(ring))) {
-//				if(entityPlayer.getActivePotionEffects().size() > cacheEffects.size()){
-//					entityPlayer.clearActivePotions();
-//					useEnergy(ring,  entityPlayer.getActivePotionEffects().size() - cacheEffects.size(), false);
-//				}
-
 				for (PotionEffect p : globalMap.get(entityPlayer.getUniqueID())) {
-					PotionEffect pot = new PotionEffect(p.getPotion(), 290);
-					entityPlayer.addPotionEffect(pot);
+					p.duration = 290;
 				}
+				//Use energy to sustain potions
 				useEnergyExact(ring, ring.getTagCompound().getInteger("pwrTick"), false);
 			}
 //		}
+	}
+
+	@Override
+	public EnumRarity getRarity(ItemStack stack) {
+		return EnumRarity.EPIC;
 	}
 
 	public ArrayList<PotionEffect> readPotionEffectsFromNBT(NBTTagCompound tagCompound){

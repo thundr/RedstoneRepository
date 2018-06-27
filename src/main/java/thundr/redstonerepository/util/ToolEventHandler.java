@@ -125,9 +125,10 @@ public class ToolEventHandler {
 						if (ring.isActive(itemStack)) {
 							ArrayList<PotionEffect> potions = ring.globalMap.get(player.getUniqueID());
 							if (potions != null) {
-								if (potions.size() < player.getActivePotionEffects().size()) {
+								int diff = player.getActivePotionEffects().size() - potions.size();
+								if (diff > 0) {
+									ring.useEnergy(itemStack, (int)Math.pow(2, diff + 3.0) , false);
 									player.clearActivePotions();
-									ring.useEnergy(itemStack, player.getActivePotionEffects().size() - potions.size(), false);
 									return;
 								}
 							}
