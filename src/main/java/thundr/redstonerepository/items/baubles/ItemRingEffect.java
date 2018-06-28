@@ -126,23 +126,21 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 			return;
 		}
 
-			EntityPlayer entityPlayer = (EntityPlayer) player;
-			//Read potion list from cache
-			ArrayList<PotionEffect> cacheEffects =  globalMap.get(entityPlayer.getUniqueID());
-			if (cacheEffects == null && ring.hasTagCompound()){
-				//Try to load potion list from NBT
-				cacheEffects = readPotionEffectsFromNBT(ring.getTagCompound());
-				globalMap.put(entityPlayer.getUniqueID(), cacheEffects);
-			}
+		EntityPlayer entityPlayer = (EntityPlayer) player;
+		//Read potion list from cache
+		ArrayList<PotionEffect> cacheEffects =  globalMap.get(entityPlayer.getUniqueID());
+		if (cacheEffects == null && ring.hasTagCompound()){
+			//Try to load potion list from NBT
+			cacheEffects = readPotionEffectsFromNBT(ring.getTagCompound());
+			globalMap.put(entityPlayer.getUniqueID(), cacheEffects);
+		}
 
-			if (isActive(ring) && (getEnergyStored(ring) >= getEnergyPerUse(ring))) {
-				for (PotionEffect p : globalMap.get(entityPlayer.getUniqueID())) {
-					p.duration = 290;
-				}
-				//Use energy to sustain potions
-				useEnergyExact(ring, ring.getTagCompound().getInteger("pwrTick"), false);
-
+		if (isActive(ring) && (getEnergyStored(ring) >= getEnergyPerUse(ring))) {
+			for (PotionEffect p : globalMap.get(entityPlayer.getUniqueID())) {
+				p.duration = 290;
 			}
+			//Use energy to sustain potions
+			useEnergyExact(ring, ring.getTagCompound().getInteger("pwrTick"), false);
 		}
 	}
 
