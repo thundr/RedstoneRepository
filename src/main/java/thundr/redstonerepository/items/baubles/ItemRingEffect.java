@@ -103,6 +103,7 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 		}
 	}
 
+	@Optional.Method(modid = "baubles")
 	public void onUnequipped(ItemStack ring, EntityLivingBase player) {
 		if (!(player instanceof EntityPlayer) || player.world.isRemote || CoreUtils.isFakePlayer(player)) {
 			return;
@@ -112,6 +113,7 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 		if (isActive(ring) && (getEnergyStored(ring) >= getEnergyPerUse(ring))) {
 			entityPlayer.clearActivePotions();
 		}
+		globalMap.remove(player.getUniqueID());
 	}
 
 	@Optional.Method(modid = "baubles")
@@ -138,6 +140,7 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 		if (isActive(ring) && (getEnergyStored(ring) >= getEnergyPerUse(ring))) {
 			for (PotionEffect p : globalMap.get(entityPlayer.getUniqueID())) {
 				p.duration = 290;
+				World world = entityPlayer.getEntityWorld();
 			}
 			//Use energy to sustain potions
 			useEnergyExact(ring, ring.getTagCompound().getInteger("pwrTick"), false);
