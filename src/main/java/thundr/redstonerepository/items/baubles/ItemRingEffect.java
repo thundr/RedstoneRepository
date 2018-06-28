@@ -37,6 +37,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles")
 public class ItemRingEffect extends ItemCoreRF implements IBauble {
 
+	public final static int POTION_DURATION_TICKS = 290;
 	public ConcurrentHashMap<UUID, ArrayList<PotionEffect>> globalMap;
 
 	public ItemRingEffect() {
@@ -89,7 +90,8 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 			ArrayList<PotionEffect> effects = new ArrayList<>(10);
 			int powerUsage = getEnergyPerUse(ring); //use basic energy level when ring is active
 			for (PotionEffect p: player.getActivePotionEffects()){
-				effects.add(new PotionEffect(p.getPotion(), 290, p.getAmplifier()));
+				p.duration = POTION_DURATION_TICKS;
+				effects.add(p);
 				//add to power usage per tick per potion and level
 				powerUsage += p.getAmplifier() * getEnergyPerUse(ring);
 			}
@@ -139,8 +141,7 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 
 		if (isActive(ring) && (getEnergyStored(ring) >= getEnergyPerUse(ring))) {
 			for (PotionEffect p : globalMap.get(entityPlayer.getUniqueID())) {
-				p.duration = 290;
-				World world = entityPlayer.getEntityWorld();
+				player.addPotionEffect(p);
 			}
 			//Use energy to sustain potions
 			useEnergyExact(ring, ring.getTagCompound().getInteger("pwrTick"), false);
@@ -162,7 +163,7 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 		ArrayList<PotionEffect> toLoadEffects = new ArrayList<>();
 
 		for(int i = 0; i < nbtEffects.tagCount(); i++){
-			PotionEffect p = new PotionEffect(Potion.getPotionById(nbtEffects.getIntAt(i)), 100, nbtAmp.getIntAt(i));
+			PotionEffect p = new PotionEffect(Potion.getPotionById(nbtEffects.getIntAt(i)), POTION_DURATION_TICKS, nbtAmp.getIntAt(i));
 			toLoadEffects.add(p);
 		}
 		return toLoadEffects;
