@@ -11,21 +11,20 @@ item.redstonerepository.material.plateGelidEnderium.name=Gelid Enderium Plate
 item.redstonerepository.material.plateArmorGelidEnderium.name=Gelid Enderium Armor Plating
 item.redstonerepository.material.rodGelid.name=Gelid Rod
 item.redstonerepository.material.stringFluxed.name=Fluxed String
-
 tile.redstonerepository.storage.blockGelidEnderium.name=Gelid Enderium Block
 tile.redstonerepository.storage.blockGelidGem.name=Gelid Gem Block
 
-item.redstonerepository.bauble.capacitor.creative.name=Creative Flux Amulet
-item.redstonerepository.bauble.capacitor.tuberous.name=Tuberous Flux Amulet
-item.redstonerepository.bauble.capacitor.leadstone.name=Leadstone Flux Amulet
-item.redstonerepository.bauble.capacitor.hardened.name=Hardened Flux Amulet
-item.redstonerepository.bauble.capacitor.reinforced.name=Reinforced Flux Amulet
-item.redstonerepository.bauble.capacitor.resonant.name=Resonant Flux Amulet
+#Equipment
 item.redstonerepository.bauble.capacitor.gelid.name=Gelid Flux Capacitor Amulet
 item.redstonerepository.bauble.feeder.name=Endoscopic Gastrostomizer
-
 item.redstonerepository.bauble.ring.effect.name=Cryotheum Stasis Ring
 item.redstonerepository.bauble.ring.base.name=Gelid Enderium Ring
+
+#Equipment Tooltip Titles
+info.redstonerepository.capacitor.title=Charges items in your inventory. Must be placed in the Baubles slot.
+info.redstonerepository.feeder.title=Automatically restores hunger and saturation when activated. Must be placed in the Baubles slot.
+info.redstonerepository.feeder.short=Automatic food eating bauble.
+info.redstonerepository.ring.effect.title=Freezes potion effects in place. No way in, no way out.
 
 #Tools
 item.redstonerepository.tool.enderium.gelid.axe.name=Gelid Enderium Axe
@@ -34,39 +33,14 @@ item.redstonerepository.tool.enderium.gelid.pickaxe.name=Gelid Enderium Pickaxe
 item.redstonerepository.tool.enderium.gelid.shovel.name=Gelid Enderium Shovel
 item.redstonerepository.tool.enderium.gelid.sickle.name=Gelid Enderium Sickle
 item.redstonerepository.tool.enderium.gelid.sword.name=Gelid Enderium Sword
-item.redstonerepository.tool.potato.hoe.name=Fluxed Potahoe
 
 #Armor
 item.redstonerepository.armor.enderium.gelid.helm.name=Enderium Flux Helmet
 item.redstonerepository.armor.enderium.gelid.chestplate.name=Enderium Flux Chestplate
 item.redstonerepository.armor.enderium.gelid.leggings.name=Enderium Flux Leggings
 item.redstonerepository.armor.enderium.gelid.boots.name=Enderium Flux Boots
-item.redstonerepository.armor.powersuit.helm.name=Powersuit Helmet
-item.redstonerepository.armor.powersuit.chestplate.name=Powersuit Chestplate
-item.redstonerepository.armor.powersuit.leggings.name=Powersuit Leggings
-item.redstonerepository.armor.powersuit.boots.name=Powersuit Boots
-item.redstonerepository.armor.lumium.helm.name=Lumium Helmet
-item.redstonerepository.armor.lumium.chestplate.name=Lumium Chestplate
-item.redstonerepository.armor.lumium.leggings.name=Lumium Leggings
-item.redstonerepository.armor.lumium.boots.name=Lumium Boots
-item.redstonerepository.armor.tuberous.helm.name=Tuberous Helmet
-item.redstonerepository.armor.tuberous.chestplate.name=Tuberous Chestplate
-item.redstonerepository.armor.tuberous.leggings.name=Tuberous Leggings
-item.redstonerepository.armor.tuberous.boots.name=Tuberous Boots
-item.redstonerepository.armor.redstone.boots.name=Redstone Dusted Iron Boots
 
-#Blocks
-tile.redstonerepository.storage.enderium.gelid.nothing.name=Block of Anti-Derp Protocol
-tile.redstonerepository.random.lapis.purple.name=Lapis Quisque
-tile.redstonerepository.random.nothing.name=Anti-Derp Protocol
-tile.redstonerepository.table.tinker.name=Tinker Table
-tile.redstonerepository.light.invisible.name=Invisible Light
-tile.redstonerepository.solar.basic.name=Solar Panel (Basic)
-tile.redstonerepository.solar.hardened.name=Solar Panel (Hardened)
-tile.redstonerepository.solar.reinforced.name=Solar Panel (Reinforced)
-tile.redstonerepository.solar.resonant.name=Solar Panel (Resonant)
-
-#Tooltips
+#General Tooltips
 info.redstonerepository.tooltip.getenergy=Charge: %d / %d RF
 info.redstonerepository.tooltip.peruse=%d RF Per Use
 info.redstonerepository.tooltip.perdamage=%d RF Per Damage
@@ -77,53 +51,15 @@ info.redstonerepository.tooltip.damage.flux=+%d Flux Damage
 info.redstonerepository.tooltip.durability=Durability
 info.redstonerepository.tooltip.bound=Bound Block:
 info.redstonerepository.tooltip.side=Insert Side:
-
-info.redstonerepository.capacitor.title=Charges items in your inventory. Must be placed in the Baubles slot. 
-info.redstonerepository.capacitor.activate=Use while sneaking to activate.
-info.redstonerepository.capacitor.deactivate=Use while sneaking to deactivate.
-
-info.redstonerepository.feeder.title=Automatically restores hunger and saturation when activated. Must be placed in the Baubles slot.
-info.redstonerepository.feeder.short=Automatic food eating bauble.
-info.redstonerepository.feeder.active=Currently %sactive%s. Press (%s) while in hand to deactivate.
-info.redstonerepository.feeder.disabled=Currently %sdisabled%s. Press (%s) while in hand to activate.
-
-info.redstonerepository.tooltip.armor.lumium.shine=Shining bright like a Glowstone
-info.redstonerepository.tooltip.armor.tuberous.clever.1=Congrats, you have smeared yourself with
-info.redstonerepository.tooltip.armor.tuberous.clever.2=potatoes. You have achieved "Protatotection".
-info.redstonerepository.tooltip.armor.powersuit.ignore=This is currently unusable. Ignore it.
-info.redstonerepository.tooltip.forModules=for Modules
 info.redstonerepository.tooltip.forDetails=for bound details
 info.redstonerepository.tooltip.control=Control
 info.redstonerepository.tooltip.hold=Hold
-
-#Powersuit Upgrade Tooltips
-info.redstonerepository.tooltip.armor.powersuit.flight.t1=Flight Mk1
-info.redstonerepository.tooltip.armor.powersuit.flight.t2=Flight Mk2
-info.redstonerepository.tooltip.armor.powersuit.flight.t3=Flight Mk3
-info.redstonerepository.tooltip.armor.powersuit.flight.t4=Flight Mk4
-info.redstonerepository.tooltip.armor.powersuit.flight.t5=Flight Mk5
-info.redstonerepository.tooltip.armor.powersuit.fall.prevention=Fall Prevention
-info.redstonerepository.tooltip.armor.powersuit.speed.t1=Speed Mk1
-info.redstonerepository.tooltip.armor.powersuit.speed.t2=Speed Mk2
-info.redstonerepository.tooltip.armor.powersuit.speed.t3=Speed Mk3
-info.redstonerepository.tooltip.armor.powersuit.speed.t4=Speed Mk4
-info.redstonerepository.tooltip.armor.powersuit.step.assist=Step Assist
-info.redstonerepository.tooltip.armor.powersuit.water.breathing=Water Breathing
-info.redstonerepository.tooltip.armor.powersuit.potion.nullification=Potion Nullifier
+info.redstonerepository.tooltip.active=Currently %sactive%s. Press (%s) while in hand to deactivate.
+info.redstonerepository.tooltip.disabled=Currently %sdisabled%s. Press (%s) while in hand to activate.
 
 #Chat Messages
-info.redstonerepository.chat.table.tinker.instruct=Right click top with powersuit to begin upgrading.
-info.redstonerepository.chat.armor.powersuit.active=Active:
 info.redstonerepository.chat.boundto.txt=Bound to:
 info.redstonerepository.chat.unbound.txt=Item unbound!
-
-#Keybinding
-key.redstonerepository.bind.powersuitActivate=Activate Powersuit
-
-#Console
-info.redstonerepository.console.recipes.remove=Removing recipes
-info.redstonerepository.console.recipes.remove.vanilla.armor=Vanilla Armor
-info.redstonerepository.console.compat.thermalexpansion=Registering compatability with ThermalExpansion.
 
 #Config
 config.redstonerepository.title=Redstone Repository Configuration

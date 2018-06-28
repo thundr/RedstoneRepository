@@ -127,7 +127,7 @@ public class ToolEventHandler {
 							if (potions != null) {
 								int diff = player.getActivePotionEffects().size() - potions.size();
 								if (diff > 0) {
-									ring.useEnergy(itemStack, (int)Math.pow(2, diff + 3.0) , false);
+									ring.useEnergy(itemStack, (int)Math.pow(2, diff + 6.0) , false);
 									player.clearActivePotions();
 									return;
 								}

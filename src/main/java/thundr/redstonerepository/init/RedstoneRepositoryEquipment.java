@@ -29,7 +29,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thundr.redstonerepository.RedstoneRepository;
-import thundr.redstonerepository.items.ItemFeeder;
+import thundr.redstonerepository.items.baubles.ItemFeeder;
 import thundr.redstonerepository.items.ItemMaterial;
 import thundr.redstonerepository.items.armor.ItemArmorEnderium;
 import thundr.redstonerepository.items.baubles.ItemCapacitorAmulet;

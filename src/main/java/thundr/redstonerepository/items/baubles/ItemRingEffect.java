@@ -45,7 +45,7 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 		globalMap = new ConcurrentHashMap<>();
 
 		maxEnergy = 4000000;
-		maxTransfer = 100000;
+		maxTransfer = 500000;
 		energyPerUse = 1000;
 		setMaxStackSize(1);
 	}
@@ -62,9 +62,9 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 		tooltip.add(StringHelper.getInfoText("info.redstonerepository.ring.effect.title"));
 
 		if (isActive(stack)) {
-			tooltip.add(StringHelper.localizeFormat("info.redstonerepository.ring.effect.active", StringHelper.BRIGHT_GREEN, StringHelper.END, StringHelper.getKeyName(KeyBindingItemMultiMode.INSTANCE.getKey())));
+			tooltip.add(StringHelper.localizeFormat("info.redstonerepository.tooltip.active", StringHelper.BRIGHT_GREEN, StringHelper.END, StringHelper.getKeyName(KeyBindingItemMultiMode.INSTANCE.getKey())));
 		} else {
-			tooltip.add(StringHelper.localizeFormat("info.redstonerepository.ring.effect.disabled", StringHelper.LIGHT_RED, StringHelper.END, StringHelper.getKeyName(KeyBindingItemMultiMode.INSTANCE.getKey())));
+			tooltip.add(StringHelper.localizeFormat("info.redstonerepository.tooltip.disabled", StringHelper.LIGHT_RED, StringHelper.END, StringHelper.getKeyName(KeyBindingItemMultiMode.INSTANCE.getKey())));
 		}
 
 		if(!RedstoneRepositoryEquipment.EquipmentInit.enable[0]){
@@ -92,8 +92,9 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 			for (PotionEffect p: player.getActivePotionEffects()){
 				p.duration = POTION_DURATION_TICKS;
 				effects.add(p);
-				//add to power usage per tick per potion and level
-				powerUsage += p.getAmplifier() * getEnergyPerUse(ring);
+				//add to power usage per tick per potion and level (int)Math.pow(2, diff + 6.0)
+				powerUsage += (int)Math.pow(getEnergyPerUse(ring), p.getAmplifier() );
+				RedstoneRepository.LOG.info(powerUsage + "");
 			}
 			//Write potion list to NBT
 			writePotionEffectsToNBT(effects, ring);
@@ -139,12 +140,16 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 			globalMap.put(entityPlayer.getUniqueID(), cacheEffects);
 		}
 
-		if (isActive(ring) && (getEnergyStored(ring) >= getEnergyPerUse(ring))) {
+		if (isActive(ring) && (getEnergyStored(ring) >= ring.getTagCompound().getInteger("pwrTick"))) {
 			for (PotionEffect p : globalMap.get(entityPlayer.getUniqueID())) {
 				player.addPotionEffect(p);
 			}
 			//Use energy to sustain potions
 			useEnergyExact(ring, ring.getTagCompound().getInteger("pwrTick"), false);
+		}
+		else{
+			entityPlayer.clearActivePotions();
+			globalMap.remove(player.getUniqueID());
 		}
 	}
 

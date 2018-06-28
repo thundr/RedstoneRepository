@@ -1,4 +1,4 @@
-package thundr.redstonerepository.items;
+package thundr.redstonerepository.items.baubles;
 
 import cofh.core.init.CoreEnchantments;
 import cofh.core.key.KeyBindingItemMultiMode;
@@ -29,6 +29,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import thundr.redstonerepository.api.IHungerStorageItem;
 import thundr.redstonerepository.gui.GuiHandler;
+import thundr.redstonerepository.items.ItemCoreRF;
 import thundr.redstonerepository.util.HungerHelper;
 
 import static thundr.redstonerepository.RedstoneRepository.NAME;
@@ -95,9 +96,9 @@ public class ItemFeeder extends ItemCoreRF implements IBauble, IInventoryContain
 
         //Display active/disabled text
         if (isActive(stack)) {
-            tooltip.add(StringHelper.localizeFormat("info.redstonerepository.feeder.active", StringHelper.BRIGHT_GREEN, StringHelper.END, StringHelper.getKeyName(KeyBindingItemMultiMode.INSTANCE.getKey())));
+            tooltip.add(StringHelper.localizeFormat("info.redstonerepository.tooltip.active", StringHelper.BRIGHT_GREEN, StringHelper.END, StringHelper.getKeyName(KeyBindingItemMultiMode.INSTANCE.getKey())));
         } else {
-            tooltip.add(StringHelper.localizeFormat("info.redstonerepository.feeder.disabled", StringHelper.LIGHT_RED, StringHelper.END, StringHelper.getKeyName(KeyBindingItemMultiMode.INSTANCE.getKey())));
+            tooltip.add(StringHelper.localizeFormat("info.redstonerepository.tooltip.disabled", StringHelper.LIGHT_RED, StringHelper.END, StringHelper.getKeyName(KeyBindingItemMultiMode.INSTANCE.getKey())));
         }
 
         if (!RedstoneRepositoryEquipment.EquipmentInit.enable[1]) {
