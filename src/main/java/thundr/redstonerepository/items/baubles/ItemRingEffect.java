@@ -31,15 +31,16 @@ import thundr.redstonerepository.items.ItemCoreRF;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles")
 public class ItemRingEffect extends ItemCoreRF implements IBauble {
 
-	public HashMap<UUID, ArrayList<PotionEffect>> globalMap;
+	public ConcurrentHashMap<UUID, ArrayList<PotionEffect>> globalMap;
 
 	public ItemRingEffect() {
 		super(RedstoneRepository.NAME);
-		globalMap = new HashMap<>();
+		globalMap = new ConcurrentHashMap<>();
 
 		maxEnergy = 4000000;
 		maxTransfer = 100000;
@@ -110,37 +111,31 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 	@Optional.Method(modid = "baubles")
 	public void onWornTick(ItemStack ring, EntityLivingBase player) {
 
-//		if (player.getEntityWorld().getTotalWorldTime() % 4 == 0) {
-			if (!(player instanceof EntityPlayer) || player.world.isRemote || CoreUtils.isFakePlayer(player)) {
-				return;
-			}
-			if(!ring.hasTagCompound()){
-				//somehow has been equipped without calling onEquipped
-				RedstoneRepository.LOG.error("Stasis Ring has Invalid NBT! This is a bug! Report to author.");
-				return;
-			}
+		if (!(player instanceof EntityPlayer) || player.world.isRemote || CoreUtils.isFakePlayer(player)) {
+			return;
+		}
+		if(!ring.hasTagCompound()){
+			//somehow has been equipped without calling onEquipped
+			RedstoneRepository.LOG.error("Stasis Ring has Invalid NBT! This is a bug! Report to author.");
+			return;
+		}
 
-			EntityPlayer entityPlayer = (EntityPlayer) player;
+		EntityPlayer entityPlayer = (EntityPlayer) player;
 
-			ArrayList<PotionEffect> cacheEffects =  globalMap.get(entityPlayer.getUniqueID());
-			if (cacheEffects == null && ring.hasTagCompound()){
-				cacheEffects = readPotionEffectsFromNBT(ring.getTagCompound());
-				globalMap.put(entityPlayer.getUniqueID(), cacheEffects);
+		ArrayList<PotionEffect> cacheEffects =  globalMap.get(entityPlayer.getUniqueID());
+		if (cacheEffects == null && ring.hasTagCompound()){
+			cacheEffects = readPotionEffectsFromNBT(ring.getTagCompound());
+			globalMap.put(entityPlayer.getUniqueID(), cacheEffects);
+		}
+
+		if (isActive(ring) && (getEnergyStored(ring) >= getEnergyPerUse(ring))) {
+
+			for (PotionEffect p : globalMap.get(entityPlayer.getUniqueID())) {
+				PotionEffect pot = new PotionEffect(p.getPotion(), 290);
+				entityPlayer.addPotionEffect(pot);
 			}
-
-			if (isActive(ring) && (getEnergyStored(ring) >= getEnergyPerUse(ring))) {
-//				if(entityPlayer.getActivePotionEffects().size() > cacheEffects.size()){
-//					entityPlayer.clearActivePotions();
-//					useEnergy(ring,  entityPlayer.getActivePotionEffects().size() - cacheEffects.size(), false);
-//				}
-
-				for (PotionEffect p : globalMap.get(entityPlayer.getUniqueID())) {
-					PotionEffect pot = new PotionEffect(p.getPotion(), 290);
-					entityPlayer.addPotionEffect(pot);
-				}
-				useEnergyExact(ring, ring.getTagCompound().getInteger("pwrTick"), false);
-			}
-//		}
+			useEnergyExact(ring, ring.getTagCompound().getInteger("pwrTick"), false);
+		}
 	}
 
 	public ArrayList<PotionEffect> readPotionEffectsFromNBT(NBTTagCompound tagCompound){

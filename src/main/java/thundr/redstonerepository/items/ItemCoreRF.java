@@ -203,7 +203,7 @@ public class ItemCoreRF extends ItemCore implements IMultiModeItem, IEnergyConta
             container.getTagCompound().setInteger(CoreProps.ENERGY, stored);
         }
         return extract;
-    }
+	}
 
     @Override
     public int getEnergyStored(ItemStack container) {
