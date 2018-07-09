@@ -4,7 +4,7 @@ itemGroup.redstonerepository.creativeTab=Redstone Repository
 #Items
 item.redstonerepository.material.dustGelidEnderium.name=Gelid Enderium Dust
 item.redstonerepository.material.gearGelidEnderium.name=Gelid Enderium Gear
-item.redstonerepository.material.gemGelid.name=Gelid Crystal
+item.redstonerepository.material.gemGelid.name=Gelid Gem
 item.redstonerepository.material.ingotGelidEnderium.name=Gelid Enderium Ingot
 item.redstonerepository.material.nuggetGelidEnderium.name=Gelid Enderium Nugget
 item.redstonerepository.material.plateGelidEnderium.name=Gelid Enderium Plate
