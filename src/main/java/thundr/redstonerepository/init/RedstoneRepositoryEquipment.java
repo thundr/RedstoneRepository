@@ -29,12 +29,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thundr.redstonerepository.RedstoneRepository;
-import thundr.redstonerepository.items.baubles.ItemFeeder;
+import thundr.redstonerepository.items.baubles.*;
 import thundr.redstonerepository.items.ItemMaterial;
 import thundr.redstonerepository.items.armor.ItemArmorEnderium;
-import thundr.redstonerepository.items.baubles.ItemCapacitorAmulet;
-import thundr.redstonerepository.items.baubles.ItemRingBase;
-import thundr.redstonerepository.items.baubles.ItemRingEffect;
 import thundr.redstonerepository.items.tools.gelidenderium.*;
 
 import java.util.Locale;
@@ -381,6 +378,7 @@ public class RedstoneRepositoryEquipment{
 		public static ItemFeeder itemFeeder;
 		public static ItemCapacitorAmulet itemCapacitorAmulet;
 		public static ItemRingEffect itemEffectRing;
+		public static ItemRingMining itemMiningRing;
 		public static ItemRingBase itemBaseRing;
 
 		@GameRegistry.ItemStackHolder(value = "thermalexpansion:capacitor", meta = 4)
@@ -393,11 +391,12 @@ public class RedstoneRepositoryEquipment{
 
 		public static ItemStack feederStack;
 		public static ItemStack effectRingStack;
+		public static ItemStack miningRingStack;
 		public static ItemStack baseRingStack;
 		public static ItemStack mushroomStewBucket;
 
 
-		public static boolean[] enable = new boolean[4];
+		public static boolean[] enable = new boolean[5];
 		public static int capacity;
 		public static int transfer;
 		public static int hungerPointsMax;
@@ -426,6 +425,12 @@ public class RedstoneRepositoryEquipment{
 			itemEffectRing.setRegistryName("ring_effect");
 			ForgeRegistries.ITEMS.register(itemEffectRing);
 			effectRingStack = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemEffectRing), 0);
+
+			itemMiningRing = new ItemRingMining();
+			itemMiningRing.setUnlocalizedName("redstonerepository.bauble.ring.mining").setCreativeTab(RedstoneRepository.tabCommon);
+			itemMiningRing.setRegistryName("ring_mining");
+			ForgeRegistries.ITEMS.register(itemMiningRing);
+			effectRingStack = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemMiningRing), 0);
 
 			itemBaseRing = new ItemRingBase();
 			itemBaseRing.setUnlocalizedName("redstonerepository.bauble.ring.base").setCreativeTab(RedstoneRepository.tabCommon);
@@ -510,6 +515,7 @@ public class RedstoneRepositoryEquipment{
 			ModelLoader.setCustomModelResourceLocation(itemFeeder, 0, new ModelResourceLocation(RedstoneRepository.ID + ":" + "feeder", "inventory"));
 			ModelLoader.setCustomModelResourceLocation(itemEffectRing, 0, new ModelResourceLocation(RedstoneRepository.ID + ":" + "ring_effect", "inventory"));
 			ModelLoader.setCustomModelResourceLocation(itemBaseRing, 0, new ModelResourceLocation(RedstoneRepository.ID + ":" + "ring_base", "inventory"));
+			ModelLoader.setCustomModelResourceLocation(itemMiningRing, 0, new ModelResourceLocation(RedstoneRepository.ID + ":" + "ring_base", "inventory"));
 		}
 	}
 }
