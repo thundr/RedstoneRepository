@@ -146,7 +146,6 @@ public class ToolEventHandler {
 		if (event.getEntity() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.getEntity();
 			for (ItemStack itemStack : BaublesHelper.getBaubles(player)) {
-				//make sure we have a player with a ring on
 				if (itemStack.getItem() instanceof ItemRingMining) {
 					ItemRingMining ring = (ItemRingMining) itemStack.getItem();
 
