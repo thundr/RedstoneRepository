@@ -28,6 +28,9 @@ info.redstonerepository.feeder.short=Automatic food eating bauble.
 info.redstonerepository.ring.effect.title=Freezes potion effects in place. No way in, no way out.
 info.redstonerepository.ring.mining.title=Mining speed when in air will not be slowed.
 
+#Equipment Tooltip Various
+info.redstonerepository.ring.effect.disabled=Overheated! The ring was worn for too short of a time! Back up in: (%s) seconds.
+
 #Tools
 item.redstonerepository.tool.enderium.gelid.axe.name=Gelid Enderium Axe
 item.redstonerepository.tool.enderium.gelid.battlewrench.name=Gelid Enderium Battle-Wrench
