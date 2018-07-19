@@ -2,9 +2,12 @@ package thundr.redstonerepository.items.armor;
 
 import cofh.core.init.CoreProps;
 import cofh.core.util.helpers.EnergyHelper;
+import cofh.core.util.helpers.MathHelper;
 import cofh.core.util.helpers.StringHelper;
 import cofh.redstonearsenal.item.armor.ItemArmorFlux;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -54,6 +57,15 @@ public class ItemArmorEnderium extends ItemArmorFlux implements IArmorEnderium {
 	@Override
 	public int getRGBDurabilityForDisplay(ItemStack stack) {
 		return CoreProps.RGB_DURABILITY_ENDER;
+	}
+
+	//soon
+	public int useEnergy(ItemStack container, int maxExtract, boolean simulate) {
+		int unbreakingLevel = MathHelper.clamp(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, container), 0, 10);
+		if (MathHelper.RANDOM.nextInt(3 + unbreakingLevel) >= 3) {
+			return 0;
+		}
+		return extractEnergy(container, maxExtract, false);
 	}
 
 	public boolean isEnderiumArmor(ItemStack stack) {

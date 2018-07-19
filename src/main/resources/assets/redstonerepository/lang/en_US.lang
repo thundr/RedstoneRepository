@@ -4,7 +4,7 @@ itemGroup.redstonerepository.creativeTab=Redstone Repository
 #Items
 item.redstonerepository.material.dustGelidEnderium.name=Gelid Enderium Dust
 item.redstonerepository.material.gearGelidEnderium.name=Gelid Enderium Gear
-item.redstonerepository.material.gemGelid.name=Gelid Crystal
+item.redstonerepository.material.gemGelid.name=Gelid Gem
 item.redstonerepository.material.ingotGelidEnderium.name=Gelid Enderium Ingot
 item.redstonerepository.material.nuggetGelidEnderium.name=Gelid Enderium Nugget
 item.redstonerepository.material.plateGelidEnderium.name=Gelid Enderium Plate
@@ -17,14 +17,19 @@ tile.redstonerepository.storage.blockGelidGem.name=Gelid Gem Block
 #Equipment
 item.redstonerepository.bauble.capacitor.gelid.name=Gelid Flux Capacitor Amulet
 item.redstonerepository.bauble.feeder.name=Endoscopic Gastrostomizer
-item.redstonerepository.bauble.ring.effect.name=Cryotheum Stasis Ring
+item.redstonerepository.bauble.ring.effect.name=Alchemical Stasis Ring
 item.redstonerepository.bauble.ring.base.name=Gelid Enderium Ring
+item.redstonerepository.bauble.ring.mining.name=Destructive Stabilization Ring
 
 #Equipment Tooltip Titles
 info.redstonerepository.capacitor.title=Charges items in your inventory. Must be placed in the Baubles slot.
 info.redstonerepository.feeder.title=Automatically restores hunger and saturation when activated. Must be placed in the Baubles slot.
 info.redstonerepository.feeder.short=Automatic food eating bauble.
 info.redstonerepository.ring.effect.title=Freezes potion effects in place. No way in, no way out.
+info.redstonerepository.ring.mining.title=Mining speed will not be slowed when in air .
+
+#Equipment Tooltip Various
+info.redstonerepository.ring.effect.disabled=Overheated! Back up in: (%s) seconds.
 
 #Tools
 item.redstonerepository.tool.enderium.gelid.axe.name=Gelid Enderium Axe

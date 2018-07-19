@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.PotionColorCalculationEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -21,6 +22,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import thundr.redstonerepository.RedstoneRepository;
 import thundr.redstonerepository.items.baubles.ItemRingBase;
 import thundr.redstonerepository.items.baubles.ItemRingEffect;
+import thundr.redstonerepository.items.baubles.ItemRingMining;
 import thundr.redstonerepository.items.tools.gelidenderium.ItemPickaxeGelidEnderium;
 
 import java.util.ArrayList;
@@ -138,5 +140,22 @@ public class ToolEventHandler {
 			}
 		}
 	}
+
+	@SubscribeEvent
+	public void onBlockMined(PlayerEvent.BreakSpeed event){
+		if (event.getEntity() instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) event.getEntity();
+			for (ItemStack itemStack : BaublesHelper.getBaubles(player)) {
+				if (itemStack.getItem() instanceof ItemRingMining) {
+					ItemRingMining ring = (ItemRingMining) itemStack.getItem();
+
+					if (ring.isActive(itemStack) && !player.onGround) {
+						event.setNewSpeed(event.getOriginalSpeed() * 5.0f);
+						ring.useEnergy(itemStack, 1, false);
+					}
+				}
+			}
+		}
+}
 }
 
