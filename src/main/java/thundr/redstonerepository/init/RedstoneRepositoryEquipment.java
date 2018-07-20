@@ -397,18 +397,29 @@ public class RedstoneRepositoryEquipment{
 
 
 		public static boolean[] enable = new boolean[5];
-		public static int capacity;
-		public static int transfer;
+
+		//Capacitor values
+		public static int capacitorCapacity;
+		public static int capacitorTransfer;
+
+		//Feeder values
 		public static int hungerPointsMax;
 		public static int feederCapacity;
 		public static int feederMaxTransfer;
 		public static int feederEnergyPerUse;
 		public static int feederMaxSat;
 
+		//Effect Ring values
+		public static int cooldownThreshold;
+		public static int cooldownDuration;
+		public static int powerMultiplier;
+		public static int effectRingTransfer;
+		public static int effectRingCapacity;
+
 		public boolean preInit() {
 			config();
 
-			itemCapacitorAmulet = new ItemCapacitorAmulet(capacity, transfer);
+			itemCapacitorAmulet = new ItemCapacitorAmulet(capacitorCapacity, capacitorTransfer);
 			itemCapacitorAmulet.setUnlocalizedName("redstonerepository.bauble.capacitor.gelid").setCreativeTab(RedstoneRepository.tabCommon);
 			itemCapacitorAmulet.setRegistryName("capacitor_gelid");
 			ForgeRegistries.ITEMS.register(itemCapacitorAmulet);
@@ -420,7 +431,7 @@ public class RedstoneRepositoryEquipment{
 			ForgeRegistries.ITEMS.register(itemFeeder);
 			feederStack = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemFeeder), 0);
 
-			itemEffectRing = new ItemRingEffect();
+			itemEffectRing = new ItemRingEffect(cooldownThreshold, cooldownDuration, powerMultiplier, effectRingTransfer, effectRingCapacity);
 			itemEffectRing.setUnlocalizedName("redstonerepository.bauble.ring.effect").setCreativeTab(RedstoneRepository.tabCommon);
 			itemEffectRing.setRegistryName("ring_effect");
 			ForgeRegistries.ITEMS.register(itemEffectRing);
@@ -430,7 +441,7 @@ public class RedstoneRepositoryEquipment{
 			itemMiningRing.setUnlocalizedName("redstonerepository.bauble.ring.mining").setCreativeTab(RedstoneRepository.tabCommon);
 			itemMiningRing.setRegistryName("ring_mining");
 			ForgeRegistries.ITEMS.register(itemMiningRing);
-			effectRingStack = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemMiningRing), 0);
+			miningRingStack = EnergyHelper.setDefaultEnergyTag(new ItemStack(itemMiningRing), 0);
 
 			itemBaseRing = new ItemRingBase();
 			itemBaseRing.setUnlocalizedName("redstonerepository.bauble.ring.base").setCreativeTab(RedstoneRepository.tabCommon);
@@ -443,26 +454,37 @@ public class RedstoneRepositoryEquipment{
 		}
 
 		public void config() {
-			boolean enableConfig = RedstoneRepository.CONFIG.get("Item.Capacitor", "Enable", true, "Enable the Gelid Capacitor Amulet");
+			//Capacitor config
+			boolean enableCapacitorConfig = RedstoneRepository.CONFIG.get("Item.Capacitor", "Enable", true, "Enable the Gelid Capacitor Amulet");
 			boolean enableLoaded = Loader.isModLoaded("baubles");
-			enable[0] = enableConfig && enableLoaded;
+			enable[0] = enableCapacitorConfig && enableLoaded;
 
-			transfer = RedstoneRepository.CONFIG.get("Item.Capacitor", "BaseTransfer", 100000, "Set the base transfer rate of the Gelid Capacitor Amulet in RF/t (Default 100,000) ");
-			capacity = RedstoneRepository.CONFIG.get("Item.Capacitor", "BaseCapacity", 100000000, "Set the base capacity of the Gelid Capacitor Amulet in RF/t (Default 100,000,000) ");
+			capacitorTransfer = RedstoneRepository.CONFIG.get("Item.Capacitor", "BaseTransfer", 100000, "Set the base transfer rate of the Gelid Capacitor Amulet in RF/t (Default 100,000) ");
+			capacitorCapacity = RedstoneRepository.CONFIG.get("Item.Capacitor", "BaseCapacity", 100000000, "Set the base capacitorCapacity of the Gelid Capacitor Amulet in RF/t (Default 100,000,000) ");
 
 			//Feeder config
 			boolean enableFeederConfig = RedstoneRepository.CONFIG.get("Item.Feeder", "Enable", true, "Enable the Endoscopic Gastrostomizer (Automatic Feeder)");
 			enable[1] = enableFeederConfig && enableLoaded;
 
 			hungerPointsMax = RedstoneRepository.CONFIG.get("Item.Feeder", "MaxHungerPoints", 500, "Set the maximum hunger point storage of the Endoscopic Gastrostomizer (EG) (Default 500)");
-			feederCapacity = RedstoneRepository.CONFIG.get("Item.Feeder", "BaseCapacity", 4000000, "Set the base capacity of the E.G. in RF (Default 4,000,000) ");
+			feederCapacity = RedstoneRepository.CONFIG.get("Item.Feeder", "BaseCapacity", 4000000, "Set the base capacitorCapacity of the E.G. in RF (Default 4,000,000) ");
 			feederMaxTransfer = RedstoneRepository.CONFIG.get("Item.Feeder", "MaxTransfer", 8000, "Set the maximum transfer rate into the item in RF/t (Default 8000)");
 			feederEnergyPerUse = RedstoneRepository.CONFIG.get("Item.Feeder", "EnergyPerUse", 30000, "Set amount of energy used per food point in RF (Default 3000)");
 			feederMaxSat = RedstoneRepository.CONFIG.get("Item.Feeder", "SaturationFillLevel", 5, "Maximum amount of hunger saturation to automatically fill to. Higher numbers consume hunger points more quickly. (Default 5, Max 20)");
 
-			enable[2] = enableLoaded && RedstoneRepository.CONFIG.get("Item.Ring.Effect", "Enable", true, "Enable the Cryotheum Stasis Ring");
+			//Effect ring config
+			boolean enableEffectRingConfig = RedstoneRepository.CONFIG.get("Item.Ring.Effect", "Enable", true, "Enable the Cryotheum Stasis Ring");
+			enable[2] = enableLoaded && enableEffectRingConfig;
 
+			cooldownThreshold = RedstoneRepository.CONFIG.get("Item.Ring.Effect", "CooldownThreshold", 100, "Set how many ticks the ring must be worn before it can be removed without causing a cooldown. (Default 100)");
+			cooldownDuration = RedstoneRepository.CONFIG.get("Item.Ring.Effect", "CooldownDuration", 1200, "Set how many ticks the ring's cooldown lasts for. (Default 1200)");
+			powerMultiplier = RedstoneRepository.CONFIG.get("Item.Ring.Effect", "PowerMultiplier", 1, "Set the multiplier for power usage. Be careful with this, it can get insane fast. (Default 1)");
+			effectRingTransfer = RedstoneRepository.CONFIG.get("Item.Ring.Effect", "Transfer", 500000, "Set RF/T transfer rate maximum. (Default 500,000)");
+			effectRingCapacity = RedstoneRepository.CONFIG.get("Item.Ring.Effect", "Capacity", 4000000, "Set RF capacity. (Default 4,000,000)");
 
+			//Mining Ring Config
+			boolean enableMiningRingConfig = RedstoneRepository.CONFIG.get("Item.Ring.Mining", "Enable", true, "Enable the Mining Stabilization Ring");
+			enable[3] = enableLoaded && enableMiningRingConfig;
 		}
 
 		public boolean initialize() {
@@ -490,20 +512,35 @@ public class RedstoneRepositoryEquipment{
 						'G', ItemMaterial.gearGelidEnderium);
 			}
 			if (enable[2]){
-				ItemStack gelidCryotheumBucket = FluidUtil.getFilledBucket(FluidRegistry.getFluidStack("cryotheum", 1000));
 				addShapedRecipe(effectRingStack,
-						"   ",
-						"NBN",
-						"GCG",
-						'B', baseRingStack,
-						'N', Items.NETHER_STAR,
-						'C', hardenedCapacitor,
-						'G', gelidCryotheumBucket);
+							"GMP",
+							"NBN",
+							"LSR",
+							'B', baseRingStack,
+							'N', Items.NETHER_STAR,
+							'G', Items.GHAST_TEAR,
+							'M', Items.MAGMA_CREAM,
+							'P', Items.BLAZE_POWDER,
+							'L', Items.SPECKLED_MELON,
+							'S', Items.FERMENTED_SPIDER_EYE,
+							'R', Items.RABBIT_FOOT);
 			}
+			if(enable[3]){
+				ItemStack aerotheumBucket = FluidUtil.getFilledBucket(FluidRegistry.getFluidStack("aerotheum", 1000));
+				addShapedRecipe(miningRingStack,
+						" E ",
+						" B ",
+						"FGF",
+						'B', baseRingStack,
+						'E', Items.ELYTRA,
+						'F', Items.FEATHER,
+						'G', aerotheumBucket);
+			}
+
 			addShapedRecipe(baseRingStack,
-					" G ",
-					"I I",
 					" I ",
+					"I I",
+					" G ",
 					'G', ItemMaterial.gemGelid,
 					'I', ItemMaterial.ingotGelidEnderium);
 			return true;

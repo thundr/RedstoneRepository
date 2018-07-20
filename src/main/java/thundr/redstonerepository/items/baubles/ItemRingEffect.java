@@ -34,8 +34,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ItemRingEffect extends ItemCoreRF implements IBauble {
 
 	public final static int POTION_DURATION_TICKS = 290;
-	public static final int REMOVAL_TIMER = 100;
-	public static final int COOLDOWN_TIMER = 1200;
+	public static int removalTimer = 100;
+	public static int cooldownTimer = 1200;
 
 	public static final String POWER_TICK = "pwrTick";
 	public static final String UNTIL_SAFE_TO_REMOVE = "cd";
@@ -45,13 +45,23 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 
 	public ConcurrentHashMap<UUID, ArrayList<PotionEffect>> globalMap;
 
-	public ItemRingEffect() {
+//	public static int cooldownThreshold;
+//	public static int cooldownDuration;
+//	public static int powerMultiplier;
+//	public static int effectRingTransfer;
+//	public static int effectRingCapacity;
+
+	public ItemRingEffect(int cooldownThreshold, int cooldownDuration, int powerMultiplier, int effectRingTransfer, int effectRingCapacity) {
 		super(RedstoneRepository.NAME);
 		//CME generator start
 		globalMap = new ConcurrentHashMap<>();
-		maxEnergy = 4000000;
-		maxTransfer = 500000;
-		energyPerUse = 2000;
+
+		removalTimer = cooldownThreshold;
+		cooldownTimer = cooldownDuration;
+		maxEnergy = effectRingCapacity;
+		maxTransfer = effectRingTransfer;
+		energyPerUse = 2000 * powerMultiplier;
+
 		setMaxStackSize(1);
 	}
 
@@ -73,7 +83,7 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 		}
 
 		if(ItemNBTUtils.getInteger(stack, ON_COOLDOWN) > 0){
-			tooltip.add(StringHelper.RED + StringHelper.localizeFormat("info.redstonerepository.ring.effect.disabled", StringHelper.formatNumber(ItemNBTUtils.getInteger(stack, ON_COOLDOWN))));
+			tooltip.add(StringHelper.RED + StringHelper.localizeFormat("info.redstonerepository.ring.effect.disabled", StringHelper.formatNumber((ItemNBTUtils.getInteger(stack, ON_COOLDOWN) / 20) + 1)));
 		}
 
 		if(!RedstoneRepositoryEquipment.EquipmentInit.enable[0]){
@@ -93,11 +103,18 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 		if (!(player instanceof EntityPlayer) || player.world.isRemote || CoreUtils.isFakePlayer(player)) {
 			return;
 		}
+		RedstoneRepository.LOG.info("goob");
+
 		EntityPlayer entityPlayer = (EntityPlayer) player;
 
-		if (isActive(ring) && (getEnergyStored(ring) >= getEnergyPerUse(ring))) {
+		if(!ItemNBTUtils.hasKey(ring, ON_COOLDOWN)){
+			ItemNBTUtils.setInteger(ring, ON_COOLDOWN, 0);
+		}
+
+		if (isActive(ring) && (getEnergyStored(ring) >= getEnergyPerUse(ring)) && ItemNBTUtils.getInteger(ring, ON_COOLDOWN) == 0) {
 			ArrayList<PotionEffect> effects = new ArrayList<>(10);
 			int powerUsage = getEnergyPerUse(ring); //use basic energy level when ring is active
+
 			for (PotionEffect p: player.getActivePotionEffects()){
 				p.duration = POTION_DURATION_TICKS;
 				effects.add(p);
@@ -105,12 +122,15 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 				powerUsage += (int)Math.pow(getEnergyPerUse(ring), p.getAmplifier() );
 				RedstoneRepository.LOG.info(powerUsage + "");
 			}
+
+
+
 			//Write potion list to NBT
 			writePotionEffectsToNBT(effects, ring);
 			//Update global potion map and power usage
 			globalMap.put(entityPlayer.getUniqueID(), effects);
 			ItemNBTUtils.setInteger(ring, POWER_TICK, powerUsage);
-			ItemNBTUtils.setInteger(ring, UNTIL_SAFE_TO_REMOVE, REMOVAL_TIMER);
+			ItemNBTUtils.setInteger(ring, UNTIL_SAFE_TO_REMOVE, removalTimer);
 
 			// Kill the old potions.
 			entityPlayer.clearActivePotions();
@@ -122,35 +142,42 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 		if (!(player instanceof EntityPlayer) || player.world.isRemote || CoreUtils.isFakePlayer(player)) {
 			return;
 		}
+
 		EntityPlayer entityPlayer = (EntityPlayer) player;
 
 		if (isActive(ring) && (getEnergyStored(ring) >= getEnergyPerUse(ring))) {
+			RedstoneRepository.LOG.info("boo333g");
 			entityPlayer.clearActivePotions();
-			if(ItemNBTUtils.getInteger(ring, UNTIL_SAFE_TO_REMOVE) > 0){
-				RedstoneRepository.LOG.info("test1");
-
-				ItemNBTUtils.setInteger(ring, ON_COOLDOWN, COOLDOWN_TIMER);
+			if(ItemNBTUtils.getInteger(ring, UNTIL_SAFE_TO_REMOVE) > 0 && ItemNBTUtils.getInteger(ring, ON_COOLDOWN) == 0){
+				RedstoneRepository.LOG.info("boo5g");
+				ItemNBTUtils.setInteger(ring, ON_COOLDOWN, cooldownTimer);
 			}
 			ItemNBTUtils.setInteger(ring, UNTIL_SAFE_TO_REMOVE, 0);
-
 		}
 		globalMap.remove(player.getUniqueID());
 	}
 
 	@Optional.Method(modid = "baubles")
 	public void onWornTick(ItemStack ring, EntityLivingBase player) {
-
 		if (!(player instanceof EntityPlayer) || player.world.isRemote || CoreUtils.isFakePlayer(player)) {
 			return;
 		}
+
 		if(!ItemNBTUtils.hasTag(ring)){
 			//somehow has been equipped without calling onEquipped
 			RedstoneRepository.LOG.error("Stasis Ring has Invalid NBT! This is a bug! Report to author.");
 			return;
 		}
 
+		if(ItemNBTUtils.getInteger(ring, POWER_TICK) > maxTransfer){
+			ItemNBTUtils.setInteger(ring, ON_COOLDOWN, cooldownTimer);
+			return;
+		}
+
 		if(ItemNBTUtils.getInteger(ring, ON_COOLDOWN) > 0){
 			ItemNBTUtils.setInteger(ring, ON_COOLDOWN, ItemNBTUtils.getInteger(ring, ON_COOLDOWN) - 1);
+//			RedstoneRepository.LOG.info("test234");
+			return;
 		}
 
 		EntityPlayer entityPlayer = (EntityPlayer) player;
@@ -168,10 +195,12 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 				player.addPotionEffect(p);
 			}
 			//Use energy to sustain potions
+
 			useEnergyExact(ring, ItemNBTUtils.getInteger(ring, POWER_TICK), false);
 			ItemNBTUtils.setInteger(ring, UNTIL_SAFE_TO_REMOVE, ItemNBTUtils.getInteger(ring, UNTIL_SAFE_TO_REMOVE) - 1);
 		}
 		else{
+			RedstoneRepository.LOG.info("tf349994");
 			entityPlayer.clearActivePotions();
 			globalMap.remove(player.getUniqueID());
 		}
@@ -184,7 +213,6 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 
 		if(ItemNBTUtils.getInteger(stack, ON_COOLDOWN) > 0){
 			ItemNBTUtils.setInteger(stack, ON_COOLDOWN, ItemNBTUtils.getInteger(stack, ON_COOLDOWN) - 1);
-			RedstoneRepository.LOG.info("test1");
 		}
 	}
 
