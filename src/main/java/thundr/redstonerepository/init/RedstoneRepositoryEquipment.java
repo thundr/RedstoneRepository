@@ -552,7 +552,7 @@ public class RedstoneRepositoryEquipment{
 			ModelLoader.setCustomModelResourceLocation(itemFeeder, 0, new ModelResourceLocation(RedstoneRepository.ID + ":" + "feeder", "inventory"));
 			ModelLoader.setCustomModelResourceLocation(itemEffectRing, 0, new ModelResourceLocation(RedstoneRepository.ID + ":" + "ring_effect", "inventory"));
 			ModelLoader.setCustomModelResourceLocation(itemBaseRing, 0, new ModelResourceLocation(RedstoneRepository.ID + ":" + "ring_base", "inventory"));
-			ModelLoader.setCustomModelResourceLocation(itemMiningRing, 0, new ModelResourceLocation(RedstoneRepository.ID + ":" + "ring_base", "inventory"));
+			ModelLoader.setCustomModelResourceLocation(itemMiningRing, 0, new ModelResourceLocation(RedstoneRepository.ID + ":" + "ring_mining", "inventory"));
 		}
 	}
 }

@@ -86,7 +86,7 @@ public class ItemRingEffect extends ItemCoreRF implements IBauble {
 			tooltip.add(StringHelper.RED + StringHelper.localizeFormat("info.redstonerepository.ring.effect.disabled", StringHelper.formatNumber((ItemNBTUtils.getInteger(stack, ON_COOLDOWN) / 20) + 1)));
 		}
 
-		if(!RedstoneRepositoryEquipment.EquipmentInit.enable[0]){
+		if(!RedstoneRepositoryEquipment.EquipmentInit.enable[2]){
 			tooltip.add(StringHelper.RED + "Baubles not loaded: Recipe disabled.");
 		}
 		tooltip.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.getScaledNumber(getEnergyStored(stack)) + " / " + StringHelper.getScaledNumber(getMaxEnergyStored(stack)) + " RF");

@@ -12,6 +12,7 @@ import thundr.redstonerepository.items.ItemCoreRF;
 public class ItemRingBase extends ItemCore implements IBauble {
     public ItemRingBase(){
         super(RedstoneRepository.NAME);
+        setMaxStackSize(1);
     }
 
     @Optional.Method(modid = "baubles")

@@ -63,7 +63,7 @@ public class ItemRingMining extends ItemCoreRF implements IBauble {
             tooltip.add(StringHelper.localizeFormat("info.redstonerepository.tooltip.disabled", StringHelper.LIGHT_RED, StringHelper.END, StringHelper.getKeyName(KeyBindingItemMultiMode.INSTANCE.getKey())));
         }
 
-        if(!RedstoneRepositoryEquipment.EquipmentInit.enable[0]){
+        if(!RedstoneRepositoryEquipment.EquipmentInit.enable[3]){
             tooltip.add(StringHelper.RED + "Baubles not loaded: Recipe disabled.");
         }
         tooltip.add(StringHelper.localize("info.cofh.charge") + ": " + StringHelper.getScaledNumber(getEnergyStored(stack)) + " / " + StringHelper.getScaledNumber(getMaxEnergyStored(stack)) + " RF");
