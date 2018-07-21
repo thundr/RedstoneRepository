@@ -72,29 +72,20 @@ public class ItemAxeGelidEnderium extends ItemAxeFlux{
 
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
-//        if (ConfigHandler.enableAxeLightning) {
 	    ItemStack held = player.getHeldItem(hand);
 	    int x = pos.getX();
 	    int y = pos.getY();
 	    int z = pos.getZ();
             if(getEnergyStored(held) > LIGHTNING_ENERGY){
-                if(!isEmpowered(held)){
+                if(isEmpowered(held) && getEnergyStored(held) >= EMPOWERED_LIGHTNING_ENERGY){
 	                world.spawnEntity(new EntityLightningBolt(world, x, y, z, false));
 	                if(!player.capabilities.isCreativeMode){
 		                extractEnergy(held, LIGHTNING_ENERGY, false);
 	                }
-                }
-                else if(isEmpowered(held) && getEnergyStored(held) >= EMPOWERED_LIGHTNING_ENERGY){
-                    for(int i = 0; i <= 10; i++){
-                        world.spawnEntity(new EntityLightningBolt(world, x, y, z, false));
-                    }
-	                if(!player.capabilities.isCreativeMode){
-		                extractEnergy(held, EMPOWERED_LIGHTNING_ENERGY, false);
-	                }
+	                return EnumActionResult.SUCCESS;
                 }
             }
-//        }
-		return EnumActionResult.SUCCESS;
+	    return EnumActionResult.FAIL;
     }
 
 	@Override
@@ -126,8 +117,8 @@ public class ItemAxeGelidEnderium extends ItemAxeFlux{
 
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(StringHelper.BRIGHT_GREEN + "Right click a block to call down the power of the sky.");
-		tooltip.add(StringHelper.BRIGHT_GREEN + "Right click the air to clear the skies when empowered.");
+		tooltip.add(StringHelper.BRIGHT_GREEN + StringHelper.localize("info.redstonerepository.tooltip.lightning"));
+		tooltip.add(StringHelper.BRIGHT_GREEN + StringHelper.localize("info.redstonerepository.tooltip.clearskies"));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 

@@ -92,6 +92,12 @@ info.redstonerepository.tooltip.forModules=for Modules
 info.redstonerepository.tooltip.forDetails=for bound details
 info.redstonerepository.tooltip.control=Control
 info.redstonerepository.tooltip.hold=Hold
+info.redstonerepository.tooltip.bind=Sneak right click to bind an inventory when empowered.
+info.redstonerepository.tooltip.notbound="Not Bound to an Inventory"
+
+info.redstonerepository.tooltip.lightning=Right click a block to call down the power of the sky when empowered.
+info.redstonerepository.tooltip.clearskies=Sneak right click to bind an inventory when empowered.
+
 
 #Powersuit Upgrade Tooltips
 info.redstonerepository.tooltip.armor.powersuit.flight.t1=Flight Mk1

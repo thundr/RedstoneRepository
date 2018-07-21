@@ -84,7 +84,7 @@ public class ItemPickaxeGelidEnderium extends ItemPickaxeFlux{
     @SideOnly(Side.CLIENT)
     @SuppressWarnings("unchecked")
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-	    tooltip.add(StringHelper.BRIGHT_GREEN + "Sneak right click to bind an inventory when empowered.");
+	    tooltip.add(StringHelper.BRIGHT_GREEN + StringHelper.localize("info.redstonerepository.tooltip.bind"));
         super.addInformation(stack, worldIn, tooltip, flagIn);
         if(stack.hasTagCompound()){
 
@@ -114,7 +114,7 @@ public class ItemPickaxeGelidEnderium extends ItemPickaxeFlux{
 		            tooltip.add(StringHelper.localize(StringHelper.BRIGHT_BLUE + StringHelper.localize("info.redstonerepository.tooltip.side") + StringHelper.LIGHT_GRAY + " " + Character.toUpperCase(sideString.charAt(0)) + sideString.substring(1)));
 	            }
 	            else{
-            		tooltip.add(StringHelper.BRIGHT_GREEN + "Not Bound to an Inventory");
+            		tooltip.add(StringHelper.BRIGHT_GREEN + StringHelper.localize("info.redstonerepository.tooltip.notbound"));
 	            }
             } else {
                 tooltip.add(StringHelper.localize("info.redstonerepository.tooltip.hold") + " " + StringHelper.YELLOW + StringHelper.ITALIC + StringHelper.localize("info.redstonerepository.tooltip.control") + " " + StringHelper.LIGHT_GRAY + StringHelper.localize("info.redstonerepository.tooltip.forDetails"));
