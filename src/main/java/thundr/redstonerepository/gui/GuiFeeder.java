@@ -7,11 +7,10 @@ import cofh.core.util.helpers.StringHelper;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.input.Keyboard;
-import thundr.redstonerepository.RedstoneRepository;
 import thundr.redstonerepository.gui.element.ElementEnergyItem;
 import thundr.redstonerepository.gui.element.ElementHungerPoints;
 import thundr.redstonerepository.init.RedstoneRepositoryProps;
-import thundr.redstonerepository.items.ItemFeeder;
+import thundr.redstonerepository.items.baubles.ItemFeeder;
 import thundr.redstonerepository.network.PacketRR;
 import thundr.redstonerepository.util.HungerHelper;
 

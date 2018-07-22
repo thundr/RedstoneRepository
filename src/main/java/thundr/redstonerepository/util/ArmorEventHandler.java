@@ -59,12 +59,10 @@ public class ArmorEventHandler {
 	public void onPlayerAttacked(LivingAttackEvent event) {
 		if(event.getEntity() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-
 			if(!player.world.isRemote){
 				ArmorSummary summary = new ArmorSummary().getSummary(player);
-
 				if(summary.isFullSet){
-					//the enderium armor is made out of cryotheum, after all...
+					//the armor is made out of cryotheum, after all...
 					if(event.getSource().isFireDamage()){
 						if(doFullArmorDrain((int) event.getAmount()* fireDrainFactor, summary, player)){
 							event.setCanceled(true);
@@ -84,7 +82,9 @@ public class ArmorEventHandler {
 	private boolean doFullArmorDrain(int toDrain, ArmorSummary summary, EntityPlayer player){
 		if(summary.totalEnergyStored >= toDrain){
 			Iterator armor = player.getArmorInventoryList().iterator();
-			summary.enderiumPieces.forEach((key, value) -> value.extractEnergy((ItemStack)armor.next(), toDrain/4, false));
+			summary.enderiumPieces.forEach((key, value) ->
+					value.extractEnergy((ItemStack)armor.next(), toDrain/4, false)
+			);
 			return true;
 		}
 		else {

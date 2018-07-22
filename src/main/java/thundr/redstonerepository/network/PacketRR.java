@@ -1,13 +1,12 @@
 package thundr.redstonerepository.network;
 
 import cofh.core.network.PacketBase;
-import cofh.core.network.PacketCore;
 import cofh.core.network.PacketHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import thundr.redstonerepository.RedstoneRepository;
 import thundr.redstonerepository.gui.ContainerFeeder;
-import thundr.redstonerepository.items.ItemFeeder;
+import thundr.redstonerepository.items.baubles.ItemFeeder;
 
 public class PacketRR extends PacketBase {
 	public enum PacketTypes {

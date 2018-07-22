@@ -22,7 +22,7 @@
 //
 //public class ItemPotahoeFluxed extends ItemHoe implements IEnergyContainerItem {
 //    //TODO: Revisit this item
-//    public static int capacity = 16000;
+//    public static int capacitorCapacity = 16000;
 //    public static int send = 80;
 //    public static int receive = 0;
 //
@@ -55,7 +55,7 @@
 //
 //    @SuppressWarnings("unchecked")
 //    public void getSubItems(Item item, CreativeTabs tabs, List list) {
-//        list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item), capacity));
+//        list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item), capacitorCapacity));
 //    }
 //
 //    @Override
@@ -70,7 +70,7 @@
 //
 //        int currentEnergy = stack.stackTagCompound.getInteger("Energy");
 //
-//        return 1.0 - ((double) currentEnergy / (double) capacity);
+//        return 1.0 - ((double) currentEnergy / (double) capacitorCapacity);
 //    }
 //
 //    @SideOnly(Side.CLIENT)
@@ -84,7 +84,7 @@
 //            EnergyHelper.setDefaultEnergyTag(stack, 0);
 //
 //        if (StringHelper.isShiftKeyDown()) {
-//            list.add(StringHelper.localize("info.cofh.charge") + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + capacity + " RF");
+//            list.add(StringHelper.localize("info.cofh.charge") + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + capacitorCapacity + " RF");
 //            list.add(EnumChatFormatting.GOLD + Utils.localizeFormatted("info.RArm.tooltip.peruse", "" + send));
 //        }
 //    }
@@ -97,7 +97,7 @@
 //            EnergyHelper.setDefaultEnergyTag(stack, 0);
 //
 //        int energy = stack.stackTagCompound.getInteger("Energy");
-//        int energyReceived = Math.min(i, Math.min(capacity - energy, receive));
+//        int energyReceived = Math.min(i, Math.min(capacitorCapacity - energy, receive));
 //
 //        if (!simulate) {
 //            energy += energyReceived;
@@ -133,6 +133,6 @@
 //
 //    @Override
 //    public int getMaxEnergyStored(ItemStack stack) {
-//        return capacity;
+//        return capacitorCapacity;
 //    }
 //}

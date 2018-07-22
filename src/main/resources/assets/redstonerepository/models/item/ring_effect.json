@@ -1,0 +1,14 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "redstonerepository:items/equipment/ring_effect"
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"active": 1.0
+			},
+			"model": "redstonerepository:item/ring_effect_active"
+		}
+	]
+}
