@@ -59,8 +59,15 @@ info.redstonerepository.tooltip.side=Insert Side:
 info.redstonerepository.tooltip.forDetails=for bound details
 info.redstonerepository.tooltip.control=Control
 info.redstonerepository.tooltip.hold=Hold
+
 info.redstonerepository.tooltip.active=Currently %sactive%s. Press (%s) while in hand to deactivate.
 info.redstonerepository.tooltip.disabled=Currently %sdisabled%s. Press (%s) while in hand to activate.
+
+info.redstonerepository.tooltip.bind=Sneak right click to bind an inventory when empowered.
+info.redstonerepository.tooltip.notbound=Not Bound to an Inventory.
+
+info.redstonerepository.tooltip.lightning=Right click a block to call down the power of the sky when empowered.
+info.redstonerepository.tooltip.clearskies=Sneak right click to bind an inventory when empowered.
 
 #Chat Messages
 info.redstonerepository.chat.boundto.txt=Bound to:
